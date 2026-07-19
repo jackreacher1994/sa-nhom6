@@ -244,13 +244,13 @@
     <div class="container" id="backend" style="left: 810px; top: 470px; width: 280px; height: 120px;">
       <div class="name">Backend Service</div>
       <div class="type">[Container: Python, FastAPI]</div>
-      <div class="desc">REST API. Audit upload/review stays actor-based (Vendor uploads, Reviewer reviews), unchanged from v1. Injects role/department entitlements only for knowledge-assistant queries.</div>
+      <div class="desc">REST API. Checks Entra ID role for each action: upload (Vendor/Contractor), review (Customer/Reviewer), view/query knowledge (any authenticated employee). No content-scope mapping.</div>
     </div>
 
     <div class="container new" id="connector" style="left: 150px; top: 720px; width: 280px; height: 120px;">
       <div class="name">Connector Layer</div>
       <div class="type">[Container: Python, Celery] (evolved from ETL Service)</div>
-      <div class="desc">Per-source connectors ingest content from SharePoint, Confluence, file servers, and databases, tagging it by source and department scope.</div>
+      <div class="desc">Per-source connectors ingest content from SharePoint, Confluence, file servers, and databases, tagging it by source system.</div>
     </div>
 
     <div class="container" id="ai" style="left: 810px; top: 720px; width: 280px; height: 120px;">
@@ -286,7 +286,7 @@
       <div class="cylinder">
         <div class="name">Search Index</div>
         <div class="type">[Azure AI Search]</div>
-        <div class="desc">Unified vector index: audit docs + multi-source knowledge + process content, tagged by source system and department scope.</div>
+        <div class="desc">Unified vector index: audit docs + multi-source knowledge + process content, tagged by source system.</div>
       </div>
     </div>
 
@@ -299,19 +299,11 @@
     </div>
 
     <!-- DATA STORES: new -->
-    <div class="datastore new" id="entitlement" style="left: 280px; top: 1160px; width: 230px; height: 140px;">
-      <div class="cylinder">
-        <div class="name">Entitlement / Permission Store</div>
-        <div class="type">[PostgreSQL]</div>
-        <div class="desc">Role/department entitlements for knowledge-assistant queries only, synced from Entra ID. Not used for audit upload/review, which stays actor-based as in v1.</div>
-      </div>
-    </div>
-
     <div class="datastore new" id="feedback" style="left: 680px; top: 1160px; width: 230px; height: 140px;">
       <div class="cylinder">
         <div class="name">Feedback &amp; Learning Store</div>
         <div class="type">[PostgreSQL]</div>
-        <div class="desc">Reviewer corrections queued for curator flag-and-review; approved fixes applied via config.</div>
+        <div class="desc">Reviewer corrections queued for curator flag-and-review; approved ranking/prompt config is read by AI Service.</div>
       </div>
     </div>
 
@@ -377,7 +369,7 @@
 
       <!-- 4. Backend -> Azure Entra ID -->
       <path d="M 1090 500 L 1880 500" marker-end="url(#arrowhead)"/>
-      <text x="1280" y="492">Authenticates users &amp; resolves roles/entitlements [HTTPS]</text>
+      <text x="1280" y="492">Authenticates users &amp; resolves role [HTTPS]</text>
 
       <!-- 5. Backend -> Message Broker -->
       <path d="M 1090 480 L 1450 480 L 1450 1050 L 1184 1050" marker-end="url(#arrowhead)"/>
@@ -394,10 +386,6 @@
       <!-- 8. Backend -> Document Storage -->
       <path d="M 810 520 L 210 520 L 210 974" marker-end="url(#arrowhead)"/>
       <text x="280" y="512">Stores uploaded documents [HTTPS]</text>
-
-      <!-- 9. Backend -> Entitlement/Permission Store -->
-      <path d="M 810 540 L 105 540 L 105 1200 L 280 1200" marker-end="url(#arrowhead)"/>
-      <text x="380" y="532">Reads role/department entitlements for knowledge queries [SQL/TCP]</text>
 
       <!-- 10. Backend -> Governance & Audit Log -->
       <path d="M 1000 590 L 1000 650 L 1250 650 L 1250 1154" marker-end="url(#arrowhead)"/>
@@ -417,11 +405,7 @@
 
       <!-- 14. Connector Layer -> Search Index -->
       <path d="M 430 780 L 790 780 L 790 974" marker-end="url(#arrowhead)"/>
-      <text x="470" y="772">Writes content tagged by source &amp; department [HTTPS]</text>
-
-      <!-- 15. Connector Layer -> Entitlement/Permission Store -->
-      <path d="M 320 840 L 320 1154" marker-end="url(#arrowhead)"/>
-      <text x="326" y="1000">Reads role/department tags to scope content [SQL/TCP]</text>
+      <text x="470" y="772">Writes content tagged by source system [HTTPS]</text>
 
       <!-- 16. Connector Layer -> Enterprise Content Sources -->
       <path d="M 230 840 L 90 840 L 90 1434 L 400 1434" marker-end="url(#arrowhead)"/>
@@ -433,11 +417,15 @@
 
       <!-- 21. AI Service -> Search Index -->
       <path d="M 860 840 L 860 974" marker-end="url(#arrowhead)"/>
-      <text x="866" y="900">Queries department-scoped knowledge [HTTPS]</text>
+      <text x="866" y="900">Queries the knowledge index [HTTPS]</text>
 
       <!-- 22. AI Service -> Azure OpenAI -->
       <path d="M 950 840 L 950 1434 L 1530 1434" marker-end="url(#arrowhead)"/>
       <text x="1450" y="1400">Generates answers, summaries &amp; audit results [HTTPS]</text>
+
+      <!-- 22b. AI Service -> Feedback & Learning Store -->
+      <path d="M 930 840 L 930 1180 L 910 1180" marker-end="url(#arrowhead)"/>
+      <text x="935" y="860">Reads approved ranking/prompt config [SQL/TCP]</text>
 
       <!-- 23. AI Service -> Expert Directory Service -->
       <path d="M 1090 780 L 1470 780" marker-end="url(#arrowhead)"/>
@@ -459,7 +447,7 @@
 
     <!-- TITLE -->
     <div class="diagram-title">Container Diagram v2 &mdash; AI Document Audit &amp; Knowledge Assistant System</div>
-    <div class="diagram-subtitle">Gold outline = new/changed since v1. Same person actors as v1. Entitlements stay role/department-level (no per-document ACLs). Expert directory seeded from document metadata + HR directory. Reviewer feedback flows to a human-gated flag-and-review queue.</div>
+    <div class="diagram-subtitle">Gold outline = new/changed since v1. Same person actors as v1. Access is action-level only (upload / review / view), checked against Entra ID roles &mdash; no entitlement store, no content-scope tagging. Expert directory seeded from document metadata + HR directory. Reviewer feedback flows to a human-gated flag-and-review queue.</div>
 
     <!-- LEGEND -->
     <div class="legend" style="left: 1680px; top: 1650px;">

@@ -96,7 +96,7 @@
       font-size: 15px;
       font-weight: 400;
       color: #444;
-      max-width: 780px;
+      max-width: 1360px;
     }
 
     /* SVG arrows */
@@ -148,7 +148,7 @@
     <div class="c4-box system" style="left: 480px; top: 380px; width: 540px; height: 190px;">
       <div class="name">AI Document Audit &amp; Knowledge Assistant System</div>
       <div class="type">[Software System]</div>
-      <div class="desc">Audits vendor handover documents with AI, and lets employees query, discover, and get guidance across the company's internal knowledge sources in natural language &mdash; with role-based access and expert connections.</div>
+      <div class="desc">Audits vendor handover documents with AI, and lets employees query, discover, and get guidance across the company's internal knowledge sources in natural language &mdash; with action-level access control (upload / review / view) and expert connections.</div>
     </div>
 
     <!-- EXTERNAL SYSTEMS (single row; content sources merged into one box) -->
@@ -173,7 +173,7 @@
     <div class="c4-box external small" style="left: 905px; top: 720px; width: 250px; height: 160px;">
       <div class="name">Azure Entra ID</div>
       <div class="type">[Software System]</div>
-      <div class="desc">Authentication and role/department identity.</div>
+      <div class="desc">Authentication and role identity for upload/review/view checks.</div>
     </div>
 
     <div class="c4-box external small" style="left: 1185px; top: 720px; width: 250px; height: 160px;">
@@ -215,7 +215,7 @@
       <text x="750" y="705">Generates answers using</text>
 
       <line x1="880" y1="570" x2="1030" y2="716" marker-end="url(#arrowhead)"/>
-      <text x="1030" y="705">Authenticates &amp; authorizes using</text>
+      <text x="1030" y="705">Authenticates &amp; checks role using</text>
 
       <line x1="960" y1="570" x2="1310" y2="716" marker-end="url(#arrowhead)"/>
       <text x="1310" y="705">Resolves experts via</text>
@@ -223,7 +223,7 @@
 
     <!-- TITLE -->
     <div class="diagram-title">System Context Diagram v2 &mdash; AI Document Audit &amp; Knowledge Assistant System</div>
-    <div class="diagram-subtitle">Same person actors as v1 (Vendor/Contractor, Customer/Reviewer). New knowledge sources and an HR/Org directory are added to support natural-language query, discovery, and expert connection.</div>
+    <div class="diagram-subtitle">Same person actors as v1 (Vendor/Contractor, Customer/Reviewer). New knowledge sources and an HR/Org directory support natural-language query, discovery, and expert connection. Access is action-level only (upload / review / view), checked via Entra ID role &mdash; no content-level personalization.</div>
 
     <!-- LEGEND -->
     <div class="legend">
