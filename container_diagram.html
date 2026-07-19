@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container Diagram - AI Document Audit System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+    .diagram {
+      position: relative;
+      min-width: 1600px;
+      min-height: 1600px;
+      background: transparent;
+    }
+
+    /* Person */
+    .person {
+      position: absolute;
+      text-align: center;
+    }
+    /* .person .head {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      margin-left: -24px;
+      width: 48px;
+      height: 48px;
+      background: #3a8342;
+      border-radius: 50%;
+    } */
+    .person .body-icon {
+      display: none;
+    }
+    .person .box {
+      background: #3a8342;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      padding-top: 24px;
+      font-size: 14px;
+      line-height: 1.3;
+      height: auto;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .person .box .name { font-size: 19px; font-weight: 700; margin-bottom: 2px; }
+    .person .box .type { font-size: 14px; font-weight: normal; margin-bottom: 12px; opacity: 1; }
+    .person .box .desc { font-size: 15px; opacity: 1; }
+
+    /* System boundary */
+    .boundary {
+      position: absolute;
+      border: 3px dashed #115594;
+      border-radius: 12px;
+    }
+    .boundary-label {
+      position: absolute;
+      top: -16px; left: 24px;
+      background: #fdfdfd;
+      padding: 0 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #115594;
+    }
+
+    /* Container (app) */
+    .container {
+      position: absolute;
+      background: #115594;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-align: center;
+      line-height: 1.3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .container .name { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+    .container .type { font-size: 13px; font-weight: normal; margin-bottom: 10px; opacity: 1; }
+    .container .desc { font-size: 14px; opacity: 1; }
+
+    /* Container (data store) */
+    .datastore {
+      position: absolute;
+      text-align: center;
+      color: #fff;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      border-radius: 8px;
+    }
+    .datastore .cylinder {
+      background: #115594;
+      border-radius: 8px;
+      padding: 16px 16px;
+      padding-top: 30px;
+      position: relative;
+      line-height: 1.3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .datastore .cylinder::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: 0; right: 0;
+      height: 24px;
+      background: #115594;
+      border-radius: 50%;
+      border-bottom: 2px solid rgba(255,255,255,0.4);
+    }
+    .datastore .cylinder::after {
+      content: '';
+      position: absolute;
+      top: 1px; left: 0; right: 0;
+      height: 24px;
+      background: #1664ab;
+      border-radius: 50%;
+    }
+    .datastore .name { font-size: 17px; font-weight: 700; position: relative; z-index: 1; margin-bottom: 2px; }
+    .datastore .type { font-size: 13px; font-weight: normal; position: relative; z-index: 1; margin-bottom: 10px; opacity: 1; }
+    .datastore .desc { font-size: 13px; opacity: 1; position: relative; z-index: 1; }
+
+    /* External system */
+    .external {
+      position: absolute;
+      background: #4f5256;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-align: center;
+      line-height: 1.3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .external .name { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+    .external .type { font-size: 13px; font-weight: normal; margin-bottom: 10px; opacity: 1; }
+    .external .desc { font-size: 14px; opacity: 1; }
+
+    /* Legend */
+    .legend {
+      position: absolute;
+      border: 1px solid #777;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 2.2;
+      background: #fff;
+      width: 340px;
+    }
+    .legend-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
+    .legend-swatch.person-sw { background: #3a8342; }
+    .legend-swatch.container-sw { background: #115594; }
+    .legend-swatch.datastore-sw { background: #115594; border-radius: 50% / 40%; }
+    .legend-swatch.external-sw { background: #4f5256; }
+    .legend-swatch.boundary-sw { border: 3px dashed #115594; background: transparent; }
+    
+    .legend-line { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-dash { width: 24px; height: 0; border-top: 2px dashed #444; position: relative; }
+    .legend-dash::after {
+      content: ''; position: absolute; right: -4px; top: -4px;
+      border-left: 6px solid #444; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+    }
+
+    /* Title */
+    .diagram-title {
+      position: absolute;
+      top: 1450px; left: 60px;
+      font-size: 26px;
+      font-weight: 400;
+      color: #000;
+    }
+
+    /* SVG arrows */
+    svg.arrows {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 50;
+    }
+    svg.arrows path, svg.arrows line {
+      fill: none;
+      stroke: #555;
+      stroke-width: 1.5;
+      stroke-dasharray: 8 6;
+    }
+    svg.arrows text {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 15px;
+      fill: #111;
+      text-shadow: 
+        -2px -2px 0 #fff, 2px -2px 0 #fff, 
+        -2px 2px 0 #fff, 2px 2px 0 #fff,
+        -3px 0 0 #fff, 3px 0 0 #fff,
+        0 -3px 0 #fff, 0 3px 0 #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <!-- PERSONS (Moved down slightly to give room, Boundary is much lower) -->
+    <div class="person" style="left: 230px; top: -25px; width: 240px;">
+      <div class="head"></div>
+      <div class="body-icon"></div>
+      <div class="box">
+        <div class="name">Vendor / Contractor</div>
+        <div class="type">[Person]</div>
+        <div class="desc">A construction vendor who completes factory work items and submits handover documents for audit review.</div>
+      </div>
+    </div>
+
+    <div class="person" style="left: 830px; top: -25px; width: 240px;">
+      <div class="head"></div>
+      <div class="body-icon"></div>
+      <div class="box">
+        <div class="name">Customer / Reviewer</div>
+        <div class="type">[Person]</div>
+        <div class="desc">A factory project manager who reviews AI audit results and makes final decisions on document acceptance.</div>
+      </div>
+    </div>
+
+    <!-- SYSTEM BOUNDARY -->
+    <!-- Lowered from 190 to 220 so it completely clears the person descriptions -->
+    <div class="boundary" style="left: 60px; top: 220px; width: 1230px; height: 960px;">
+      <div class="boundary-label">AI Document Audit System [Software System]</div>
+    </div>
+
+    <!-- CONTAINERS -->
+    <div class="container" id="frontend" style="left: 510px; top: 270px; width: 280px; height: 120px;">
+      <div class="name">Frontend</div>
+      <div class="type">[Container: JavaScript, React]</div>
+      <div class="desc">Single-page application for document upload, audit result viewing, and template management.</div>
+    </div>
+
+    <div class="container" id="backend" style="left: 510px; top: 470px; width: 280px; height: 120px;">
+      <div class="name">Backend Service</div>
+      <div class="type">[Container: Python, FastAPI]</div>
+      <div class="desc">Provides REST API for document management, audit workflows, and user management.</div>
+    </div>
+
+    <div class="container" id="etl" style="left: 210px; top: 720px; width: 280px; height: 120px;">
+      <div class="name">ETL Service</div>
+      <div class="type">[Container: Python, Celery]</div>
+      <div class="desc">Runs as Celery Worker to process documents, extract content, and index for search.</div>
+    </div>
+
+    <div class="container" id="ai" style="left: 810px; top: 720px; width: 280px; height: 120px;">
+      <div class="name">AI Service</div>
+      <div class="type">[Container: Python]</div>
+      <div class="desc">Orchestrates AI-powered document audit using RAG workflow.</div>
+    </div>
+
+    <!-- DATA STORES -->
+    <div class="datastore" id="blob" style="left: 100px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Document Storage</div>
+        <div class="type">[Container: Azure Blob Storage]</div>
+        <div class="desc">Stores uploaded handover documents.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="db" style="left: 400px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Database</div>
+        <div class="type">[Container: PostgreSQL]</div>
+        <div class="desc">Stores user data, audit records, audit results, and templates.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="search" style="left: 700px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Search Index</div>
+        <div class="type">[Container: Azure AI Search]</div>
+        <div class="desc">Stores vector embeddings for semantic search.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="redis" style="left: 1050px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Message Broker</div>
+        <div class="type">[Container: Redis]</div>
+        <div class="desc">Message queue for Celery task distribution.</div>
+      </div>
+    </div>
+
+    <!-- EXTERNAL SYSTEMS -->
+    <div class="external" id="entra" style="left: 1330px; top: 470px; width: 260px; height: 120px;">
+      <div class="name">Azure Entra ID</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Provides authentication and identity management for system users.</div>
+    </div>
+
+    <div class="external" id="acu" style="left: 220px; top: 1260px; width: 280px; height: 120px;">
+      <div class="name">Azure Content Understanding</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Analyzes document content to extract text and structural information.</div>
+    </div>
+
+    <div class="external" id="openai" style="left: 820px; top: 1260px; width: 260px; height: 120px;">
+      <div class="name">Azure OpenAI Service</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Provides large language model capabilities for audit result generation.</div>
+    </div>
+
+    <!-- ARROWS (SVG) -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+          <polygon points="0 0, 10 4, 0 8" fill="#555"/>
+        </marker>
+      </defs>
+
+      <!-- 1. Vendor -> Frontend -->
+      <path d="M 350 150 L 350 210 L 580 210 L 580 264" marker-end="url(#arrowhead)"/>
+      <text x="465" y="177" text-anchor="middle">
+        <tspan x="465" dy="0">Submits handover documents and</tspan>
+        <tspan x="465" dy="20">views audit results using [HTTPS]</tspan>
+      </text>
+
+      <!-- 2. Customer -> Frontend -->
+      <path d="M 950 150 L 950 210 L 720 210 L 720 264" marker-end="url(#arrowhead)"/>
+      <text x="835" y="177" text-anchor="middle">
+        <tspan x="835" dy="0">Reviews AI-generated audit results</tspan>
+        <tspan x="835" dy="20">and manages audit templates using [HTTPS]</tspan>
+      </text>
+
+      <!-- 3. Frontend -> Backend -->
+      <path d="M 650 390 L 650 464" marker-end="url(#arrowhead)"/>
+      <text x="660" y="435">Makes API requests to [JSON/HTTPS]</text>
+
+      <!-- 4. Backend -> Azure Entra ID -->
+      <path d="M 790 540 L 1324 540" marker-end="url(#arrowhead)"/>
+      <text x="830" y="532">Authenticates users using [HTTPS]</text>
+
+      <!-- 5. Backend -> Message Broker -->
+      <path d="M 790 490 L 1150 490 L 1150 974" marker-end="url(#arrowhead)"/>
+      <text x="810" y="482">Dispatches tasks &amp; consumes results via Celery [Redis]</text>
+
+      <!-- 6. Backend -> AI Service -->
+      <path d="M 670 590 L 670 650 L 950 650 L 950 714" marker-end="url(#arrowhead)"/>
+      <text x="685" y="642">Triggers audit execution [JSON/HTTPS]</text>
+
+      <!-- 7. Backend -> Database -->
+      <path d="M 610 590 L 610 680 L 500 680 L 500 974" marker-end="url(#arrowhead)"/>
+      <text x="420" y="672">Reads from and writes to [SQL/TCP]</text>
+
+      <!-- 8. Backend -> Document Storage -->
+      <path d="M 510 530 L 150 530 L 150 974" marker-end="url(#arrowhead)"/>
+      <text x="210" y="522">Stores uploaded documents [HTTPS]</text>
+
+      <!-- 9. ETL -> Message Broker (Routed nicely below Data Stores) -->
+      <path d="M 310 840 L 310 1150 L 1280 1150 L 1280 1050 L 1256 1050" marker-end="url(#arrowhead)"/>
+      <text x="600" y="1142">Picks up tasks &amp; sends results via Celery [Redis]</text>
+
+      <!-- 10. ETL -> Document Storage -->
+      <path d="M 280 840 L 280 974" marker-end="url(#arrowhead)"/>
+      <text x="288" y="900">Reads documents from [HTTPS]</text>
+
+      <!-- 11. ETL -> Azure Content Understanding -->
+      <path d="M 370 840 L 370 1254" marker-end="url(#arrowhead)"/>
+      <text x="380" y="1210">Analyzes document content using [HTTPS]</text>
+
+      <!-- 12. ETL -> Search Index (Separated from Path 13) -->
+      <path d="M 490 760 L 770 760 L 770 974" marker-end="url(#arrowhead)"/>
+      <text x="520" y="752">Writes document vectors [HTTPS]</text>
+
+      <!-- 13. AI -> Search Index (Separated from Path 12) -->
+      <path d="M 810 820 L 730 820 L 730 974" marker-end="url(#arrowhead)"/>
+      <text x="735" y="902">Queries relevant documents [HTTPS]</text>
+
+      <!-- 14. AI -> Azure OpenAI -->
+      <path d="M 950 840 L 950 1254" marker-end="url(#arrowhead)"/>
+      <text x="960" y="1210">Generates audit results using [HTTPS]</text>
+
+      <!-- 15. AI -> Backend Service -->
+      <path d="M 880 720 L 880 570 L 796 570" marker-end="url(#arrowhead)"/>
+      <text x="888" y="610">Sends audit results [JSON/HTTPS]</text>
+
+    </svg>
+
+    <!-- TITLE -->
+    <div class="diagram-title">Container Diagram for AI Document Audit System</div>
+
+    <!-- LEGEND (Moved explicitly to absolute coordinates below Azure Entra to avoid any overlap) -->
+    <div class="legend" style="left: 1200px; top: 1260px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch person-sw"></span> Person</div>
+      <div class="legend-item"><span class="legend-swatch container-sw"></span> Container</div>
+      <div class="legend-item"><span class="legend-swatch datastore-sw"></span> Container (data store)</div>
+      <div class="legend-item"><span class="legend-swatch boundary-sw"></span> System boundary</div>
+      <div class="legend-item"><span class="legend-swatch external-sw"></span> External Software System</div>
+      <div class="legend-line"><span class="legend-dash"></span> Relationship (with protocol)</div>
+    </div>
+
+  </div>
+</body>
+</html>
