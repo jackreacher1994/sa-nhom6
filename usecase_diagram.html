@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Case Diagram - AI Document Audit System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+    .diagram {
+      position: relative;
+      min-width: 1400px;
+      min-height: 1150px;
+      background: transparent;
+    }
+
+    /* Actor */
+    .actor {
+      position: absolute;
+      text-align: center;
+      width: 140px;
+    }
+    .actor .stick-figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .actor .stick-head {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2.5px solid #333;
+      background: #fff;
+    }
+    .actor .stick-body {
+      width: 2.5px;
+      height: 30px;
+      background: #333;
+    }
+    .actor .stick-arms {
+      width: 36px;
+      height: 2.5px;
+      background: #333;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+    .actor .stick-legs {
+      position: relative;
+      width: 36px;
+      height: 30px;
+    }
+    .actor .stick-legs::before,
+    .actor .stick-legs::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 2.5px;
+      height: 30px;
+      background: #333;
+      transform-origin: top center;
+    }
+    .actor .stick-legs::before {
+      left: 6px;
+      transform: rotate(-15deg);
+    }
+    .actor .stick-legs::after {
+      right: 6px;
+      transform: rotate(15deg);
+    }
+    .actor .actor-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+      margin-top: 4px;
+    }
+    .actor .actor-type {
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* External system actor */
+    .ext-actor {
+      position: absolute;
+      text-align: center;
+      background: #4f5256;
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      line-height: 1.3;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .ext-actor .name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .ext-actor .type { font-size: 11px; opacity: 0.85; }
+
+    /* System boundary */
+    .boundary {
+      position: absolute;
+      border: 2.5px solid #115594;
+      border-radius: 12px;
+      background: rgba(17, 85, 148, 0.02);
+    }
+    .boundary-label {
+      position: absolute;
+      top: -14px; left: 24px;
+      background: #fdfdfd;
+      padding: 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #115594;
+    }
+
+    /* Use case (ellipse) */
+    .usecase {
+      position: absolute;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+    }
+    .usecase .uc-ellipse {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border: 2px solid #115594;
+      border-radius: 50%;
+      background: #e8f0fa;
+    }
+    .usecase .uc-text {
+      position: relative;
+      z-index: 1;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1a1a1a;
+      line-height: 1.3;
+    }
+
+    /* Legend */
+    .legend {
+      position: absolute;
+      border: 1px solid #777;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 2;
+      background: #fff;
+      width: 280px;
+    }
+    .legend-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin: 3px 0; }
+    .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
+    .legend-swatch.actor-sw { border: 2px solid #333; background: #fff; }
+    .legend-swatch.uc-sw { border: 2px solid #115594; background: #e8f0fa; border-radius: 50%; }
+    .legend-swatch.ext-sw { background: #4f5256; }
+    .legend-swatch.boundary-sw { border: 2.5px solid #115594; background: transparent; }
+    .legend-line { display: flex; align-items: center; gap: 10px; margin: 3px 0; }
+    .legend-solid { width: 24px; height: 0; border-top: 2px solid #333; }
+    .legend-dashed { width: 24px; height: 0; border-top: 2px dashed #666; }
+
+    /* Title */
+    .diagram-title {
+      position: absolute;
+      top: 1080px; left: 60px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #000;
+    }
+
+    /* SVG */
+    svg.arrows {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 50;
+    }
+    svg.arrows line {
+      fill: none;
+      stroke: #333;
+      stroke-width: 1.5;
+    }
+    svg.arrows .assoc {
+      stroke: #333;
+      stroke-width: 1.5;
+      stroke-dasharray: none;
+    }
+    svg.arrows .include-line,
+    svg.arrows .extend-line {
+      stroke: #666;
+      stroke-width: 1.3;
+      stroke-dasharray: 6 4;
+    }
+    svg.arrows text {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11px;
+      fill: #444;
+      text-anchor: middle;
+    }
+    svg.arrows text.stereotype {
+      font-size: 11px;
+      font-style: italic;
+      fill: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <!-- SYSTEM BOUNDARY -->
+    <div class="boundary" style="left: 260px; top: 40px; width: 820px; height: 980px;">
+      <div class="boundary-label">AI Document Audit System</div>
+    </div>
+
+    <!-- ACTORS (Left) - Vendor/Contractor -->
+    <div class="actor" style="left: 50px; top: 200px;">
+      <div class="stick-figure">
+        <div class="stick-head"></div>
+        <div class="stick-body"></div>
+        <div class="stick-arms"></div>
+        <div class="stick-legs"></div>
+      </div>
+      <div class="actor-name">Vendor /<br>Contractor</div>
+      <div class="actor-type">[Person]</div>
+    </div>
+
+    <!-- ACTORS (Right) - Customer/Reviewer -->
+    <div class="actor" style="left: 1200px; top: 200px;">
+      <div class="stick-figure">
+        <div class="stick-head"></div>
+        <div class="stick-body"></div>
+        <div class="stick-arms"></div>
+        <div class="stick-legs"></div>
+      </div>
+      <div class="actor-name">Customer /<br>Reviewer</div>
+      <div class="actor-type">[Person]</div>
+    </div>
+
+
+    <!-- USE CASES -->
+
+    <!-- UC1: Submit Handover Documents -->
+    <div class="usecase" id="uc1" style="left: 320px; top: 80px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Submit Handover<br>Documents</div>
+    </div>
+
+    <!-- UC2: View Audit Results -->
+    <div class="usecase" id="uc2" style="left: 320px; top: 180px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">View Audit Results</div>
+    </div>
+
+    <!-- UC3: Query Documents (Natural Language) -->
+    <div class="usecase" id="uc3" style="left: 320px; top: 290px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Query Documents<br>(Natural Language)</div>
+    </div>
+
+    <!-- UC4: View Document Summaries -->
+    <div class="usecase" id="uc4" style="left: 320px; top: 400px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">View Document<br>Summaries</div>
+    </div>
+
+    <!-- UC5: Review AI Audit Results -->
+    <div class="usecase" id="uc5" style="left: 790px; top: 80px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Review AI<br>Audit Results</div>
+    </div>
+
+    <!-- UC6: Accept/Reject Documents -->
+    <div class="usecase" id="uc6" style="left: 790px; top: 180px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Accept / Reject<br>Documents</div>
+    </div>
+
+    <!-- UC7: Manage Audit Templates -->
+    <div class="usecase" id="uc7" style="left: 790px; top: 290px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Manage Audit<br>Templates</div>
+    </div>
+
+    <!-- UC8: Identify Subject Matter Experts -->
+    <div class="usecase" id="uc8" style="left: 790px; top: 400px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Identify Subject<br>Matter Experts</div>
+    </div>
+
+    <!-- UC9: Authenticate User -->
+    <div class="usecase" id="uc9" style="left: 370px; top: 880px; width: 200px; height: 65px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Authenticate User</div>
+    </div>
+
+    <!-- UC10: Process & Extract Document Content -->
+    <div class="usecase" id="uc10" style="left: 340px; top: 640px; width: 240px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Process & Extract<br>Document Content</div>
+    </div>
+
+    <!-- UC11: Generate AI Audit Results -->
+    <div class="usecase" id="uc11" style="left: 750px; top: 640px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Generate AI<br>Audit Results</div>
+    </div>
+
+    <!-- UC12: Index Documents for Search -->
+    <div class="usecase" id="uc12" style="left: 530px; top: 770px; width: 220px; height: 65px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Index Documents<br>for Search</div>
+    </div>
+
+    <!-- UC13: Manage Role-Based Access -->
+    <div class="usecase" id="uc13" style="left: 640px; top: 880px; width: 220px; height: 65px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Manage Role-Based<br>Access Control</div>
+    </div>
+
+    <!-- UC14: Learn from User Interactions -->
+    <div class="usecase" id="uc14" style="left: 550px; top: 520px; width: 220px; height: 65px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Learn from User<br>Interactions</div>
+    </div>
+
+    <!-- SVG CONNECTIONS -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#666"/>
+        </marker>
+        <marker id="arrowhead-open" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polyline points="0 0, 8 3, 0 6" fill="none" stroke="#666" stroke-width="1.2"/>
+        </marker>
+      </defs>
+
+      <!-- ACTOR ASSOCIATIONS (solid lines) -->
+
+      <!-- Vendor -> UC1 (Submit Handover Documents) -->
+      <line class="assoc" x1="170" y1="240" x2="320" y2="115"/>
+      <!-- Vendor -> UC2 (View Audit Results) -->
+      <line class="assoc" x1="170" y1="255" x2="320" y2="215"/>
+      <!-- Vendor -> UC3 (Query Documents) -->
+      <line class="assoc" x1="170" y1="270" x2="320" y2="325"/>
+      <!-- Vendor -> UC4 (View Document Summaries) -->
+      <line class="assoc" x1="170" y1="285" x2="320" y2="435"/>
+
+      <!-- Customer -> UC5 (Review AI Audit Results) -->
+      <line class="assoc" x1="1220" y1="240" x2="1010" y2="115"/>
+      <!-- Customer -> UC6 (Accept/Reject Documents) -->
+      <line class="assoc" x1="1220" y1="255" x2="1010" y2="215"/>
+      <!-- Customer -> UC7 (Manage Audit Templates) -->
+      <line class="assoc" x1="1220" y1="270" x2="1010" y2="325"/>
+      <!-- Customer -> UC8 (Identify SME) -->
+      <line class="assoc" x1="1220" y1="285" x2="1010" y2="435"/>
+      <!-- Customer -> UC3 (Query Documents - shared) -->
+      <line class="assoc" x1="1220" y1="300" x2="540" y2="325"/>
+
+
+      <!-- INCLUDE RELATIONSHIPS (dashed with arrow) -->
+
+      <!-- UC1 (Submit) --include--> UC9 (Authenticate) -->
+      <line class="include-line" x1="400" y1="150" x2="440" y2="880" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="380" y="520">&laquo;include&raquo;</text>
+
+      <!-- UC1 (Submit) --include--> UC10 (Process & Extract) -->
+      <line class="include-line" x1="450" y1="150" x2="460" y2="640" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="490" y="400">&laquo;include&raquo;</text>
+
+      <!-- UC10 (Process) --include--> UC12 (Index for Search) -->
+      <line class="include-line" x1="520" y1="710" x2="600" y2="770" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="530" y="755">&laquo;include&raquo;</text>
+
+      <!-- UC5 (Review) --include--> UC9 (Authenticate) -->
+      <line class="include-line" x1="870" y1="150" x2="540" y2="895" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="750" y="520">&laquo;include&raquo;</text>
+
+      <!-- EXTEND RELATIONSHIPS -->
+
+      <!-- UC11 (Generate AI Results) --extend--> UC5 (Review AI Results) -->
+      <line class="extend-line" x1="880" y1="640" x2="890" y2="150" marker-end="url(#arrowhead-open)"/>
+      <text class="stereotype" x="920" y="400">&laquo;extend&raquo;</text>
+
+      <!-- UC14 (Learn) --extend--> UC3 (Query Documents) -->
+      <line class="extend-line" x1="600" y1="520" x2="480" y2="360" marker-end="url(#arrowhead-open)"/>
+      <text class="stereotype" x="510" y="455">&laquo;extend&raquo;</text>
+
+      <!-- UC13 (RBAC) --include from UC9 -->
+      <line class="include-line" x1="570" y1="912" x2="640" y2="912" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="605" y="902">&laquo;include&raquo;</text>
+
+    </svg>
+
+    <!-- TITLE -->
+    <div class="diagram-title">Use Case Diagram for AI Document Audit System</div>
+
+    <!-- LEGEND -->
+    <div class="legend" style="left: 1120px; top: 530px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch actor-sw"></span> Actor (Person)</div>
+      <div class="legend-item"><span class="legend-swatch uc-sw"></span> Use Case</div>
+      <div class="legend-item"><span class="legend-swatch boundary-sw"></span> System Boundary</div>
+      <div class="legend-line"><span class="legend-solid"></span> Association</div>
+      <div class="legend-line"><span class="legend-dashed"></span> &laquo;include&raquo; / &laquo;extend&raquo;</div>
+    </div>
+
+  </div>
+</body>
+</html>
