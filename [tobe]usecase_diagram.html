@@ -16,7 +16,7 @@
     .diagram {
       position: relative;
       min-width: 1400px;
-      min-height: 1150px;
+      min-height: 1100px;
       background: transparent;
     }
 
@@ -85,20 +85,6 @@
       color: #666;
     }
 
-    /* External system actor */
-    .ext-actor {
-      position: absolute;
-      text-align: center;
-      background: #4f5256;
-      color: #fff;
-      border-radius: 8px;
-      padding: 12px 16px;
-      line-height: 1.3;
-      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
-    }
-    .ext-actor .name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-    .ext-actor .type { font-size: 11px; opacity: 0.85; }
-
     /* System boundary */
     .boundary {
       position: absolute;
@@ -132,6 +118,10 @@
       border-radius: 50%;
       background: #e8f0fa;
     }
+    .usecase.ai-uc .uc-ellipse {
+      border: 2px solid #8b5e3c;
+      background: #fdf6ef;
+    }
     .usecase .uc-text {
       position: relative;
       z-index: 1;
@@ -156,7 +146,7 @@
     .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
     .legend-swatch.actor-sw { border: 2px solid #333; background: #fff; }
     .legend-swatch.uc-sw { border: 2px solid #115594; background: #e8f0fa; border-radius: 50%; }
-    .legend-swatch.ext-sw { background: #4f5256; }
+    .legend-swatch.ai-sw { border: 2px solid #8b5e3c; background: #fdf6ef; border-radius: 50%; }
     .legend-swatch.boundary-sw { border: 2.5px solid #115594; background: transparent; }
     .legend-line { display: flex; align-items: center; gap: 10px; margin: 3px 0; }
     .legend-solid { width: 24px; height: 0; border-top: 2px solid #333; }
@@ -165,7 +155,7 @@
     /* Title */
     .diagram-title {
       position: absolute;
-      top: 1080px; left: 60px;
+      top: 1030px; left: 60px;
       font-size: 24px;
       font-weight: 400;
       color: #000;
@@ -213,12 +203,12 @@
   <div class="diagram">
 
     <!-- SYSTEM BOUNDARY -->
-    <div class="boundary" style="left: 260px; top: 40px; width: 820px; height: 980px;">
+    <div class="boundary" style="left: 260px; top: 40px; width: 820px; height: 950px;">
       <div class="boundary-label">AI Document Audit System</div>
     </div>
 
     <!-- ACTORS (Left) - Vendor/Contractor -->
-    <div class="actor" style="left: 50px; top: 200px;">
+    <div class="actor" style="left: 50px; top: 250px;">
       <div class="stick-figure">
         <div class="stick-head"></div>
         <div class="stick-body"></div>
@@ -230,7 +220,7 @@
     </div>
 
     <!-- ACTORS (Right) - Customer/Reviewer -->
-    <div class="actor" style="left: 1200px; top: 200px;">
+    <div class="actor" style="left: 1200px; top: 250px;">
       <div class="stick-figure">
         <div class="stick-head"></div>
         <div class="stick-body"></div>
@@ -241,89 +231,87 @@
       <div class="actor-type">[Person]</div>
     </div>
 
-
     <!-- USE CASES -->
 
-    <!-- UC1: Submit Handover Documents -->
+    <!-- UC1: Submit Handover Documents (Vendor) -->
     <div class="usecase" id="uc1" style="left: 320px; top: 80px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Submit Handover<br>Documents</div>
     </div>
 
-    <!-- UC2: View Audit Results -->
-    <div class="usecase" id="uc2" style="left: 320px; top: 180px; width: 220px; height: 70px;">
+    <!-- UC2: View Audit Results (Both) -->
+    <div class="usecase" id="uc2" style="left: 550px; top: 170px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">View Audit Results</div>
     </div>
 
-    <!-- UC3: Query Documents (Natural Language) -->
-    <div class="usecase" id="uc3" style="left: 320px; top: 290px; width: 220px; height: 70px;">
+    <!-- UC3: Query Documents - NL (Both) -->
+    <div class="usecase" id="uc3" style="left: 550px; top: 280px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Query Documents<br>(Natural Language)</div>
     </div>
 
-    <!-- UC4: View Document Summaries -->
-    <div class="usecase" id="uc4" style="left: 320px; top: 400px; width: 220px; height: 70px;">
+    <!-- UC4: View Document Summaries (Vendor) -->
+    <div class="usecase" id="uc4" style="left: 320px; top: 370px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">View Document<br>Summaries</div>
     </div>
 
-    <!-- UC5: Review AI Audit Results -->
+    <!-- UC5: Manage Audit Templates (Customer) -->
     <div class="usecase" id="uc5" style="left: 790px; top: 80px; width: 220px; height: 70px;">
-      <div class="uc-ellipse"></div>
-      <div class="uc-text">Review AI<br>Audit Results</div>
-    </div>
-
-    <!-- UC6: Accept/Reject Documents -->
-    <div class="usecase" id="uc6" style="left: 790px; top: 180px; width: 220px; height: 70px;">
-      <div class="uc-ellipse"></div>
-      <div class="uc-text">Accept / Reject<br>Documents</div>
-    </div>
-
-    <!-- UC7: Manage Audit Templates -->
-    <div class="usecase" id="uc7" style="left: 790px; top: 290px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Manage Audit<br>Templates</div>
     </div>
 
-    <!-- UC8: Identify Subject Matter Experts -->
-    <div class="usecase" id="uc8" style="left: 790px; top: 400px; width: 220px; height: 70px;">
+    <!-- UC6: Identify Subject Matter Experts (Customer) -->
+    <div class="usecase" id="uc6" style="left: 790px; top: 370px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Identify Subject<br>Matter Experts</div>
     </div>
 
-    <!-- UC9: Authenticate User -->
-    <div class="usecase" id="uc9" style="left: 370px; top: 880px; width: 200px; height: 65px;">
+    <!-- UC7: Add Source (Vendor) -->
+    <div class="usecase" id="uc7" style="left: 320px; top: 470px; width: 220px; height: 70px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Add Source<br>(SharePoint, Confluence,<br>Servers, DB)</div>
+    </div>
+
+    <!-- UC8: Authenticate User (Both - prerequisite) -->
+    <div class="usecase" id="uc8" style="left: 450px; top: 850px; width: 200px; height: 65px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Authenticate User</div>
     </div>
 
-    <!-- UC10: Process & Extract Document Content -->
-    <div class="usecase" id="uc10" style="left: 340px; top: 640px; width: 240px; height: 70px;">
+    <!-- UC14: Role-Based Access Control -->
+    <div class="usecase" id="uc14" style="left: 720px; top: 850px; width: 220px; height: 65px;">
       <div class="uc-ellipse"></div>
-      <div class="uc-text">Process & Extract<br>Document Content</div>
+      <div class="uc-text">Role-Based<br>Access Control</div>
     </div>
 
-    <!-- UC11: Generate AI Audit Results -->
-    <div class="usecase" id="uc11" style="left: 750px; top: 640px; width: 220px; height: 70px;">
+    <!-- AI-driven Use Cases -->
+
+    <!-- UC9: Generate AI Audit Results (AI) -->
+    <div class="usecase ai-uc" id="uc9" style="left: 340px; top: 590px; width: 220px; height: 70px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Generate AI<br>Audit Results</div>
     </div>
 
-    <!-- UC12: Index Documents for Search -->
-    <div class="usecase" id="uc12" style="left: 530px; top: 770px; width: 220px; height: 65px;">
+
+    <!-- System Use Cases -->
+
+    <!-- UC11: Process & Extract Document Content (AI) -->
+    <div class="usecase ai-uc" id="uc11" style="left: 310px; top: 740px; width: 240px; height: 65px;">
+      <div class="uc-ellipse"></div>
+      <div class="uc-text">Process & Extract<br>Document Content</div>
+    </div>
+
+    <!-- UC12: Index Documents for Search (AI) -->
+    <div class="usecase ai-uc" id="uc12" style="left: 700px; top: 740px; width: 220px; height: 65px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Index Documents<br>for Search</div>
     </div>
 
-    <!-- UC13: Manage Role-Based Access -->
-    <div class="usecase" id="uc13" style="left: 640px; top: 880px; width: 220px; height: 65px;">
-      <div class="uc-ellipse"></div>
-      <div class="uc-text">Manage Role-Based<br>Access Control</div>
-    </div>
-
-    <!-- UC14: Learn from User Interactions -->
-    <div class="usecase" id="uc14" style="left: 550px; top: 520px; width: 220px; height: 65px;">
+    <!-- UC13: Learn from User Interactions -->
+    <div class="usecase" id="uc13" style="left: 550px; top: 470px; width: 220px; height: 65px;">
       <div class="uc-ellipse"></div>
       <div class="uc-text">Learn from User<br>Interactions</div>
     </div>
@@ -342,57 +330,54 @@
       <!-- ACTOR ASSOCIATIONS (solid lines) -->
 
       <!-- Vendor -> UC1 (Submit Handover Documents) -->
-      <line class="assoc" x1="170" y1="240" x2="320" y2="115"/>
+      <line class="assoc" x1="170" y1="280" x2="320" y2="115"/>
       <!-- Vendor -> UC2 (View Audit Results) -->
-      <line class="assoc" x1="170" y1="255" x2="320" y2="215"/>
+      <line class="assoc" x1="170" y1="295" x2="550" y2="205"/>
       <!-- Vendor -> UC3 (Query Documents) -->
-      <line class="assoc" x1="170" y1="270" x2="320" y2="325"/>
+      <line class="assoc" x1="170" y1="310" x2="550" y2="315"/>
       <!-- Vendor -> UC4 (View Document Summaries) -->
-      <line class="assoc" x1="170" y1="285" x2="320" y2="435"/>
+      <line class="assoc" x1="170" y1="325" x2="320" y2="405"/>
 
-      <!-- Customer -> UC5 (Review AI Audit Results) -->
-      <line class="assoc" x1="1220" y1="240" x2="1010" y2="115"/>
-      <!-- Customer -> UC6 (Accept/Reject Documents) -->
-      <line class="assoc" x1="1220" y1="255" x2="1010" y2="215"/>
-      <!-- Customer -> UC7 (Manage Audit Templates) -->
-      <line class="assoc" x1="1220" y1="270" x2="1010" y2="325"/>
-      <!-- Customer -> UC8 (Identify SME) -->
-      <line class="assoc" x1="1220" y1="285" x2="1010" y2="435"/>
-      <!-- Customer -> UC3 (Query Documents - shared) -->
-      <line class="assoc" x1="1220" y1="300" x2="540" y2="325"/>
+      <!-- Customer -> UC2 (View Audit Results) -->
+      <line class="assoc" x1="1220" y1="280" x2="770" y2="205"/>
+      <!-- Customer -> UC3 (Query Documents) -->
+      <line class="assoc" x1="1220" y1="295" x2="770" y2="315"/>
+      <!-- Customer -> UC5 (Manage Audit Templates) -->
+      <line class="assoc" x1="1220" y1="270" x2="1010" y2="115"/>
+      <!-- Customer -> UC6 (Identify SME) -->
+      <line class="assoc" x1="1220" y1="325" x2="1010" y2="405"/>
+      <!-- Vendor -> UC7 (Add Source) -->
+      <line class="assoc" x1="170" y1="340" x2="320" y2="505"/>
 
+      <!-- Vendor -> UC8 (Authenticate) -->
+      <line class="assoc" x1="140" y1="390" x2="450" y2="880"/>
+      <!-- Customer -> UC8 (Authenticate) -->
+      <line class="assoc" x1="1250" y1="390" x2="650" y2="880"/>
 
       <!-- INCLUDE RELATIONSHIPS (dashed with arrow) -->
 
-      <!-- UC1 (Submit) --include--> UC9 (Authenticate) -->
-      <line class="include-line" x1="400" y1="150" x2="440" y2="880" marker-end="url(#arrowhead)"/>
-      <text class="stereotype" x="380" y="520">&laquo;include&raquo;</text>
+      <!-- UC1 (Submit) --include--> UC11 (Process & Extract) -->
+      <line class="include-line" x1="430" y1="150" x2="430" y2="740" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="395" y="450">&laquo;include&raquo;</text>
 
-      <!-- UC1 (Submit) --include--> UC10 (Process & Extract) -->
-      <line class="include-line" x1="450" y1="150" x2="460" y2="640" marker-end="url(#arrowhead)"/>
-      <text class="stereotype" x="490" y="400">&laquo;include&raquo;</text>
+      <!-- UC1 (Submit) --include--> UC9 (Generate AI Results) -->
+      <line class="include-line" x1="470" y1="150" x2="460" y2="590" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="500" y="380">&laquo;include&raquo;</text>
 
-      <!-- UC10 (Process) --include--> UC12 (Index for Search) -->
-      <line class="include-line" x1="520" y1="710" x2="600" y2="770" marker-end="url(#arrowhead)"/>
-      <text class="stereotype" x="530" y="755">&laquo;include&raquo;</text>
 
-      <!-- UC5 (Review) --include--> UC9 (Authenticate) -->
-      <line class="include-line" x1="870" y1="150" x2="540" y2="895" marker-end="url(#arrowhead)"/>
-      <text class="stereotype" x="750" y="520">&laquo;include&raquo;</text>
+      <!-- UC11 (Process) --include--> UC12 (Index for Search) -->
+      <line class="include-line" x1="550" y1="772" x2="700" y2="772" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="625" y="762">&laquo;include&raquo;</text>
+
+      <!-- UC8 (Authenticate) --include--> UC14 (RBAC) -->
+      <line class="include-line" x1="650" y1="882" x2="720" y2="882" marker-end="url(#arrowhead)"/>
+      <text class="stereotype" x="685" y="872">&laquo;include&raquo;</text>
 
       <!-- EXTEND RELATIONSHIPS -->
 
-      <!-- UC11 (Generate AI Results) --extend--> UC5 (Review AI Results) -->
-      <line class="extend-line" x1="880" y1="640" x2="890" y2="150" marker-end="url(#arrowhead-open)"/>
-      <text class="stereotype" x="920" y="400">&laquo;extend&raquo;</text>
-
-      <!-- UC14 (Learn) --extend--> UC3 (Query Documents) -->
-      <line class="extend-line" x1="600" y1="520" x2="480" y2="360" marker-end="url(#arrowhead-open)"/>
-      <text class="stereotype" x="510" y="455">&laquo;extend&raquo;</text>
-
-      <!-- UC13 (RBAC) --include from UC9 -->
-      <line class="include-line" x1="570" y1="912" x2="640" y2="912" marker-end="url(#arrowhead)"/>
-      <text class="stereotype" x="605" y="902">&laquo;include&raquo;</text>
+      <!-- UC13 (Learn) --extend--> UC3 (Query Documents) -->
+      <line class="extend-line" x1="660" y1="470" x2="660" y2="350" marker-end="url(#arrowhead-open)"/>
+      <text class="stereotype" x="700" y="415">&laquo;extend&raquo;</text>
 
     </svg>
 
@@ -400,10 +385,11 @@
     <div class="diagram-title">Use Case Diagram for AI Document Audit System</div>
 
     <!-- LEGEND -->
-    <div class="legend" style="left: 1120px; top: 530px;">
+    <div class="legend" style="left: 1120px; top: 570px;">
       <div class="legend-title">Legend</div>
       <div class="legend-item"><span class="legend-swatch actor-sw"></span> Actor (Person)</div>
       <div class="legend-item"><span class="legend-swatch uc-sw"></span> Use Case</div>
+      <div class="legend-item"><span class="legend-swatch ai-sw"></span> AI-driven Use Case</div>
       <div class="legend-item"><span class="legend-swatch boundary-sw"></span> System Boundary</div>
       <div class="legend-line"><span class="legend-solid"></span> Association</div>
       <div class="legend-line"><span class="legend-dashed"></span> &laquo;include&raquo; / &laquo;extend&raquo;</div>
