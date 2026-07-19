@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Container Diagram v2 - AI Document Audit & Knowledge Assistant System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+    .diagram {
+      position: relative;
+      min-width: 2250px;
+      min-height: 1950px;
+      background: transparent;
+    }
+
+    /* Person */
+    .person {
+      position: absolute;
+      text-align: center;
+    }
+    .person .body-icon { display: none; }
+    .person .box {
+      background: #3a8342;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      padding-top: 24px;
+      font-size: 14px;
+      line-height: 1.3;
+      height: auto;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .person .box .name { font-size: 19px; font-weight: 700; margin-bottom: 2px; }
+    .person .box .type { font-size: 14px; font-weight: normal; margin-bottom: 12px; opacity: 1; }
+    .person .box .desc { font-size: 15px; opacity: 1; }
+
+    /* System boundary */
+    .boundary {
+      position: absolute;
+      border: 3px dashed #115594;
+      border-radius: 12px;
+    }
+    .boundary-label {
+      position: absolute;
+      top: -16px; left: 24px;
+      background: #fdfdfd;
+      padding: 0 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #115594;
+    }
+
+    /* Container (app) */
+    .container {
+      position: absolute;
+      background: #115594;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .container .name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+    .container .type { font-size: 12px; font-weight: normal; margin-bottom: 8px; opacity: 1; }
+    .container .desc { font-size: 13px; opacity: 1; }
+    .container.new { outline: 3px solid #e0a300; outline-offset: 3px; }
+
+    /* Container (data store) */
+    .datastore {
+      position: absolute;
+      text-align: center;
+      color: #fff;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      border-radius: 8px;
+    }
+    .datastore .cylinder {
+      background: #115594;
+      border-radius: 8px;
+      padding: 14px 14px;
+      padding-top: 28px;
+      position: relative;
+      line-height: 1.25;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .datastore .cylinder::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: 0; right: 0;
+      height: 22px;
+      background: #115594;
+      border-radius: 50%;
+      border-bottom: 2px solid rgba(255,255,255,0.4);
+    }
+    .datastore .cylinder::after {
+      content: '';
+      position: absolute;
+      top: 1px; left: 0; right: 0;
+      height: 22px;
+      background: #1664ab;
+      border-radius: 50%;
+    }
+    .datastore .name { font-size: 15px; font-weight: 700; position: relative; z-index: 1; margin-bottom: 2px; }
+    .datastore .type { font-size: 11px; font-weight: normal; position: relative; z-index: 1; margin-bottom: 8px; opacity: 1; }
+    .datastore .desc { font-size: 12px; opacity: 1; position: relative; z-index: 1; }
+    .datastore.new .cylinder { outline: 3px solid #e0a300; outline-offset: 3px; }
+
+    /* External system */
+    .external {
+      position: absolute;
+      background: #4f5256;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+    }
+    .external .name { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .external .type { font-size: 12px; font-weight: normal; margin-bottom: 8px; opacity: 1; }
+    .external .desc { font-size: 13px; opacity: 1; }
+    .external.new { outline: 3px solid #e0a300; outline-offset: 3px; }
+
+    /* Legend */
+    .legend {
+      position: absolute;
+      border: 1px solid #777;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 2.1;
+      background: #fff;
+      width: 360px;
+    }
+    .legend-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
+    .legend-swatch.person-sw { background: #3a8342; }
+    .legend-swatch.container-sw { background: #115594; }
+    .legend-swatch.datastore-sw { background: #115594; border-radius: 50% / 40%; }
+    .legend-swatch.external-sw { background: #4f5256; }
+    .legend-swatch.boundary-sw { border: 3px dashed #115594; background: transparent; }
+    .legend-swatch.new-sw { background: #fff; outline: 3px solid #e0a300; outline-offset: -3px; }
+
+    .legend-line { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-dash { width: 24px; height: 0; border-top: 2px dashed #444; position: relative; }
+    .legend-dash::after {
+      content: ''; position: absolute; right: -4px; top: -4px;
+      border-left: 6px solid #444; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+    }
+
+    /* Title */
+    .diagram-title {
+      position: absolute;
+      top: 1650px; left: 60px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #000;
+      max-width: 900px;
+    }
+    .diagram-subtitle {
+      position: absolute;
+      top: 1690px; left: 60px;
+      font-size: 14px;
+      color: #444;
+      max-width: 900px;
+    }
+
+    /* SVG arrows */
+    svg.arrows {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 50;
+    }
+    svg.arrows path, svg.arrows line {
+      fill: none;
+      stroke: #555;
+      stroke-width: 1.5;
+      stroke-dasharray: 8 6;
+    }
+    svg.arrows text {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      fill: #111;
+      text-shadow:
+        -2px -2px 0 #fff, 2px -2px 0 #fff,
+        -2px 2px 0 #fff, 2px 2px 0 #fff,
+        -3px 0 0 #fff, 3px 0 0 #fff,
+        0 -3px 0 #fff, 0 3px 0 #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <!-- PERSONS (unchanged from v1) -->
+    <div class="person" style="left: 300px; top: -25px; width: 240px;">
+      <div class="box">
+        <div class="name">Vendor / Contractor</div>
+        <div class="type">[Person]</div>
+        <div class="desc">Completes factory work items, submits handover documents, and asks natural-language questions.</div>
+      </div>
+    </div>
+
+    <div class="person" style="left: 1300px; top: -25px; width: 240px;">
+      <div class="box">
+        <div class="name">Customer / Reviewer</div>
+        <div class="type">[Person]</div>
+        <div class="desc">Reviews AI audit results, queries knowledge, and manages audit templates.</div>
+      </div>
+    </div>
+
+    <!-- SYSTEM BOUNDARY -->
+    <div class="boundary" style="left: 60px; top: 220px; width: 1780px; height: 1120px;">
+      <div class="boundary-label">AI Document Audit &amp; Knowledge Assistant System [Software System]</div>
+    </div>
+
+    <!-- CONTAINERS -->
+    <div class="container" id="frontend" style="left: 810px; top: 270px; width: 280px; height: 120px;">
+      <div class="name">Frontend</div>
+      <div class="type">[Container: JavaScript, React]</div>
+      <div class="desc">Conversational + audit UI: document upload, audit results, NL query, and template management.</div>
+    </div>
+
+    <div class="container" id="backend" style="left: 810px; top: 470px; width: 280px; height: 120px;">
+      <div class="name">Backend Service</div>
+      <div class="type">[Container: Python, FastAPI]</div>
+      <div class="desc">REST API. Checks Entra ID role for each action: upload (Vendor/Contractor), review (Customer/Reviewer), view/query knowledge (any authenticated employee). No content-scope mapping.</div>
+    </div>
+
+    <div class="container new" id="connector" style="left: 150px; top: 720px; width: 280px; height: 120px;">
+      <div class="name">Connector Layer</div>
+      <div class="type">[Container: Python, Celery] (evolved from ETL Service)</div>
+      <div class="desc">Per-source connectors ingest content from SharePoint, Confluence, file servers, and databases, tagging it by source system.</div>
+    </div>
+
+    <div class="container" id="ai" style="left: 810px; top: 720px; width: 280px; height: 120px;">
+      <div class="name">AI Service</div>
+      <div class="type">[Container: Python]</div>
+      <div class="desc">Routes intent (search / summarize / process-guidance / expert-lookup) and runs RAG over the unified index.</div>
+    </div>
+
+    <div class="container new" id="expert" style="left: 1470px; top: 720px; width: 280px; height: 120px;">
+      <div class="name">Expert Directory Service</div>
+      <div class="type">[Container: Python]</div>
+      <div class="desc">Resolves subject-matter experts from document authorship metadata and org/HR profiles.</div>
+    </div>
+
+    <!-- DATA STORES: existing -->
+    <div class="datastore" id="blob" style="left: 110px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Document Storage</div>
+        <div class="type">[Azure Blob Storage]</div>
+        <div class="desc">Stores uploaded handover documents and crawled files.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="db" style="left: 400px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Database</div>
+        <div class="type">[PostgreSQL]</div>
+        <div class="desc">Stores user data, audit records, results, and templates.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="search" style="left: 690px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Search Index</div>
+        <div class="type">[Azure AI Search]</div>
+        <div class="desc">Unified vector index: audit docs + multi-source knowledge + process content, tagged by source system.</div>
+      </div>
+    </div>
+
+    <div class="datastore" id="redis" style="left: 980px; top: 980px; width: 200px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Message Broker</div>
+        <div class="type">[Redis]</div>
+        <div class="desc">Message queue for Celery task distribution.</div>
+      </div>
+    </div>
+
+    <!-- DATA STORES: new -->
+    <div class="datastore new" id="feedback" style="left: 680px; top: 1160px; width: 230px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Feedback &amp; Learning Store</div>
+        <div class="type">[PostgreSQL]</div>
+        <div class="desc">Reviewer corrections queued for curator flag-and-review; approved ranking/prompt config is read by AI Service.</div>
+      </div>
+    </div>
+
+    <div class="datastore new" id="governance" style="left: 1080px; top: 1160px; width: 230px; height: 140px;">
+      <div class="cylinder">
+        <div class="name">Governance &amp; Audit Log</div>
+        <div class="type">[PostgreSQL]</div>
+        <div class="desc">Logs every Q&amp;A/audit interaction with sources surfaced and permission context applied.</div>
+      </div>
+    </div>
+
+    <!-- EXTERNAL SYSTEMS: identity / retained -->
+    <div class="external" id="entra" style="left: 1880px; top: 490px; width: 260px; height: 120px;">
+      <div class="name">Azure Entra ID</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Authentication and role/department identity for system users.</div>
+    </div>
+
+    <!-- EXTERNAL SYSTEMS: bottom row (content sources merged, AI/identity right) -->
+    <div class="external new" id="contentsources" style="left: 60px; top: 1440px; width: 1050px; height: 130px;">
+      <div class="name">Enterprise Content Sources</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">SharePoint, Confluence, file servers, and internal databases &mdash; corporate knowledge and structured data.</div>
+    </div>
+
+    <div class="external" id="acu" style="left: 1140px; top: 1440px; width: 240px; height: 130px;">
+      <div class="name">Azure Content Understanding</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Analyzes document content to extract text and structure.</div>
+    </div>
+
+    <div class="external" id="openai" style="left: 1410px; top: 1440px; width: 240px; height: 130px;">
+      <div class="name">Azure OpenAI Service</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">LLM capabilities for answers, summaries, and audit results.</div>
+    </div>
+
+    <div class="external new" id="hrdir" style="left: 1680px; top: 1440px; width: 240px; height: 130px;">
+      <div class="name">HR / Org Directory</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Employee profiles for expert identification.</div>
+    </div>
+
+    <!-- ARROWS (SVG) -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+          <polygon points="0 0, 10 4, 0 8" fill="#555"/>
+        </marker>
+      </defs>
+
+      <!-- 1. Vendor -> Frontend -->
+      <path d="M 420 150 L 420 230 L 950 230 L 950 264" marker-end="url(#arrowhead)"/>
+      <text x="500" y="220"><tspan x="500" dy="0">Submits documents and asks</tspan><tspan x="500" dy="18">natural-language questions [HTTPS]</tspan></text>
+
+      <!-- 2. Customer -> Frontend -->
+      <path d="M 1420 150 L 1420 230 L 1050 230 L 1050 264" marker-end="url(#arrowhead)"/>
+      <text x="1180" y="220"><tspan x="1180" dy="0">Reviews results, queries knowledge,</tspan><tspan x="1180" dy="18">manages templates [HTTPS]</tspan></text>
+
+      <!-- 3. Frontend -> Backend -->
+      <path d="M 950 390 L 950 464" marker-end="url(#arrowhead)"/>
+      <text x="965" y="430">Makes API requests to [JSON/HTTPS]</text>
+
+      <!-- 4. Backend -> Azure Entra ID -->
+      <path d="M 1090 500 L 1880 500" marker-end="url(#arrowhead)"/>
+      <text x="1280" y="492">Authenticates users &amp; resolves role [HTTPS]</text>
+
+      <!-- 5. Backend -> Message Broker -->
+      <path d="M 1090 480 L 1450 480 L 1450 1050 L 1184 1050" marker-end="url(#arrowhead)"/>
+      <text x="1180" y="472">Dispatches &amp; consumes tasks via Celery [Redis]</text>
+
+      <!-- 6. Backend -> AI Service -->
+      <path d="M 950 590 L 950 714" marker-end="url(#arrowhead)"/>
+      <text x="960" y="700">Triggers audit &amp; NL query/answer [JSON/HTTPS]</text>
+
+      <!-- 7. Backend -> Database -->
+      <path d="M 810 560 L 500 560 L 500 974" marker-end="url(#arrowhead)"/>
+      <text x="540" y="552">Reads/writes user, audit &amp; template data [SQL/TCP]</text>
+
+      <!-- 8. Backend -> Document Storage -->
+      <path d="M 810 520 L 210 520 L 210 974" marker-end="url(#arrowhead)"/>
+      <text x="280" y="512">Stores uploaded documents [HTTPS]</text>
+
+      <!-- 10. Backend -> Governance & Audit Log -->
+      <path d="M 1000 590 L 1000 650 L 1250 650 L 1250 1154" marker-end="url(#arrowhead)"/>
+      <text x="1050" y="610">Writes access &amp; audit logs [SQL/TCP]</text>
+
+      <!-- 11. Backend -> Feedback & Learning Store -->
+      <path d="M 810 578 L 650 578 L 650 1200 L 680 1200" marker-end="url(#arrowhead)"/>
+      <text x="640" y="570">Writes reviewer corrections [SQL/TCP]</text>
+
+      <!-- 12. Connector Layer -> Message Broker -->
+      <path d="M 310 840 L 310 900 L 1080 900 L 1080 974" marker-end="url(#arrowhead)"/>
+      <text x="500" y="892">Picks up ingestion tasks via Celery [Redis]</text>
+
+      <!-- 13. Connector Layer -> Document Storage -->
+      <path d="M 250 840 L 250 974" marker-end="url(#arrowhead)"/>
+      <text x="256" y="900">Reads/writes crawled files [HTTPS]</text>
+
+      <!-- 14. Connector Layer -> Search Index -->
+      <path d="M 430 780 L 790 780 L 790 974" marker-end="url(#arrowhead)"/>
+      <text x="470" y="772">Writes content tagged by source system [HTTPS]</text>
+
+      <!-- 16. Connector Layer -> Enterprise Content Sources -->
+      <path d="M 230 840 L 90 840 L 90 1434 L 400 1434" marker-end="url(#arrowhead)"/>
+      <text x="200" y="1000">Ingests content &amp; structured data [HTTPS/SQL]</text>
+
+      <!-- 17. Connector Layer -> Azure Content Understanding -->
+      <path d="M 380 840 L 60 840 L 60 1360 L 1260 1360 L 1260 1434" marker-end="url(#arrowhead)"/>
+      <text x="1000" y="1352">Analyzes document content using [HTTPS]</text>
+
+      <!-- 21. AI Service -> Search Index -->
+      <path d="M 860 840 L 860 974" marker-end="url(#arrowhead)"/>
+      <text x="866" y="900">Queries the knowledge index [HTTPS]</text>
+
+      <!-- 22. AI Service -> Azure OpenAI -->
+      <path d="M 950 840 L 950 1434 L 1530 1434" marker-end="url(#arrowhead)"/>
+      <text x="1450" y="1400">Generates answers, summaries &amp; audit results [HTTPS]</text>
+
+      <!-- 22b. AI Service -> Feedback & Learning Store -->
+      <path d="M 930 840 L 930 1180 L 910 1180" marker-end="url(#arrowhead)"/>
+      <text x="935" y="860">Reads approved ranking/prompt config [SQL/TCP]</text>
+
+      <!-- 23. AI Service -> Expert Directory Service -->
+      <path d="M 1090 780 L 1470 780" marker-end="url(#arrowhead)"/>
+      <text x="1280" y="772">Requests expert matches [JSON/HTTPS]</text>
+
+      <!-- 24. AI Service -> Backend (results) -->
+      <path d="M 900 720 L 900 650 L 820 650 L 820 594" marker-end="url(#arrowhead)"/>
+      <text x="650" y="635">Sends audit/answer results [JSON/HTTPS]</text>
+
+      <!-- 25. Expert Directory Service -> Search Index -->
+      <path d="M 1610 840 L 1610 900 L 890 900 L 890 1050" marker-end="url(#arrowhead)"/>
+      <text x="1200" y="892">Reads document/author metadata [HTTPS]</text>
+
+      <!-- 26. Expert Directory Service -> HR/Org Directory -->
+      <path d="M 1610 840 L 1610 1400 L 1800 1400 L 1800 1434" marker-end="url(#arrowhead)"/>
+      <text x="1650" y="1260">Resolves employee profiles [HTTPS]</text>
+
+    </svg>
+
+    <!-- TITLE -->
+    <div class="diagram-title">Container Diagram v2 &mdash; AI Document Audit &amp; Knowledge Assistant System</div>
+    <div class="diagram-subtitle">Gold outline = new/changed since v1. Same person actors as v1. Access is action-level only (upload / review / view), checked against Entra ID roles &mdash; no entitlement store, no content-scope tagging. Expert directory seeded from document metadata + HR directory. Reviewer feedback flows to a human-gated flag-and-review queue.</div>
+
+    <!-- LEGEND -->
+    <div class="legend" style="left: 1680px; top: 1650px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch person-sw"></span> Person</div>
+      <div class="legend-item"><span class="legend-swatch container-sw"></span> Container</div>
+      <div class="legend-item"><span class="legend-swatch datastore-sw"></span> Container (data store)</div>
+      <div class="legend-item"><span class="legend-swatch boundary-sw"></span> System boundary</div>
+      <div class="legend-item"><span class="legend-swatch external-sw"></span> External Software System</div>
+      <div class="legend-item"><span class="legend-swatch new-sw"></span> New / changed in v2</div>
+      <div class="legend-line"><span class="legend-dash"></span> Relationship (with protocol)</div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Context Diagram v2 - AI Document Audit & Knowledge Assistant System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    .diagram {
+      position: relative;
+      width: 1500px;
+      height: 1250px;
+    }
+
+    /* Common Box Style */
+    .c4-box {
+      position: absolute;
+      color: #fff;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .c4-box .name { font-size: 19px; font-weight: 700; margin-bottom: 2px; }
+    .c4-box .type { font-size: 14px; margin-bottom: 12px; font-weight: normal; }
+    .c4-box .desc { font-size: 15px; }
+
+    .c4-box.small .name { font-size: 15px; }
+    .c4-box.small .type { font-size: 11px; margin-bottom: 6px; }
+    .c4-box.small .desc { font-size: 12px; }
+
+    /* Person */
+    .person {
+      background: #3a8342;
+      border-radius: 12px;
+      padding-top: 24px;
+    }
+
+    /* Software System */
+    .system {
+      background: #115594;
+    }
+
+    /* External System */
+    .external {
+      background: #4f5256;
+    }
+
+    /* Legend */
+    .legend {
+      position: absolute;
+      top: 1000px; left: 70px;
+      border: 1px solid #777;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 2.2;
+      background: #fff;
+      width: 320px;
+    }
+    .legend-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
+    .legend-swatch.person-sw { background: #3a8342; }
+    .legend-swatch.system-sw { background: #115594; }
+    .legend-swatch.external-sw { background: #4f5256; }
+    .legend-line { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .legend-dash { width: 24px; height: 0; border-top: 2px dashed #444; position: relative; }
+    .legend-dash::after {
+      content: ''; position: absolute; right: -4px; top: -4px;
+      border-left: 6px solid #444; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+    }
+
+    /* Title */
+    .diagram-title {
+      position: absolute;
+      top: 900px; left: 70px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #000;
+      max-width: 1360px;
+    }
+    .diagram-subtitle {
+      position: absolute;
+      top: 935px; left: 70px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #444;
+      max-width: 1360px;
+    }
+
+    /* SVG arrows */
+    svg.arrows {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+    svg.arrows line {
+      stroke: #555;
+      stroke-width: 1.5;
+      stroke-dasharray: 8 6;
+    }
+    svg.arrows text {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      fill: #111;
+      text-anchor: middle;
+      text-shadow:
+        -2px -2px 0 #fff, 2px -2px 0 #fff,
+        -2px 2px 0 #fff, 2px 2px 0 #fff,
+        -3px 0 0 #fff, 3px 0 0 #fff,
+        0 -3px 0 #fff, 0 3px 0 #fff;
+    }
+    svg.arrows text.wide {
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <!-- PERSONS (unchanged from v1) -->
+    <div class="c4-box person" style="left: 70px; top: 100px; width: 340px; height: 150px;">
+      <div class="name">Vendor / Contractor</div>
+      <div class="type">[Person]</div>
+      <div class="desc">A construction vendor who completes factory work items, submits handover documents for audit, and asks natural-language questions to find requirements and experts.</div>
+    </div>
+
+    <div class="c4-box person" style="left: 1090px; top: 100px; width: 340px; height: 150px;">
+      <div class="name">Customer / Reviewer</div>
+      <div class="type">[Person]</div>
+      <div class="desc">A factory project manager who reviews AI audit results, queries company knowledge in natural language, and manages audit templates.</div>
+    </div>
+
+    <!-- MAIN SYSTEM -->
+    <div class="c4-box system" style="left: 480px; top: 380px; width: 540px; height: 190px;">
+      <div class="name">AI Document Audit &amp; Knowledge Assistant System</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Audits vendor handover documents with AI, and lets employees query, discover, and get guidance across the company's internal knowledge sources in natural language &mdash; with action-level access control (upload / review / view) and expert connections.</div>
+    </div>
+
+    <!-- EXTERNAL SYSTEMS (single row; content sources merged into one box) -->
+    <div class="c4-box external small" style="left: 65px; top: 720px; width: 250px; height: 160px;">
+      <div class="name">Enterprise Content Sources</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">SharePoint, Confluence, file servers, and internal databases &mdash; corporate knowledge and structured data.</div>
+    </div>
+
+    <div class="c4-box external small" style="left: 345px; top: 720px; width: 250px; height: 160px;">
+      <div class="name">Azure Content Understanding</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Analyzes document content to extract text and structure.</div>
+    </div>
+
+    <div class="c4-box external small" style="left: 625px; top: 720px; width: 250px; height: 160px;">
+      <div class="name">Azure OpenAI Service</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Provides LLM capabilities for answers, summaries, and audits.</div>
+    </div>
+
+    <div class="c4-box external small" style="left: 905px; top: 720px; width: 250px; height: 160px;">
+      <div class="name">Azure Entra ID</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Authentication and role identity for upload/review/view checks.</div>
+    </div>
+
+    <div class="c4-box external small" style="left: 1185px; top: 720px; width: 250px; height: 160px;">
+      <div class="name">HR / Org Directory</div>
+      <div class="type">[Software System]</div>
+      <div class="desc">Employee profiles for expert identification.</div>
+    </div>
+
+    <!-- ARROWS (SVG) -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+          <polygon points="0 0, 10 4, 0 8" fill="#555"/>
+        </marker>
+      </defs>
+
+      <!-- Vendor -> System -->
+      <line x1="240" y1="250" x2="620" y2="380" marker-end="url(#arrowhead)"/>
+      <text class="wide" x="350" y="300">
+        <tspan x="350" dy="-10">Submits handover documents and asks</tspan>
+        <tspan x="350" dy="20">natural-language questions using</tspan>
+      </text>
+
+      <!-- Customer -> System -->
+      <line x1="1260" y1="250" x2="880" y2="380" marker-end="url(#arrowhead)"/>
+      <text class="wide" x="1090" y="300">
+        <tspan x="1090" dy="-10">Reviews audit results, queries knowledge,</tspan>
+        <tspan x="1090" dy="20">and manages templates using</tspan>
+      </text>
+
+      <!-- System -> external sources (fan out) -->
+      <line x1="560" y1="570" x2="190" y2="716" marker-end="url(#arrowhead)"/>
+      <text x="190" y="705">Ingests content &amp; structured data from</text>
+
+      <line x1="680" y1="570" x2="470" y2="716" marker-end="url(#arrowhead)"/>
+      <text x="470" y="705">Analyzes document content using</text>
+
+      <line x1="780" y1="570" x2="750" y2="716" marker-end="url(#arrowhead)"/>
+      <text x="750" y="705">Generates answers using</text>
+
+      <line x1="880" y1="570" x2="1030" y2="716" marker-end="url(#arrowhead)"/>
+      <text x="1030" y="705">Authenticates &amp; checks role using</text>
+
+      <line x1="960" y1="570" x2="1310" y2="716" marker-end="url(#arrowhead)"/>
+      <text x="1310" y="705">Resolves experts via</text>
+    </svg>
+
+    <!-- TITLE -->
+    <div class="diagram-title">System Context Diagram v2 &mdash; AI Document Audit &amp; Knowledge Assistant System</div>
+    <div class="diagram-subtitle">Same person actors as v1 (Vendor/Contractor, Customer/Reviewer). New knowledge sources and an HR/Org directory support natural-language query, discovery, and expert connection. Access is action-level only (upload / review / view), checked via Entra ID role &mdash; no content-level personalization.</div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch person-sw"></span> = Person</div>
+      <div class="legend-item"><span class="legend-swatch system-sw"></span> = Software System</div>
+      <div class="legend-item"><span class="legend-swatch external-sw"></span> = External Software System</div>
+      <div class="legend-line"><span class="legend-dash"></span> &nbsp;= Relationship</div>
+    </div>
+
+  </div>
+</body>
+</html>
