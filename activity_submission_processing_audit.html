@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Activity Diagram - Submission to Audit Notification</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f7fb; padding: 24px; }
+    .diagram {
+      position: relative;
+      width: 1100px;
+      height: 1420px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #ccd8e8;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+      overflow: hidden;
+    }
+    .title {
+      position: absolute;
+      left: 24px;
+      top: 14px;
+      font-size: 21px;
+      font-weight: 700;
+      color: #0e3a66;
+    }
+    .phase-label {
+      position: absolute;
+      left: 50%;
+      top: 108px;
+      transform: translateX(-50%);
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      background: #fff;
+      padding: 3px 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .phase-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 122px;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, #94a3b8 0, #94a3b8 10px, transparent 10px, transparent 20px);
+    }
+    .lane-header {
+      position: absolute;
+      top: 58px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .lane-body {
+      position: absolute;
+      top: 100px;
+      bottom: 0;
+      border-right: 1px dashed #b0c0d4;
+    }
+    .node {
+      position: absolute;
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: break-word;
+    }
+    .node-v { border: 2px solid #2f6fa7; background: #eaf4ff; color: #0e2e4b; }
+    .node-c { border: 2px solid #1a7a46; background: #eaf8ef; color: #0f3b20; }
+    .node-s { border: 2px solid #444c5c; background: #f0f2f5; color: #1e2533; }
+    .decision {
+      position: absolute;
+      width: 86px;
+      height: 86px;
+      transform: rotate(45deg);
+      border: 2px solid #8f5d1e;
+      background: #fff4e5;
+    }
+    .decision span {
+      position: absolute;
+      width: 118px;
+      left: -16px;
+      top: 30px;
+      transform: rotate(-45deg);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6f4817;
+      line-height: 1.2;
+    }
+    .start {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #111827;
+    }
+    .end {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 3px solid #111827;
+      background: #fff;
+    }
+    .end::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #111827;
+    }
+    svg { position: absolute; inset: 0; pointer-events: none; }
+    .flow {
+      stroke: #34495e;
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrow);
+    }
+    .ft {
+      font-size: 12px;
+      fill: #2f4256;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+<div class="diagram">
+  <div class="title">Activity Diagram: Submission to Audit Notification (One Phase)</div>
+
+  <div class="lane-header" style="left:0;width:366px;background:#3a6fa8;">Vendor / Contractor</div>
+  <div class="lane-header" style="left:366px;width:367px;background:#1a7a46;">Customer / Reviewer</div>
+  <div class="lane-header" style="left:733px;width:367px;background:#444c5c;">AI Document Audit System</div>
+
+  <div class="lane-body" style="left:0;width:366px;background:#f7faff;"></div>
+  <div class="lane-body" style="left:366px;width:367px;background:#f6fbf8;"></div>
+  <div class="lane-body" style="left:733px;width:367px;background:#f8f8fa;"></div>
+
+  <div class="phase-label">One Phase: Submit, Validate, Audit, Notify</div>
+  <div class="phase-line"></div>
+
+  <div class="start" style="left:173px;top:150px;"></div>
+
+  <div class="node node-v" style="left:50px;top:196px;width:252px;height:70px;">Prepare handover document package</div>
+  <div class="node node-v" style="left:50px;top:306px;width:252px;height:70px;">Fill in submission checklist</div>
+  <div class="node node-v" style="left:50px;top:416px;width:252px;height:70px;">Submit package to the system</div>
+
+  <div class="node node-s" style="left:762px;top:416px;width:300px;height:70px;">Receive and log submission</div>
+  <div class="node node-s" style="left:762px;top:526px;width:300px;height:70px;">Check completeness automatically</div>
+  <div class="decision" style="left:800px;top:650px;"><span>Complete?</span></div>
+
+  <div class="node node-s" style="left:762px;top:780px;width:300px;height:70px;">Notify vendor of missing items</div>
+  <div class="node node-v" style="left:50px;top:780px;width:252px;height:70px;">Revise and resubmit package</div>
+
+  <div class="node node-s" style="left:762px;top:910px;width:300px;height:70px;">Start document processing</div>
+  <div class="node node-s" style="left:762px;top:1020px;width:300px;height:70px;">Extract content and run audit checks</div>
+  <div class="node node-s" style="left:762px;top:1130px;width:300px;height:70px;">Generate and complete audit report</div>
+  <div class="node node-s" style="left:762px;top:1240px;width:300px;height:70px;">Send notification after audit complete</div>
+
+  <div class="node node-c" style="left:396px;top:1240px;width:300px;height:70px;">Receive audit notification and review result</div>
+  <div class="end" style="left:531px;top:1334px;"></div>
+
+  <svg viewBox="0 0 1100 1420" preserveAspectRatio="none">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+        <polygon points="0 0,10 4,0 8" fill="#34495e"/>
+      </marker>
+    </defs>
+
+    <path class="flow" d="M183 170 L183 196"/>
+    <path class="flow" d="M183 266 L183 306"/>
+    <path class="flow" d="M183 376 L183 416"/>
+    <path class="flow" d="M302 451 L762 451"/>
+    <path class="flow" d="M912 486 L912 526"/>
+    <path class="flow" d="M912 596 L912 650"/>
+
+    <path class="flow" d="M912 736 L912 780"/>
+    <text class="ft" x="920" y="762">No</text>
+    <path class="flow" d="M762 815 L302 815"/>
+    <path class="flow" d="M176 850 L176 900 L40 900 L40 451 L50 451"/>
+
+    <path class="flow" d="M843 678 L1000 678 L1000 910 L912 910"/>
+    <text class="ft" x="850" y="670">Yes</text>
+    <path class="flow" d="M912 980 L912 1020"/>
+    <path class="flow" d="M912 1090 L912 1130"/>
+    <path class="flow" d="M912 1200 L912 1240"/>
+
+    <path class="flow" d="M762 1275 L696 1275"/>
+    <path class="flow" d="M546 1310 L546 1334"/>
+  </svg>
+</div>
+</body>
+</html>

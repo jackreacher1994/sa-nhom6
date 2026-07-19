@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Activity Diagram - Search, Query, and Summary</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f7fb; padding: 24px; }
+    .diagram { position: relative; width: 1100px; height: 950px; margin: 0 auto; background: #fff; border: 1px solid #cfe0db; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); overflow: hidden; }
+    .title { position: absolute; left: 24px; top: 14px; font-size: 21px; font-weight: 700; color: #115d57; }
+    .lane-header { position: absolute; top: 58px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+    .lane-body { position: absolute; top: 100px; bottom: 0; border-right: 1px dashed #bed2cc; }
+    .node { position: absolute; border-radius: 10px; border: 2px solid #1f7a72; background: #e8f9f6; padding: 8px 12px; text-align: center; font-size: 13px; line-height: 1.4; font-weight: 600; color: #0f3f3a; display: flex; align-items: center; justify-content: center; word-break: break-word; }
+    .decision { position: absolute; width: 86px; height: 86px; transform: rotate(45deg); border: 2px solid #8f5d1e; background: #fff4e5; }
+    .decision span { position: absolute; width: 118px; left: -16px; top: 30px; transform: rotate(-45deg); text-align: center; font-size: 12px; font-weight: 700; color: #6f4817; line-height: 1.2; }
+    .start { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: #111827; }
+    .end { position: absolute; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #111827; background: #fff; }
+    .end::after { content: ""; position: absolute; left: 5px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: #111827; }
+    svg { position: absolute; inset: 0; pointer-events: none; }
+    .flow { stroke: #2f4f4b; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    .ft { font-size: 12px; fill: #2f4f4b; font-weight: 700; }
+  </style>
+</head>
+<body>
+<div class="diagram">
+  <div class="title">Activity Diagram: Search, Query &amp; Summary</div>
+  <div class="lane-header" style="left:0;width:366px;background:#3a6fa8;">Vendor / Contractor</div>
+  <div class="lane-header" style="left:366px;width:367px;background:#1a7a46;">Customer / Reviewer</div>
+  <div class="lane-header" style="left:733px;width:367px;background:#444c5c;">AI Document Audit System</div>
+  <div class="lane-body" style="left:0;width:366px;background:#f7faff;"></div>
+  <div class="lane-body" style="left:366px;width:367px;background:#f6fbf8;"></div>
+  <div class="lane-body" style="left:733px;width:367px;background:#f8f8fa;"></div>
+
+  <div class="start" style="left:535px;top:126px;"></div>
+  <div class="node" style="left:396px;top:172px;width:300px;height:70px;">Enter natural language query</div>
+  <div class="node" style="left:762px;top:172px;width:300px;height:70px;">Receive and interpret query</div>
+  <div class="node" style="left:762px;top:282px;width:300px;height:70px;">Search knowledge base for relevant content</div>
+  <div class="node" style="left:762px;top:392px;width:300px;height:70px;">Rank and filter results by relevance</div>
+  <div class="decision" style="left:800px;top:502px;"><span>Results found?</span></div>
+  <div class="node" style="left:762px;top:650px;width:300px;height:70px;">Generate summary and key points</div>
+  <div class="node" style="left:762px;top:762px;width:300px;height:70px;">No results: suggest related topics</div>
+  <div class="node" style="left:396px;top:650px;width:300px;height:70px;">View answer and source links</div>
+  <div class="node" style="left:50px;top:650px;width:252px;height:70px;">View answer and take action</div>
+  <div class="decision" style="left:430px;top:770px;"><span>Satisfied?</span></div>
+  <div class="end" style="left:531px;top:900px;"></div>
+
+  <svg viewBox="0 0 1100 950" preserveAspectRatio="none">
+    <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#2f4f4b"/></marker></defs>
+    <path class="flow" d="M546 146 L546 172"/>
+    <path class="flow" d="M696 207 L762 207"/>
+    <path class="flow" d="M912 242 L912 282"/>
+    <path class="flow" d="M912 352 L912 392"/>
+    <path class="flow" d="M912 462 L912 502"/>
+    <!-- Yes -->
+    <path class="flow" d="M912 588 L912 650"/>
+    <text class="ft" x="920" y="626">Yes</text>
+    <!-- No -->
+    <path class="flow" d="M843 545 L843 500 L1060 500 L1060 797 L1062 797"/>
+    <text class="ft" x="856" y="538">No</text>
+    <path class="flow" d="M762 797 L516 797"/>
+    <!-- summary -> reviewer view -->
+    <path class="flow" d="M762 685 L696 685"/>
+    <!-- reviewer -> vendor -->
+    <path class="flow" d="M396 685 L302 685"/>
+    <!-- reviewer decision -->
+    <path class="flow" d="M546 720 L546 770"/>
+    <!-- satisfied -> end -->
+    <path class="flow" d="M473 856 L473 920 L546 920 L546 900"/>
+    <text class="ft" x="496" y="910">Yes</text>
+    <!-- not satisfied -> new query -->
+    <path class="flow" d="M516 813 L396 813 L396 207"/>
+    <text class="ft" x="376" y="800">No</text>
+  </svg>
+</div>
+</body>
+</html>

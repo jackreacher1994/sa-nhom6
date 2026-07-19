@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Activity Diagram - Reviewer Decision Process</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f7fb; padding: 24px; }
+    .diagram { position: relative; width: 1100px; height: 950px; margin: 0 auto; background: #fff; border: 1px solid #ddd6ea; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); overflow: hidden; }
+    .title { position: absolute; left: 24px; top: 14px; font-size: 21px; font-weight: 700; color: #4b2d75; }
+    .lane-header { position: absolute; top: 58px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+    .lane-body { position: absolute; top: 100px; bottom: 0; border-right: 1px dashed #cabcdf; }
+    .node { position: absolute; border-radius: 10px; border: 2px solid #6e49a3; background: #f2eaff; padding: 8px 12px; text-align: center; font-size: 13px; line-height: 1.4; font-weight: 600; color: #321c57; display: flex; align-items: center; justify-content: center; word-break: break-word; }
+    .decision { position: absolute; width: 86px; height: 86px; transform: rotate(45deg); border: 2px solid #8f5d1e; background: #fff4e5; }
+    .decision span { position: absolute; width: 118px; left: -16px; top: 30px; transform: rotate(-45deg); text-align: center; font-size: 12px; font-weight: 700; color: #6f4817; line-height: 1.2; }
+    .start { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: #111827; }
+    .end { position: absolute; width: 28px; height: 28px; border-radius: 50%; border: 3px solid #111827; background: #fff; }
+    .end::after { content: ""; position: absolute; left: 5px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: #111827; }
+    svg { position: absolute; inset: 0; pointer-events: none; }
+    .flow { stroke: #4a3a63; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    .ft { font-size: 12px; fill: #4a3a63; font-weight: 700; }
+  </style>
+</head>
+<body>
+<div class="diagram">
+  <div class="title">Activity Diagram: Reviewer Decision Process</div>
+  <div class="lane-header" style="left:0;width:366px;background:#3a6fa8;">Vendor / Contractor</div>
+  <div class="lane-header" style="left:366px;width:367px;background:#1a7a46;">Customer / Reviewer</div>
+  <div class="lane-header" style="left:733px;width:367px;background:#444c5c;">AI Document Audit System</div>
+  <div class="lane-body" style="left:0;width:366px;background:#f7faff;"></div>
+  <div class="lane-body" style="left:366px;width:367px;background:#f6fbf8;"></div>
+  <div class="lane-body" style="left:733px;width:367px;background:#f8f8fa;"></div>
+
+  <div class="start" style="left:535px;top:126px;"></div>
+  <div class="node" style="left:396px;top:172px;width:300px;height:70px;">Receive audit report notification</div>
+  <div class="node" style="left:396px;top:282px;width:300px;height:70px;">Open and read audit findings</div>
+  <div class="node" style="left:396px;top:392px;width:300px;height:70px;">Study supporting evidence</div>
+  <div class="decision" style="left:492px;top:506px;"><span>Decision?</span></div>
+  <div class="node" style="left:396px;top:660px;width:300px;height:70px;">Accept: mark package as approved</div>
+  <div class="node" style="left:396px;top:770px;width:300px;height:70px;">Write acceptance memo</div>
+  <div class="node" style="left:50px;top:660px;width:252px;height:70px;">Reject and list required fixes</div>
+  <div class="node" style="left:50px;top:770px;width:252px;height:70px;">Revise and resubmit</div>
+  <div class="node" style="left:762px;top:660px;width:300px;height:70px;">Record decision in audit log</div>
+  <div class="node" style="left:762px;top:770px;width:300px;height:70px;">Update status and notify vendor</div>
+  <div class="end" style="left:905px;top:888px;"></div>
+
+  <svg viewBox="0 0 1100 950" preserveAspectRatio="none">
+    <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#4a3a63"/></marker></defs>
+    <path class="flow" d="M546 146 L546 172"/>
+    <path class="flow" d="M546 242 L546 282"/>
+    <path class="flow" d="M546 352 L546 392"/>
+    <path class="flow" d="M546 462 L546 506"/>
+    <!-- Accept -->
+    <path class="flow" d="M535 592 L535 660"/>
+    <text class="ft" x="548" y="632">Accept</text>
+    <!-- Reject -->
+    <path class="flow" d="M492 549 L302 687"/>
+    <text class="ft" x="370" y="612">Reject</text>
+    <!-- Accept -> memo -->
+    <path class="flow" d="M546 730 L546 770"/>
+    <!-- Reject -> revise -->
+    <path class="flow" d="M176 730 L176 770"/>
+    <!-- Revise -> loop back -->
+    <path class="flow" d="M176 840 L176 920 L40 920 L40 207 L396 207"/>
+    <!-- Accept -> system record -->
+    <path class="flow" d="M696 695 L762 695"/>
+    <!-- system record -> notify -->
+    <path class="flow" d="M912 730 L912 770"/>
+    <!-- system notify -> end -->
+    <path class="flow" d="M912 840 L912 888"/>
+  </svg>
+</div>
+</body>
+</html>
