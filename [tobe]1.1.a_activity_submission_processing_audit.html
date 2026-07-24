@@ -6,11 +6,20 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: "Segoe UI", Arial, sans-serif; background: #f4f7fb; padding: 24px; }
+    .diagram-shell {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      justify-content: center;
+    }
     .diagram {
       position: relative;
       width: 1100px;
+      min-width: 1100px;
       height: 1420px;
       margin: 0 auto;
+      flex: 0 0 auto;
       background: #fff;
       border: 1px solid #ccd8e8;
       border-radius: 12px;
@@ -38,6 +47,7 @@
       border: 1px solid #94a3b8;
       border-radius: 999px;
       white-space: nowrap;
+      z-index: 2;
     }
     .phase-line {
       position: absolute;
@@ -46,6 +56,7 @@
       top: 122px;
       height: 2px;
       background: repeating-linear-gradient(90deg, #94a3b8 0, #94a3b8 10px, transparent 10px, transparent 20px);
+      z-index: 1;
     }
     .lane-header {
       position: absolute;
@@ -94,7 +105,7 @@
       position: absolute;
       width: 118px;
       left: -16px;
-      top: 30px;
+      top: 26px;
       transform: rotate(-45deg);
       text-align: center;
       font-size: 12px;
@@ -134,14 +145,24 @@
       fill: none;
       marker-end: url(#arrow);
     }
+    .flow-end { marker-end: none; }
     .ft {
       font-size: 12px;
       fill: #2f4256;
       font-weight: 700;
+      paint-order: stroke;
+      stroke: #ffffff;
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+    @media (max-width: 1148px) {
+      .diagram-shell { justify-content: flex-start; }
+      .diagram { margin: 0; }
     }
   </style>
 </head>
 <body>
+<div class="diagram-shell">
 <div class="diagram">
   <div class="title">Activity Diagram: Submission to Audit Notification (One Phase)</div>
 
@@ -189,22 +210,23 @@
     <path class="flow" d="M183 376 L183 416"/>
     <path class="flow" d="M302 451 L762 451"/>
     <path class="flow" d="M912 486 L912 526"/>
-    <path class="flow" d="M912 596 L912 650"/>
+    <path class="flow" d="M843 596 L843 632"/>
 
-    <path class="flow" d="M912 736 L912 780"/>
-    <text class="ft" x="920" y="762">No</text>
+    <path class="flow" d="M843 754 L843 780"/>
+    <text class="ft" x="852" y="772">No</text>
     <path class="flow" d="M762 815 L302 815"/>
     <path class="flow" d="M176 850 L176 900 L40 900 L40 451 L50 451"/>
 
-    <path class="flow" d="M843 678 L1000 678 L1000 910 L912 910"/>
-    <text class="ft" x="850" y="670">Yes</text>
+    <path class="flow" d="M904 693 L1000 693 L1000 910 L912 910"/>
+    <text class="ft" x="918" y="686">Yes</text>
     <path class="flow" d="M912 980 L912 1020"/>
     <path class="flow" d="M912 1090 L912 1130"/>
     <path class="flow" d="M912 1200 L912 1240"/>
 
     <path class="flow" d="M762 1275 L696 1275"/>
-    <path class="flow" d="M546 1310 L546 1334"/>
+    <path class="flow flow-end" d="M546 1310 L546 1334"/>
   </svg>
+</div>
 </div>
 </body>
 </html>
