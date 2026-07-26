@@ -74,3 +74,5 @@ The AI Document Audit System supports document handover and audit review between
 - The system shall retain uploaded documents and audit results according to organizational data retention and deletion policies.
 - The system shall restrict processing to approved file formats and configured size limits; unsupported or oversized inputs shall be rejected with clear feedback.
 - The system shall not permit direct modification of original source documents during ingestion, processing, or audit generation.
+- The system shall reach production go-live within 3 months from approved project kickoff, with each phase milestone variance not exceeding 10% of the planned schedule.
+- The system shall limit total cloud operating cost to no more than USD 5,000 per month, and shall trigger budget alerts at 80%, 90%, and 100% of the monthly cap.
