@@ -1,0 +1,65 @@
+# AI Document Audit System - Functional Requirements
+
+## 1. Purpose
+
+The AI Document Audit System supports document handover and audit review between vendors and customers. It allows users to submit documents, run AI-assisted audits, review results, search content, and manage access securely.
+
+## 2. Actors
+
+- Vendor / Contractor: submits handover documents, adds document sources, views summaries, and checks audit results.
+- Customer / Reviewer: reviews audit results, manages audit templates, and identifies subject matter experts.
+
+## 3. Functional Requirements
+
+### FR-1 User Authentication and Access Control
+
+- The system shall authenticate vendors and customers through Azure Entra ID.
+- The system shall enforce role-based access control so each user can access only permitted functions and data.
+
+### FR-2 Document Submission
+
+- The system shall allow vendors to submit handover documents for audit.
+- The system shall accept document packages from supported enterprise sources, including SharePoint, Confluence, servers, and databases.
+
+### FR-3 Document Processing
+
+- The system shall extract text and structural content from submitted documents using Azure Content Understanding.
+- The system shall prepare processed content for downstream audit and search functions.
+
+### FR-4 AI Audit Generation
+
+- The system shall generate AI-based audit results for submitted handover documents.
+- The system shall provide audit output that includes pass/fail assessment and detailed comments for review.
+
+### FR-5 Audit Review
+
+- The system shall allow vendors and customers to view audit results.
+- The system shall allow customers to make final review decisions based on AI-generated audit output.
+
+### FR-6 Audit Template Management
+
+- The system shall allow customers to create, update, and manage audit templates.
+- The system shall use the selected audit template when generating audit results.
+
+### FR-7 Search and Summaries
+
+- The system shall index processed documents for search.
+- The system shall allow vendors and customers to query documents using natural language.
+- The system shall allow vendors to view document summaries.
+
+### FR-8 Expert Identification
+
+- The system shall allow customers to identify subject matter experts relevant to a document or audit issue.
+
+### FR-9 Learning from Interactions
+
+- The system shall capture user interactions from the document query process.
+- The system shall use interaction history to improve future search and response relevance.
+
+## 4. External System Dependencies
+
+- Enterprise Content Sources: corporate content and structured data sources, including SharePoint, Confluence, file servers, and internal databases.
+- Azure Entra ID: user authentication and identity management.
+- Azure Content Understanding: document content extraction.
+- Azure OpenAI Service: AI-based answers, summaries, and audit result generation.
+- HR / Org Directory: employee profile data for subject matter expert identification.
