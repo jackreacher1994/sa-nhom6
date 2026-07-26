@@ -63,3 +63,14 @@ The AI Document Audit System supports document handover and audit review between
 - Azure Content Understanding: document content extraction.
 - Azure OpenAI Service: AI-based answers, summaries, and audit result generation.
 - HR / Org Directory: employee profile data for subject matter expert identification.
+
+## 5. Constraints
+
+- The system shall rely on Azure Entra ID as the mandatory identity provider for user login and role assignment.
+- The system shall process only supported source types (SharePoint, Confluence, file servers, and internal databases) for document intake in the current release scope.
+- The system shall operate with the integrated external services listed in Section 4; if a required dependency is unavailable, related features shall be unavailable or deferred.
+- The system shall use approved organizational data sources for expert identification and shall not infer expert profiles from unauthorized personal data.
+- The system shall encrypt data in transit and user sensitive information at rest using organization-approved security standards.
+- The system shall retain uploaded documents and audit results according to organizational data retention and deletion policies.
+- The system shall restrict processing to approved file formats and configured size limits; unsupported or oversized inputs shall be rejected with clear feedback.
+- The system shall not permit direct modification of original source documents during ingestion, processing, or audit generation.
