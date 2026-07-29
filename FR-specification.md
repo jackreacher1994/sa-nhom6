@@ -76,3 +76,5 @@ The AI Document Audit System supports document handover and audit review between
 - The system shall not permit direct modification of original source documents during ingestion, processing, or audit generation.
 - The system shall reach production go-live within 3 months from approved project kickoff, with each phase milestone variance not exceeding 10% of the planned schedule.
 - The system shall limit total cloud operating cost to no more than USD 5,000 per month, and shall trigger budget alerts at 80%, 90%, and 100% of the monthly cap.
+- The system shall be implemented using Python as the primary programming language.
+- The system shall support Google Chrome 130 and Microsoft Edge 130 (or later) as web browsers.
