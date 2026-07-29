@@ -1,8 +1,8 @@
-# AI Document Audit System - Functional Requirements
+# AI Document Audit & Knowledge Assistant System - Functional Requirements
 
 ## 1. Purpose
 
-The AI Document Audit System supports document handover and audit review between vendors and customers. It allows users to submit documents, run AI-assisted audits, review results, search content, and manage access securely.
+The AI Document Audit & Knowledge Assistant System supports document handover and audit review between vendors and customers. It allows users to submit documents, run AI-assisted audits, review results, search content, and manage access securely.
 
 ## 2. Actors
 

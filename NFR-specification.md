@@ -1,4 +1,4 @@
-# AI Document Audit System - Non-Functional Requirements
+# AI Document Audit & Knowledge Assistant System - Non-Functional Requirements
 
 | NFR ID | Category | Requirement | Target / Acceptance Criteria | Solution |
 | --- | --- | --- | --- | --- |
