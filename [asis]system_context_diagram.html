@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>System Context Diagram - AS-IS Document Audit System</title>
+  <title>System Context Diagram - Document Audit System</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -38,20 +38,24 @@
 
     /* Person */
     .person {
-      background: #3a8342;
-      border-radius: 12px;
-      padding-top: 24px;
+      background: #f4fbf4;
+      border: 2px solid #3a8342;
+      border-radius: 24px;
+      color: #1f2d1f;
+      padding-top: 18px;
     }
-    /* .person .head {
-      position: absolute;
-      top: -24px;
-      left: 50%;
-      margin-left: -24px;
-      width: 48px;
-      height: 48px;
-      background: #3a8342;
-      border-radius: 50%;
-    } */
+    .person .icon {
+      width: 74px;
+      height: 74px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .person .icon svg {
+      width: 100%;
+      height: 100%;
+    }
 
     /* Software System */
     .system {
@@ -77,7 +81,7 @@
     .legend-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
     .legend-item { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
     .legend-swatch { display: inline-block; width: 24px; height: 16px; border-radius: 3px; }
-    .legend-swatch.person-sw { background: #3a8342; }
+    .legend-swatch.person-sw { background: #f4fbf4; border: 2px solid #3a8342; }
     .legend-swatch.system-sw { background: #115594; }
     .legend-swatch.external-sw { background: #4f5256; }
     .legend-line { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
@@ -154,15 +158,25 @@
   <div class="diagram">
 
     <!-- PERSONS -->
-    <div class="c4-box person" style="left: 70px; top: 100px; width: 340px; height: 150px;">
-      <div class="head"></div>
+    <div class="c4-box person" style="left: 70px; top: 30px; width: 340px; height: 220px;">
+      <div class="icon">
+        <svg viewBox="0 0 64 64" aria-label="Person icon" role="img">
+          <circle cx="32" cy="20" r="12" fill="#3a8342"></circle>
+          <path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path>
+        </svg>
+      </div>
       <div class="name">Vendor / Contractor</div>
       <div class="type">[Person]</div>
       <div class="desc">A construction vendor who completes factory work items and submits handover documents for audit review.</div>
     </div>
 
-    <div class="c4-box person" style="left: 690px; top: 100px; width: 340px; height: 150px;">
-      <div class="head"></div>
+    <div class="c4-box person" style="left: 690px; top: 30px; width: 340px; height: 220px;">
+      <div class="icon">
+        <svg viewBox="0 0 64 64" aria-label="Person icon" role="img">
+          <circle cx="32" cy="20" r="12" fill="#3a8342"></circle>
+          <path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path>
+        </svg>
+      </div>
       <div class="name">Customer / Reviewer</div>
       <div class="type">[Person]</div>
       <div class="desc">A factory project manager who reads handover documents and makes audit results.</div>
@@ -170,7 +184,7 @@
 
     <!-- MAIN SYSTEM -->
     <div class="c4-box system" style="left: 280px; top: 380px; width: 540px; height: 180px;">
-      <div class="name">AS-IS Document Audit System</div>
+      <div class="name">Document Audit System</div>
       <div class="type">[Software System]</div>
       <div class="desc">Allows vendors to submit handover documents.<br>Allows customers to read handover documents and then provides pass/fail assessments with detailed comments.</div>
     </div>
@@ -191,14 +205,14 @@
       </defs>
 
       <!-- Vendor -> AI System -->
-      <line x1="280" y1="250" x2="420" y2="380" marker-end="url(#arrowhead)"/>
+      <line x1="240" y1="255" x2="550" y2="380" marker-end="url(#arrowhead)"/>
       <text x="350" y="300">
         <tspan x="340" dy="-10">Submits handover documents</tspan>
         <tspan x="340" dy="20">and views audit results using</tspan>
       </text>
 
       <!-- Customer -> AI System -->
-      <line x1="820" y1="250" x2="680" y2="380" marker-end="url(#arrowhead)"/>
+      <line x1="860" y1="255" x2="550" y2="380" marker-end="url(#arrowhead)"/>
       <text x="750" y="300">
         <tspan x="760" dy="-10">Makes audit results using</tspan>
       </text>
@@ -209,7 +223,7 @@
     </svg>
 
     <!-- TITLE -->
-    <div class="diagram-title">System Context Diagram for AS-IS Document Audit System</div>
+    <div class="diagram-title">System Context Diagram for Document Audit System</div>
 
     <!-- LEGEND -->
     <div class="legend">
@@ -220,9 +234,9 @@
       <div class="legend-line"><span class="legend-dash"></span> &nbsp;= Relationship</div>
     </div>
 
-    <!-- AS-IS PAIN POINTS -->
+    <!-- PAIN POINTS -->
     <div class="pain-points">
-      <div class="pain-points-title">AS-IS Pain Points</div>
+      <div class="pain-points-title">Pain Points</div>
       <ol>
         <li>Limited scope: mostly document submission and review, not a full knowledge assistant.</li>
         <li>No multi-source ingestion: enterprise sources are not unified for search.</li>
