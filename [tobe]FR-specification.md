@@ -89,3 +89,12 @@ The AI Document Audit & Knowledge Assistant System supports document handover an
 - Uploaded documents and generated outputs will be managed under organizational security, retention, and deletion policies that are already approved for operational use.
 - Users will review AI-generated summaries, audit findings, and recommendations before using them for final acceptance, rejection, or escalation decisions.
 - The project team has access to the required business stakeholders, source system owners, and subject matter experts needed for implementation and validation.
+
+## 7. Benefits
+
+- End-to-end document intelligence: The system expands beyond basic submission and review to support document processing, audit, search, and knowledge assistance in one workflow.
+- Unified enterprise access: The system combines documents and content from multiple sources into a single searchable knowledge layer for faster discovery and reuse.
+- Automated quality assurance: The system reduces manual rework by checking completeness, identifying gaps, and guiding resubmission or correction actions earlier.
+- Lower reviewer effort: The system accelerates audit review by summarizing results, surfacing risks, and helping reviewers focus on exceptions rather than repetitive manual checks.
+- Continuous AI improvement: The system learns from user interactions and corrections to refine future search results and audit recommendations over time.
+- Faster SME matching: The system helps identify the right subject matter experts quickly, reducing delays in decision-making and issue resolution.
