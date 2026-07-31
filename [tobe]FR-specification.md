@@ -78,3 +78,14 @@ The AI Document Audit & Knowledge Assistant System supports document handover an
 - The system shall limit total cloud operating cost to no more than USD 5,000 per month, and shall trigger budget alerts at 80%, 90%, and 100% of the monthly cap.
 - The system backend shall be implemented using Python and the frontend shall be implemented using JavaScript/ReactJS.
 - The system shall support Google Chrome 130 and Microsoft Edge 130 (or later) as web browsers.
+
+## 6. Assumptions
+
+- Users accessing the system are provisioned with valid Azure Entra ID accounts and the required organizational roles for their responsibilities.
+- Enterprise content sources such as SharePoint, Confluence, file servers, and internal databases are available, accessible, and configured with the correct permissions for the target deployment environment.
+- Submitted handover documents are in approved formats and within configured size limits, and they contain content suitable for text extraction and audit processing.
+- Azure Content Understanding and Azure OpenAI Service are available with sufficient capacity, network connectivity, and configuration to support document processing and AI audit generation.
+- Customer organizations provide authoritative audit templates, valid expert directory data, and approval workflows for final review decisions.
+- Uploaded documents and generated outputs will be managed under organizational security, retention, and deletion policies that are already approved for operational use.
+- Users will review AI-generated summaries, audit findings, and recommendations before using them for final acceptance, rejection, or escalation decisions.
+- The project team has access to the required business stakeholders, source system owners, and subject matter experts needed for implementation and validation.
