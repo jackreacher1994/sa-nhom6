@@ -78,3 +78,23 @@ The AI Document Audit & Knowledge Assistant System supports document handover an
 - The system shall limit total cloud operating cost to no more than USD 5,000 per month, and shall trigger budget alerts at 80%, 90%, and 100% of the monthly cap.
 - The system backend shall be implemented using Python and the frontend shall be implemented using JavaScript/ReactJS.
 - The system shall support Google Chrome 130 and Microsoft Edge 130 (or later) as web browsers.
+
+## 6. Assumptions
+
+- Users accessing the system are provisioned with valid Azure Entra ID accounts and the required organizational roles for their responsibilities.
+- Enterprise content sources such as SharePoint, Confluence, file servers, and internal databases are available, accessible, and configured with the correct permissions for the target deployment environment.
+- Submitted handover documents are in approved formats and within configured size limits, and they contain content suitable for text extraction and audit processing.
+- Azure Content Understanding and Azure OpenAI Service are available with sufficient capacity, network connectivity, and configuration to support document processing and AI audit generation.
+- Customer organizations provide authoritative audit templates, valid expert directory data, and approval workflows for final review decisions.
+- Uploaded documents and generated outputs will be managed under organizational security, retention, and deletion policies that are already approved for operational use.
+- Users will review AI-generated summaries, audit findings, and recommendations before using them for final acceptance, rejection, or escalation decisions.
+- The project team has access to the required business stakeholders, source system owners, and subject matter experts needed for implementation and validation.
+
+## 7. Benefits
+
+- End-to-end document intelligence: The system expands beyond basic submission and review to support document processing, audit, search, and knowledge assistance in one workflow.
+- Unified enterprise access: The system combines documents and content from multiple sources into a single searchable knowledge layer for faster discovery and reuse.
+- Automated quality assurance: The system reduces manual rework by checking completeness, identifying gaps, and guiding resubmission or correction actions earlier.
+- Lower reviewer effort: The system accelerates audit review by summarizing results, surfacing risks, and helping reviewers focus on exceptions rather than repetitive manual checks.
+- Continuous AI improvement: The system learns from user interactions and corrections to refine future search results and audit recommendations over time.
+- Faster SME matching: The system helps identify the right subject matter experts quickly, reducing delays in decision-making and issue resolution.

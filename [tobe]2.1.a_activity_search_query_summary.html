@@ -32,11 +32,9 @@
 <div class="diagram-shell">
 <div class="diagram">
   <div class="title">Activity Diagram: Search, Query &amp; Summary</div>
-  <div class="lane-header" style="left:0;width:366px;background:#3a6fa8;">Vendor / Contractor</div>
-  <div class="lane-header" style="left:366px;width:367px;background:#1a7a46;">Customer / Reviewer</div>
+  <div class="lane-header" style="left:0;width:733px;background:#3a6fa8;">User / Stakeholder</div>
   <div class="lane-header" style="left:733px;width:367px;background:#444c5c;">AI Document Audit & Knowledge Assistant System</div>
-  <div class="lane-body" style="left:0;width:366px;background:#f7faff;"></div>
-  <div class="lane-body" style="left:366px;width:367px;background:#f6fbf8;"></div>
+  <div class="lane-body" style="left:0;width:733px;background:#f7faff;"></div>
   <div class="lane-body" style="left:733px;width:367px;background:#f8f8fa;"></div>
 
   <div class="start" style="left:535px;top:126px;"></div>
@@ -48,7 +46,6 @@
   <div class="node" style="left:762px;top:650px;width:300px;height:70px;">Generate summary and key points</div>
   <div class="node" style="left:762px;top:762px;width:300px;height:70px;">No results: suggest related topics</div>
   <div class="node" style="left:396px;top:650px;width:300px;height:70px;">View answer and source links</div>
-  <div class="node" style="left:50px;top:650px;width:252px;height:70px;">View answer and take action</div>
   <div class="decision" style="left:503px;top:770px;"><span>Satisfied?</span></div>
   <div class="end" style="left:532px;top:900px;"></div>
 
@@ -72,11 +69,8 @@
     <!-- No -->
     <path class="flow flow-tight" d="M904 545 L912 545 L912 762"/>
     <text class="ft" x="920" y="610">No</text>
-    <path class="flow flow-tight" d="M762 797 L607 797 L607 813"/>
     <!-- summary -> reviewer view -->
     <path class="flow" d="M762 685 L696 685"/>
-    <!-- reviewer -> vendor -->
-    <path class="flow" d="M396 685 L302 685"/>
     <!-- reviewer decision -->
     <path class="flow" d="M546 720 L546 752"/>
     <!-- satisfied -> end -->
