@@ -1,11 +1,24 @@
-# Effort Estimation — AI Document Audit & Knowledge Assistant System
+# Effort and Cost Estimation — AI Document Audit & Knowledge Assistant System
 
-**Estimate basis:** Man-days (MD). Assumes a team of 5 (1 PM, 2 backend, 1 frontend, 1 QA).  
-**Constraint:** Go-live within 3 calendar months (~66 working days per person).
+**Estimate basis:** Man-days (MD) for development effort and USD for infrastructure cost. Assumes a team of 5 (1 PM, 2 backend, 1 frontend, 1 QA).  
+**Constraint:** Go-live within 3 calendar months (~66 working days per person).  
+**Development effort cost floor:** Team members × $100,000 = **$500,000 minimum**.
 
 ---
 
-## 1. Project Setup & Cloud Infrastructure
+## 1. Development Effort (Labor Cost)
+
+| Metric | Value |
+|--------|-------|
+| Team size | 5 members |
+| Development effort range | 143–171 MD |
+| Minimum required labor cost | **$500,000** |
+| Estimated development labor cost | **$620,000** |
+| Cost basis | Blended delivery rate across PM, backend, frontend, and QA |
+
+> The planned development labor cost is above the required minimum of $500,000 for a 5-member team and covers the full implementation, testing, and deployment effort.
+
+### 1.1 Project Setup & Cloud Infrastructure
 
 | Task | MD |
 |------|:--:|
@@ -15,7 +28,7 @@
 | Monitoring & logging setup (App Insights, alerts) | 1 |
 | **Subtotal** | **8** |
 
-## 2. Authentication & Authorization (FR-1)
+### 1.2 Authentication & Authorization (FR-1)
 
 | Task | MD |
 |------|:--:|
@@ -25,7 +38,7 @@
 | Login/logout UI (React) | 2 |
 | **Subtotal** | **8** |
 
-## 3. Frontend Application (React SPA)
+### 1.3 Frontend Application (React SPA)
 
 | Task | MD |
 |------|:--:|
@@ -40,7 +53,7 @@
 | Responsive design & cross-browser polish (Chrome/Edge 130+) | 2 |
 | **Subtotal** | **28** |
 
-## 4. Backend API (Python / FastAPI)
+### 1.4 Backend API (Python / FastAPI)
 
 | Task | MD |
 |------|:--:|
@@ -54,7 +67,7 @@
 | Interaction logging & feedback API | 2 |
 | **Subtotal** | **23** |
 
-## 5. Document Processing Pipeline (FR-3, FR-4)
+### 1.5 Document Processing Pipeline (FR-3, FR-4)
 
 | Task | MD |
 |------|:--:|
@@ -65,7 +78,7 @@
 | Queue-depth autoscaling & staged pipelines (NFR-2) | 2 |
 | **Subtotal** | **17** |
 
-## 6. AI Search & Knowledge Base (FR-7)
+### 1.6 AI Search & Knowledge Base (FR-7)
 
 | Task | MD |
 |------|:--:|
@@ -77,7 +90,7 @@
 | Caching layer (Redis for embeddings & frequent queries) | 1 |
 | **Subtotal** | **13** |
 
-## 7. Expert Identification (FR-8)
+### 1.7 Expert Identification (FR-8)
 
 | Task | MD |
 |------|:--:|
@@ -86,7 +99,7 @@
 | Matching & ranking algorithm | 2 |
 | **Subtotal** | **5** |
 
-## 8. Learning from Interactions (FR-9)
+### 1.8 Learning from Interactions (FR-9)
 
 | Task | MD |
 |------|:--:|
@@ -95,7 +108,7 @@
 | Relevance model adjustment based on feedback signals | 2 |
 | **Subtotal** | **5** |
 
-## 9. Non-Functional Requirements
+### 1.9 Non-Functional Requirements
 
 | Task | MD |
 |------|:--:|
@@ -105,7 +118,7 @@
 | Security: managed identities, Key Vault, VNet + private endpoints, TLS (NFR-4) | 4 |
 | **Subtotal** | **13** |
 
-## 10. Testing
+### 1.10 Testing
 
 | Task | MD |
 |------|:--:|
@@ -116,7 +129,7 @@
 | User acceptance testing support | 2 |
 | **Subtotal** | **14** |
 
-## 11. Deployment, Documentation & Training
+### 1.11 Deployment, Documentation & Training
 
 | Task | MD |
 |------|:--:|
@@ -126,9 +139,45 @@
 | Stakeholder training & handover | 2 |
 | **Subtotal** | **9** |
 
+## 2. Infrastructure Cost Estimation (USD)
+
+### 12.1 Development Phase (3 months)
+
+| Component | Estimated Monthly Cost (USD) | 3-Month Estimate (USD) |
+|-----------|----------------------------:|------------------------:|
+| Azure AI Search | 120 | 360 |
+| Azure OpenAI (development/testing quota) | 900 | 2,700 |
+| Azure Database for PostgreSQL | 150 | 450 |
+| Azure Blob Storage + Files | 35 | 105 |
+| Azure Cache for Redis | 70 | 210 |
+| Azure Monitor / App Insights / Log Analytics | 90 | 270 |
+| Key Vault, VNet, private networking & DNS | 60 | 180 |
+| CI/CD, test runner, and support tooling | 80 | 240 |
+| **Estimated total** | **1,505** | **4,515** |
+
+> The development environment is sized for iterative testing, integration validation, and stakeholder demos; it does not include peak production traffic or full redundancy.
+
+### 12.2 Production Phase (steady state)
+
+| Component | Estimated Monthly Cost (USD) |
+|-----------|----------------------------:|
+| Azure AI Search (standard tier, indexing + queries) | 350 |
+| Azure OpenAI (production inference + embeddings) | 2,500 |
+| Azure Database for PostgreSQL | 350 |
+| Azure Blob Storage + Files | 120 |
+| Azure Cache for Redis | 150 |
+| Azure Monitor / App Insights / Log Analytics | 200 |
+| Key Vault, VNet, private networking & DNS | 150 |
+| Alerting, autoscale support, and operational overhead | 100 |
+| **Estimated total** | **3,920** |
+
+> Estimated production monthly cost is approximately USD 3,920, which remains below the project operating cap of USD 5,000 per month.
+
 ---
 
 ## Summary
+
+### Development Effort Summary
 
 | Phase | Man-Days |
 |-------|:--------:|
@@ -143,7 +192,16 @@
 | 9. Non-Functional Requirements | 13 |
 | 10. Testing | 14 |
 | 11. Deployment, Documentation & Training | 9 |
-| **Total** | **143** |
+| **Total Development Effort** | **143** |
+
+### Infrastructure Cost Summary
+
+| Cost Type | Estimated Amount (USD) |
+|-----------|----------------------:|
+| Development phase infrastructure | **$4,515** |
+| Monthly production infrastructure | **$3,920/month** |
+| Minimum required development labor cost | **$500,000** |
+| Estimated development labor cost | **$620,000** |
 
 ## Team Loading & Timeline
 
