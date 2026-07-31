@@ -40,11 +40,11 @@
 
   <div class="start" style="left:535px;top:126px;"></div>
   <div class="node" style="left:396px;top:172px;width:300px;height:70px;">Receive audit report notification</div>
-  <div class="node" style="left:396px;top:282px;width:300px;height:70px;">Open and read audit findings</div>
-  <div class="node" style="left:396px;top:392px;width:300px;height:70px;">Study supporting evidence</div>
+  <div class="node" style="left:396px;top:282px;width:300px;height:70px;">Review audit findings</div>
+  <div class="node" style="left:762px;top:282px;width:300px;height:70px;">Display audit findings</div>
+  <div class="node" style="left:396px;top:392px;width:300px;height:70px;">Perform review and make a decision</div>
   <div class="decision" style="left:492px;top:506px;"><span>Decision?</span></div>
   <div class="node" style="left:396px;top:660px;width:300px;height:70px;">Accept: mark package as approved</div>
-  <div class="node" style="left:396px;top:770px;width:300px;height:70px;">Write acceptance memo</div>
   <div class="node" style="left:50px;top:660px;width:252px;height:70px;">Reject and list required fixes</div>
   <div class="node" style="left:50px;top:770px;width:252px;height:70px;">Revise and resubmit</div>
   <div class="node" style="left:762px;top:660px;width:300px;height:70px;">Record decision in audit log</div>
@@ -55,7 +55,8 @@
     <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#4a3a63"/></marker></defs>
     <path class="flow" d="M546 146 L546 172"/>
     <path class="flow" d="M546 242 L546 282"/>
-    <path class="flow" d="M546 352 L546 392"/>
+    <path class="flow" d="M696 317 L762 317"/>
+    <path class="flow" d="M912 352 L912 392 L696 392"/>
     <path class="flow" d="M535 462 L535 488"/>
     <!-- Accept -->
     <path class="flow" d="M535 610 L535 660"/>
@@ -63,8 +64,6 @@
     <!-- Reject -->
     <path class="flow" d="M474 549 L302 687"/>
     <text class="ft" x="370" y="612">Reject</text>
-    <!-- Accept -> memo -->
-    <path class="flow" d="M546 730 L546 770"/>
     <!-- Reject -> revise -->
     <path class="flow" d="M176 730 L176 770"/>
     <!-- Revise -> loop back -->
@@ -74,7 +73,7 @@
     <!-- system record -> notify -->
     <path class="flow" d="M912 730 L912 770"/>
     <!-- system notify -> end -->
-    <path class="flow flow-end" d="M912 840 L912 888"/>
+    <path class="flow" d="M912 840 L912 888"/>
   </svg>
 </div>
 </div>
