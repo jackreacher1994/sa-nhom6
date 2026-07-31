@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mxfile host="Electron">
   <diagram name="System Context" id="0">
-    <mxGraphModel dx="1542" dy="1333" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1060" math="0" shadow="0">
+    <mxGraphModel dx="1542" dy="1333" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1320" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -87,6 +87,12 @@
           <mxGeometry height="150" width="260" x="880" y="60" as="geometry" />
         </mxCell>
 
+        <mxCell id="added" parent="1" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#777777;verticalAlign=top;align=left;fontSize=16;fontStyle=1;spacingLeft=14;spacingTop=10;shadow=1;" value="What TO-BE adds — answering the AS-IS pain points" vertex="1">
+          <mxGeometry height="250" width="1600" x="140" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="addedlist" parent="added" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#111111;spacingLeft=4;" value="1. &lt;b&gt;Limited scope&lt;/b&gt; → Knowledge-assistant capability on top of audit: natural-language query, document discovery and summarization, and process guidance for common workflows.&#xa;&#xa;2. &lt;b&gt;No multi-source ingestion&lt;/b&gt; → Enterprise Content Sources integrated (SharePoint, Confluence, file servers, databases) into one vector index tagged by source system.&#xa;&#xa;3. &lt;b&gt;Weak automation&lt;/b&gt; → Automated completeness check on submission, then an AI audit run against a configurable template — no manual reading to produce the report.&#xa;&#xa;4. &lt;b&gt;Heavy manual review load&lt;/b&gt; → The reviewer approves or rejects an AI-generated report with evidence, instead of reading every handover document in full.&#xa;&#xa;5. &lt;b&gt;Missing feedback learning loop&lt;/b&gt; → Feedback &amp; Learning Store captures queries, feedback and reviewer corrections, and periodically adjusts relevance ranking and response generation.&#xa;&#xa;6. &lt;b&gt;No expert matching&lt;/b&gt; → Subject-matter experts resolved from document authorship metadata combined with the HR / Org Directory." vertex="1">
+          <mxGeometry height="200" width="1570" x="16" y="40" as="geometry" />
+        </mxCell>
         <mxCell id="r1" edge="1" parent="1" source="p1" target="sys" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=11;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.15;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Submits handover documents and asks natural-language questions using">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
