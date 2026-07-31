@@ -53,37 +53,37 @@
           <mxGeometry height="24" width="400" x="50" y="170" as="geometry" />
         </mxCell>
 
-        <mxCell id="p1" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#3a8342;strokeColor=#2a6230;fontColor=#ffffff;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="Vendor / Contractor&#xa;[Person]&#xa;A construction vendor who completes factory work items, submits handover documents for audit, and asks natural-language questions to find requirements and experts." vertex="1">
+        <mxCell id="p1" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#3a8342;strokeColor=#2a6230;fontColor=#ffffff;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="Vendor / Contractor&#xa;[Person]&#xa;Completes factory work items.&#xa;Submits handover documents for audit.&#xa;Asks natural-language questions to find requirements, experts." vertex="1">
           <mxGeometry height="160" width="300" x="140" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="p2" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#3a8342;strokeColor=#2a6230;fontColor=#ffffff;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="Customer / Reviewer&#xa;[Person]&#xa;A factory project manager who reviews AI audit results, queries company knowledge in natural language, and manages audit templates." vertex="1">
+        <mxCell id="p2" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#3a8342;strokeColor=#2a6230;fontColor=#ffffff;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="Customer / Reviewer&#xa;[Person]&#xa;Reviews AI audit results.&#xa;Queries company knowledge in natural language.&#xa;Manages audit templates." vertex="1">
           <mxGeometry height="160" width="300" x="1440" y="200" as="geometry" />
         </mxCell>
 
-        <mxCell id="sys" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#115594;strokeColor=#0c3d6b;fontColor=#ffffff;fontSize=13;align=center;verticalAlign=middle;spacing=8;" value="AI Document Audit &amp; Knowledge Assistant System&#xa;[Software System]&#xa;Audits vendor handover documents with AI, and lets employees query, discover, and get guidance across the company&#39;s internal knowledge sources in natural language — with action-level access control (upload / review / view) and expert connections." vertex="1">
+        <mxCell id="sys" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#115594;strokeColor=#0c3d6b;fontColor=#ffffff;fontSize=13;align=center;verticalAlign=middle;spacing=8;" value="AI Document Audit &amp; Knowledge Assistant System&#xa;[Software System]&#xa;Audits vendor handover documents with AI.&#xa;Answers natural-language questions across internal knowledge sources.&#xa;Summarizes documents. Guides users through processes.&#xa;Connects users to subject-matter experts.&#xa;Enforces action-level access control (upload / review / view)." vertex="1">
           <mxGeometry height="190" width="520" x="690" y="430" as="geometry" />
         </mxCell>
 
         <mxCell id="grpold" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f4f4f4;strokeColor=#999999;dashed=1;dashPattern=6 4;verticalAlign=bottom;align=center;spacingBottom=10;fontSize=13;fontStyle=1;fontColor=#666666;" value="Already integrated in AS-IS" vertex="1">
           <mxGeometry height="250" width="340" x="140" y="730" as="geometry" />
         </mxCell>
-        <mxCell id="e4" parent="grpold" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure Entra ID&#xa;[Software System]&#xa;Authentication and role identity for upload/review/view checks." vertex="1">
+        <mxCell id="e4" parent="grpold" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure Entra ID&#xa;[Software System]&#xa;Authenticates users.&#xa;Resolves role for upload/review/view checks." vertex="1">
           <mxGeometry height="150" width="260" x="40" y="60" as="geometry" />
         </mxCell>
 
         <mxCell id="grpnew" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fdf6e8;strokeColor=#e0a300;dashed=1;dashPattern=6 4;verticalAlign=bottom;align=center;spacingBottom=10;fontSize=13;fontStyle=1;fontColor=#96703f;" value="New integrations introduced by TO-BE" vertex="1">
           <mxGeometry height="250" width="1180" x="560" y="730" as="geometry" />
         </mxCell>
-        <mxCell id="e1" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Enterprise Content Sources&#xa;[Software System]&#xa;SharePoint, Confluence, file servers, and internal databases — corporate knowledge and structured data." vertex="1">
+        <mxCell id="e1" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Enterprise Content Sources&#xa;[Software System]&#xa;SharePoint. Confluence. File servers. Internal databases.&#xa;Corporate knowledge. Structured data." vertex="1">
           <mxGeometry height="150" width="260" x="40" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="e2" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure Content Understanding&#xa;[Software System]&#xa;Analyzes document content to extract text and structure." vertex="1">
+        <mxCell id="e2" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure Content Understanding&#xa;[Software System]&#xa;Analyzes document content.&#xa;Extracts text, structure." vertex="1">
           <mxGeometry height="150" width="260" x="320" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="e3" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure OpenAI Service&#xa;[Software System]&#xa;Provides LLM capabilities for answers, summaries, and audits." vertex="1">
+        <mxCell id="e3" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Azure OpenAI Service&#xa;[Software System]&#xa;Provides LLM capabilities.&#xa;Answers. Summaries. Audit results." vertex="1">
           <mxGeometry height="150" width="260" x="600" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="e5" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="HR / Org Directory&#xa;[Software System]&#xa;Employee profiles for expert identification." vertex="1">
+        <mxCell id="e5" parent="grpnew" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="HR / Org Directory&#xa;[Software System]&#xa;Employee profiles.&#xa;Used for expert identification." vertex="1">
           <mxGeometry height="150" width="260" x="880" y="60" as="geometry" />
         </mxCell>
 
