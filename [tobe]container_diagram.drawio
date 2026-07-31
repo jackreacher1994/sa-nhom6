@@ -7,10 +7,17 @@
         <mxCell id="1" parent="0" />
 
         <!-- Title / legend -->
+        <mxCell id="r23" edge="1" parent="1" source="be" target="conn" value="r23: Adds &amp; validates document sources [JSON/HTTPS]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0;exitY=0.85;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="679" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="title" parent="1" style="text;html=1;fontSize=20;align=left;verticalAlign=middle;fontColor=#000000;fontStyle=1" value="Container Diagram v2 — AI Document Audit &amp; Knowledge Assistant System" vertex="1">
           <mxGeometry height="30" width="1400" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="subtitle" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#444444;" value="Teal = container new in TO-BE; blue = carried over from AS-IS (which had only Frontend, Backend, Document Storage, Database — and Azure Entra ID as its single external system). Gold border = new in TO-BE, i.e. absent from AS-IS — it also marks the new external systems, which stay gray. Access is action-level only (upload / review / view), checked against Entra ID role — no entitlement store, no content-scope tagging." vertex="1">
+        <mxCell id="subtitle" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#444444;" value="Light blue = container new in TO-BE; dark blue = carried over from AS-IS (which had only Frontend, Backend, Document Storage, Database — and Azure Entra ID as its single external system). Gold border = new in TO-BE, i.e. absent from AS-IS — it also marks the new external systems, which stay gray. Access is action-level only (upload / review / view), checked against Entra ID role — no entitlement store, no content-scope tagging." vertex="1">
           <mxGeometry height="24" width="1900" x="40" y="54" as="geometry" />
         </mxCell>
 
@@ -29,7 +36,7 @@
         <mxCell id="lg2t" parent="legend" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="Container — already in AS-IS" vertex="1">
           <mxGeometry height="24" width="280" x="50" y="58" as="geometry" />
         </mxCell>
-        <mxCell id="lg3" parent="legend" style="rounded=0;html=1;fillColor=#0f766e;strokeColor=#0a544e;" value="" vertex="1">
+        <mxCell id="lg3" parent="legend" style="rounded=0;html=1;fillColor=#4a8ac9;strokeColor=#2f6ba8;" value="" vertex="1">
           <mxGeometry height="16" width="30" x="10" y="90" as="geometry" />
         </mxCell>
         <mxCell id="lg3t" parent="legend" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" value="Container — new in TO-BE" vertex="1">
@@ -91,10 +98,10 @@
         <mxCell id="zone2" parent="boundary" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f7ee;strokeColor=#8aad78;dashed=1;dashPattern=6 4;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontSize=13;fontStyle=1;fontColor=#5c7d4c;" value="2 · Ingestion &amp; Content Processing" vertex="1">
           <mxGeometry height="490" width="800" x="40" y="480" as="geometry" />
         </mxCell>
-        <mxCell id="conn" parent="zone2" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="Ingestion &amp; Processing Service&#xa;[Container: Python, Celery] (evolved from ETL Service)&#xa;Two entry points — per-source connectors crawl SharePoint, Confluence, file servers, and databases; documents uploaded via Backend are processed from Blob. Shared pipeline: extract → chunk → embed → index, tagged by source system." vertex="1">
+        <mxCell id="conn" parent="zone2" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="Ingestion &amp; Processing Service&#xa;[Container: Python, Celery] (evolved from ETL Service)&#xa;Two entry points — per-source connectors crawl SharePoint, Confluence, file servers, and databases; documents uploaded via Backend are processed from Blob. Shared pipeline: extract → chunk → embed → index, tagged by source system." vertex="1">
           <mxGeometry height="180" width="300" x="60" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="redis" parent="zone2" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Message Broker&#xa;[Redis]&#xa;Message queue for Celery task distribution." vertex="1">
+        <mxCell id="redis" parent="zone2" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Message Broker&#xa;[Redis]&#xa;Message queue for Celery task distribution." vertex="1">
           <mxGeometry height="150" width="240" x="440" y="70" as="geometry" />
         </mxCell>
         <mxCell id="blob" parent="zone2" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#115594;strokeColor=#0c3d6b;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Document Storage&#xa;[Azure Blob Storage]&#xa;Stores uploaded handover documents and crawled files." vertex="1">
@@ -105,13 +112,13 @@
         <mxCell id="zone3" parent="boundary" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f1fa;strokeColor=#a98cbb;dashed=1;dashPattern=6 4;verticalAlign=top;align=left;spacingLeft=12;spacingTop=6;fontSize=13;fontStyle=1;fontColor=#7a5a90;" value="3 · AI Reasoning &amp; Retrieval" vertex="1">
           <mxGeometry height="490" width="1000" x="920" y="480" as="geometry" />
         </mxCell>
-        <mxCell id="ai" parent="zone3" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="AI Service&#xa;[Container: Python]&#xa;Routes intent (search / summarize / process-guidance / expert-lookup) and runs RAG over the unified index." vertex="1">
+        <mxCell id="ai" parent="zone3" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="AI Service&#xa;[Container: Python]&#xa;Routes intent (search / summarize / process-guidance / expert-lookup) and runs RAG over the unified index." vertex="1">
           <mxGeometry height="160" width="300" x="60" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="expert" parent="zone3" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="Expert Directory Service&#xa;[Container: Python]&#xa;Resolves subject-matter experts from document authorship metadata and org/HR profiles." vertex="1">
+        <mxCell id="expert" parent="zone3" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;verticalAlign=middle;spacing=6;" value="Expert Directory Service&#xa;[Container: Python]&#xa;Resolves subject-matter experts from document authorship metadata and org/HR profiles." vertex="1">
           <mxGeometry height="160" width="300" x="620" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="search" parent="zone3" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Search Index&#xa;[Azure AI Search]&#xa;Unified vector index: audit docs + multi-source knowledge + process content, tagged by source system." vertex="1">
+        <mxCell id="search" parent="zone3" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Search Index&#xa;[Azure AI Search]&#xa;Unified vector index: audit docs + multi-source knowledge + process content, tagged by source system." vertex="1">
           <mxGeometry height="150" width="300" x="60" y="290" as="geometry" />
         </mxCell>
 
@@ -122,10 +129,10 @@
         <mxCell id="db" parent="zone4" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#115594;strokeColor=#0c3d6b;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Database&#xa;[PostgreSQL]&#xa;Stores user data, audit records, results, and templates." vertex="1">
           <mxGeometry height="130" width="240" x="50" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="feedback" parent="zone4" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Feedback &amp; Learning Store&#xa;[PostgreSQL]&#xa;Reviewer corrections queued for curator flag-and-review; approved ranking/prompt config is read by AI Service." vertex="1">
+        <mxCell id="feedback" parent="zone4" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Feedback &amp; Learning Store&#xa;[PostgreSQL]&#xa;Stores query, result and feedback history plus reviewer corrections. Periodically analysed to adjust relevance ranking and response generation, applied to future queries." vertex="1">
           <mxGeometry height="130" width="240" x="50" y="230" as="geometry" />
         </mxCell>
-        <mxCell id="gov" parent="zone4" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#0f766e;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Governance &amp; Audit Log&#xa;[PostgreSQL]&#xa;Logs every Q&amp;A/audit interaction with sources surfaced and the role check applied." vertex="1">
+        <mxCell id="gov" parent="zone4" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#4a8ac9;strokeColor=#e0a300;strokeWidth=3;fontColor=#ffffff;fontSize=11;align=center;spacing=6;" value="Governance &amp; Audit Log&#xa;[PostgreSQL]&#xa;Logs every Q&amp;A/audit interaction with sources surfaced and the role check applied." vertex="1">
           <mxGeometry height="130" width="240" x="50" y="400" as="geometry" />
         </mxCell>
 
@@ -144,12 +151,12 @@
         </mxCell>
 
         <!-- Relationships -->
-        <mxCell id="r1" edge="1" parent="1" source="vendor" target="fe" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;curved=0;" value="r1: Submits documents &amp; asks NL questions [HTTPS]">
+        <mxCell id="r1" edge="1" parent="1" source="vendor" target="fe" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;curved=0;" value="r1: Submits documents, adds sources &amp; asks NL questions [HTTPS]">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-135" y="10" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="r2" edge="1" parent="1" source="reviewer" target="fe" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;curved=0;" value="r2: Reviews results, queries knowledge, manages templates [HTTPS]">
+        <mxCell id="r2" edge="1" parent="1" source="reviewer" target="fe" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;curved=0;" value="r2: Reviews results, queries knowledge, manages templates &amp; identifies experts [HTTPS]">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="130" y="10" as="offset" />
           </mxGeometry>
@@ -180,7 +187,7 @@
               </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r10" edge="1" parent="1" source="be" target="feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" value="r10: Writes reviewer corrections [SQL/TCP]">
+        <mxCell id="r10" edge="1" parent="1" source="be" target="feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=0;" value="r10: Writes queries, feedback &amp; reviewer corrections [SQL/TCP]">
           <mxGeometry x="-0.55" relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2030" y="630" />
@@ -266,7 +273,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="r20" edge="1" parent="1" source="ai" target="feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.9;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;curved=0;" value="r20: Reads approved ranking/prompt config [SQL/TCP]">
+        <mxCell id="r20" edge="1" parent="1" source="ai" target="feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.9;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;curved=0;" value="r20: Reads relevance ranking &amp; response config [SQL/TCP]">
           <mxGeometry x="-0.35" relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1290" y="1030" />
