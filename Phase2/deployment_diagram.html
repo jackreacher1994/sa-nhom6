@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deployment Diagram - AI Document Audit &amp; Knowledge Assistant System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+    .diagram {
+      position: relative;
+      width: 1920px;
+      height: 2040px;
+      background: #fff;
+      border: 1px solid #ccd8e8;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      overflow: hidden;
+    }
+
+    /* ---- Base box ---- */
+    .c4-box {
+      position: absolute;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .c4-box .name { font-size: 15px; font-weight: 700; }
+    .c4-box .type { font-size: 11px; margin-top: 2px; opacity: .95; }
+    .c4-box .desc { font-size: 11px; margin-top: 5px; opacity: .92; line-height: 1.35; }
+
+    /* container-apps node: title pinned to the top so it never overlaps the nested boxes */
+    .cae {
+      justify-content: flex-start;
+      padding-top: 12px;
+    }
+
+    /* Person */
+    .person {
+      background: #f4fbf4;
+      border: 2px solid #3a8342;
+      border-radius: 24px;
+      color: #1f2d1f;
+      padding-top: 10px;
+    }
+    .person .icon {
+      width: 48px; height: 48px; margin-bottom: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .person .icon svg { width: 100%; height: 100%; }
+
+    /* Azure deployment node */
+    .node {
+      background: #115594;
+      border: 2px solid #0c3d6b;
+    }
+    /* new-in-TO-BE node (gold border) */
+    .node-new {
+      background: #0f766e;
+      border: 2px solid #e0a300;
+    }
+    /* external system */
+    .external {
+      background: #4f5256;
+      border: 2px solid #35373a;
+    }
+    .external-new {
+      background: #4f5256;
+      border: 2px solid #e0a300;
+    }
+    /* nested container inside a node */
+    .inner {
+      position: absolute;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 6px;
+      color: #fff;
+      padding: 5px 8px;
+      font-size: 11px;
+      text-align: center;
+      line-height: 1.25;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 21;
+    }
+    .inner b { font-size: 11.5px; display: block; }
+
+    /* ---- Zones ---- */
+    .zone {
+      position: absolute;
+      border: 2px dashed #7fa3c8;
+      border-radius: 12px;
+      background: rgba(238,244,251,0.18);
+      z-index: 1;
+    }
+    .zone-label {
+      position: absolute;
+      top: 10px; left: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #43689a;
+      z-index: 2;
+    }
+    .zone-label small { font-weight: 400; font-size: 11px; color: #5c7a9c; }
+
+    .zone-green { border-color: #8aad78; background: rgba(242,247,238,0.18); }
+    .zone-green .zone-label { color: #5c7d4c; }
+    .zone-green .zone-label small { color: #7a9870; }
+
+    .zone-purple { border-color: #a98cbb; background: rgba(248,241,250,0.18); }
+    .zone-purple .zone-label { color: #7a5a90; }
+    .zone-purple .zone-label small { color: #9a80aa; }
+
+    .zone-gray { border-color: #9aa0a8; background: rgba(240,241,244,0.25); }
+    .zone-gray .zone-label { color: #5a6069; }
+    .zone-gray .zone-label small { color: #7d838c; }
+
+    /* ---- Azure boundary ---- */
+    .azure {
+      position: absolute;
+      border: 2.5px solid #115594;
+      border-radius: 14px;
+      background: rgba(17,85,148,0.03);
+      z-index: 0;
+    }
+    .azure-label {
+      position: absolute;
+      top: -14px; left: 26px;
+      background: #fff;
+      padding: 0 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #115594;
+      z-index: 3;
+    }
+    .azure-note {
+      position: absolute;
+      background: #eef4fb;
+      border: 1px dashed #7fa3c8;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #34567a;
+      z-index: 10;
+    }
+    .azure-note b { color: #115594; }
+
+    /* ---- Title ---- */
+    .title {
+      position: absolute;
+      left: 40px; top: 14px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0e3a66;
+    }
+    .subtitle {
+      position: absolute;
+      left: 40px; top: 48px;
+      font-size: 13px;
+      color: #5a6b7e;
+    }
+
+    /* ---- Legend ---- */
+    .legend {
+      position: absolute;
+      border: 1px solid #777;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12.5px;
+      line-height: 1.9;
+      background: #fff;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.08);
+      z-index: 30;
+    }
+    .legend-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; margin: 2px 0; }
+    .legend-swatch { display: inline-block; width: 24px; height: 15px; border-radius: 3px; flex: 0 0 auto; }
+    .legend-swatch.person-sw { background: #f4fbf4; border: 2px solid #3a8342; border-radius: 12px; }
+    .legend-swatch.node-sw { background: #115594; }
+    .legend-swatch.node-new-sw { background: #0f766e; border: 2px solid #e0a300; }
+    .legend-swatch.ext-new-sw { background: #4f5256; border: 2px solid #e0a300; }
+    .legend-line { display: flex; align-items: center; gap: 10px; margin: 2px 0; }
+    .legend-solid { width: 24px; height: 0; border-top: 2px solid #555; flex: 0 0 auto; }
+    .legend-dashed { width: 24px; height: 0; border-top: 2px dashed #7fa3c8; flex: 0 0 auto; }
+    .legend-dotted { width: 24px; height: 0; border-top: 2px dotted #0f766e; flex: 0 0 auto; }
+
+    /* ---- SVG arrows ---- */
+    svg.arrows {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1920px; height: 2040px;
+      pointer-events: none;
+      z-index: 50;
+    }
+    svg.arrows path.rel {
+      fill: none;
+      stroke: #555;
+      stroke-width: 1.6;
+    }
+    svg.arrows path.telemetry {
+      fill: none;
+      stroke: #0f766e;
+      stroke-width: 1.4;
+      stroke-dasharray: 2 5;
+    }
+    svg.arrows text {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11.5px;
+      fill: #1a1a1a;
+      text-anchor: middle;
+      paint-order: stroke;
+      stroke: #fff;
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <div class="title">Deployment Diagram — AI Document Audit &amp; Knowledge Assistant System</div>
+    <div class="subtitle">TO-BE · Deployed on Microsoft Azure · C4 Deployment view · region: Southeast Asia · VNet app-vnet 10.1.0.0/16</div>
+
+    <!-- ============ PERSONS ============ -->
+    <div class="c4-box person" style="left:60px; top:95px; width:300px; height:130px;">
+      <div class="icon">
+        <svg viewBox="0 0 64 64" aria-label="Person icon" role="img">
+          <circle cx="32" cy="20" r="12" fill="#3a8342"></circle>
+          <path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path>
+        </svg>
+      </div>
+      <div class="name">Vendor / Contractor</div>
+      <div class="type">[Device: Web Browser]</div>
+      <div class="desc">Submits handover documents and asks natural-language questions.</div>
+    </div>
+
+    <div class="c4-box person" style="left:1360px; top:95px; width:300px; height:130px;">
+      <div class="icon">
+        <svg viewBox="0 0 64 64" aria-label="Person icon" role="img">
+          <circle cx="32" cy="20" r="12" fill="#3a8342"></circle>
+          <path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path>
+        </svg>
+      </div>
+      <div class="name">Customer / Reviewer</div>
+      <div class="type">[Device: Web Browser]</div>
+      <div class="desc">Reviews audit results, manages templates, and queries knowledge.</div>
+    </div>
+
+    <!-- ============ AZURE CLOUD BOUNDARY ============ -->
+    <div class="azure" style="left:40px; top:240px; width:1640px; height:1340px;">
+      <div class="azure-label">Azure Cloud — Subscription · Region: Southeast Asia [Node]</div>
+    </div>
+
+    <!-- ============ ZONE 1 : COMPUTE & ACCESS ============ -->
+    <div class="zone zone-green" style="left:60px; top:390px; width:1200px; height:325px;">
+      <div class="zone-label">1 · Compute &amp; Access <small>— Azure App Service · Static Web Apps · Container Apps (VNet app-subnet 10.1.0.0/24)</small></div>
+    </div>
+
+    <!-- Front Door (public edge) -->
+    <div class="c4-box node-new" style="left:700px; top:265px; width:300px; height:90px;">
+      <div class="name">Azure Front Door + WAF</div>
+      <div class="type">[Node: Azure PaaS — public ingress]</div>
+      <div class="desc">TLS termination, WAF &amp; DDoS protection, global routing to the SPA.</div>
+    </div>
+
+    <!-- Frontend SPA -->
+    <div class="c4-box node" style="left:80px; top:445px; width:300px; height:100px;">
+      <div class="name">Azure Static Web Apps</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Deploys <b>[Container: Frontend — React SPA]</b><br>upload UI, audit view, NL query, templates</div>
+    </div>
+
+    <!-- Backend API -->
+    <div class="c4-box node" style="left:400px; top:445px; width:300px; height:120px;">
+      <div class="name">Azure App Service (Linux)</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Deploys <b>[Container: Backend API — Python FastAPI]</b><br>REST API, Entra ID JWT validation, RBAC</div>
+    </div>
+
+    <!-- Container Apps environment (title top-aligned so nested boxes never overlap) -->
+    <div class="c4-box node-new cae" style="left:740px; top:440px; width:460px; height:270px;">
+      <div class="name">Azure Container Apps Environment</div>
+      <div class="type">[Node: Azure PaaS — K8s-backed, autoscaling]</div>
+      <div class="inner" style="left:20px; top:66px; width:420px; height:50px;">
+        <b>Ingestion &amp; Processing Service [Celery workers]</b>
+        connector crawl (SharePoint, Confluence, servers, DBs) + ETL: extract → chunk → embed → index
+      </div>
+      <div class="inner" style="left:20px; top:126px; width:420px; height:50px;">
+        <b>AI Service [Python]</b>
+        intent routing, RAG over unified index, audit &amp; answer generation
+      </div>
+      <div class="inner" style="left:20px; top:186px; width:420px; height:50px;">
+        <b>Expert Directory Service [Python]</b>
+        subject-matter-expert matching from metadata + org profiles
+      </div>
+    </div>
+
+    <!-- ============ ZONE 2 : DATA & GOVERNANCE ============ -->
+    <div class="zone" style="left:60px; top:805px; width:1380px; height:320px;">
+      <div class="zone-label">2 · Data &amp; Governance <small>— private endpoints in VNet (data-subnet 10.1.1.0/24)</small></div>
+    </div>
+
+    <div class="c4-box node" style="left:80px; top:850px; width:380px; height:150px;">
+      <div class="name">Azure Database for PostgreSQL Flexible Server</div>
+      <div class="type">[Node: Azure PaaS — zone redundant]</div>
+      <div class="desc">Hosts logical stores:<br>• Application DB (users, audits, results, templates)<br>• Feedback &amp; Learning Store (Q&amp;A corrections)<br>• Governance &amp; Audit Log</div>
+    </div>
+
+    <div class="c4-box node-new" style="left:500px; top:850px; width:300px; height:90px;">
+      <div class="name">Azure Cache for Redis</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Message broker for Celery + embedding/query cache</div>
+    </div>
+
+    <div class="c4-box node" style="left:830px; top:850px; width:300px; height:90px;">
+      <div class="name">Azure Blob Storage</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Document storage — uploaded handover docs &amp; crawled files</div>
+    </div>
+
+    <div class="c4-box node-new" style="left:1160px; top:850px; width:300px; height:90px;">
+      <div class="name">Azure AI Search</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Unified vector index — audit docs + multi-source knowledge</div>
+    </div>
+
+    <div class="c4-box node-new" style="left:80px; top:1030px; width:300px; height:90px;">
+      <div class="name">Azure Key Vault</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">Secrets, keys &amp; certificates — accessed via managed identities</div>
+    </div>
+
+    <div class="c4-box node-new" style="left:400px; top:1030px; width:300px; height:90px;">
+      <div class="name">Azure Monitor / App Insights</div>
+      <div class="type">[Node: Azure PaaS]</div>
+      <div class="desc">APM telemetry, logs, metrics &amp; budget alerts (80/90/100%)</div>
+    </div>
+
+    <!-- ============ ZONE 3 : EXTERNAL AZURE SERVICES ============ -->
+    <div class="zone zone-purple" style="left:700px; top:1150px; width:660px; height:300px;">
+      <div class="zone-label">3 · External Azure Services <small>— managed by Microsoft, consumed over private endpoints</small></div>
+    </div>
+
+    <div class="c4-box external-new" style="left:720px; top:1180px; width:300px; height:90px;">
+      <div class="name">Azure Content Understanding</div>
+      <div class="type">[Software System: Azure]</div>
+      <div class="desc">Analyzes document content — extracts text &amp; structure</div>
+    </div>
+
+    <div class="c4-box external-new" style="left:1040px; top:1180px; width:300px; height:90px;">
+      <div class="name">Azure OpenAI Service</div>
+      <div class="type">[Software System: Azure]</div>
+      <div class="desc">LLM for answers, summaries, and AI audit results</div>
+    </div>
+
+    <div class="c4-box external-new" style="left:720px; top:1310px; width:300px; height:90px;">
+      <div class="name">Azure Entra ID</div>
+      <div class="type">[Software System: Azure]</div>
+      <div class="desc">OAuth2/OIDC identity provider + role assignments (Vendor / Customer)</div>
+    </div>
+
+    <!-- ============ ZONE 4 : ON-PREMISES ============ -->
+    <div class="zone zone-gray" style="left:60px; top:1600px; width:1240px; height:150px;">
+      <div class="zone-label">4 · Corporate Network <small>— on-premises systems (accessed over VPN / private peering)</small></div>
+    </div>
+
+    <div class="c4-box external-new" style="left:80px; top:1640px; width:560px; height:100px;">
+      <div class="name">Enterprise Content Sources</div>
+      <div class="type">[Node: On-premises]</div>
+      <div class="desc">SharePoint, Confluence, file servers, and internal databases — corporate knowledge &amp; structured data</div>
+    </div>
+
+    <div class="c4-box external-new" style="left:700px; top:1640px; width:560px; height:100px;">
+      <div class="name">HR / Org Directory</div>
+      <div class="type">[Node: On-premises]</div>
+      <div class="desc">Employee profiles used for subject-matter-expert identification</div>
+    </div>
+
+    <!-- NFR note -->
+    <div class="azure-note" style="left:60px; top:1480px; width:1380px; height:80px;">
+      <b>Operational posture (NFR):</b> NFR-1 streaming (SSE) + Redis cache, precomputed summaries; NFR-2 queue-depth autoscaling &amp; staged pipelines for 500 submissions/hour and 50 concurrent queries; NFR-3 99.9% availability (zone-redundant PaaS, idempotent Celery tasks, DLQ, RTO &lt; 30 min, RPO &lt; 15 min); NFR-4 TLS in transit, sensitive fields encrypted at rest, secrets in Key Vault via managed identities, private endpoints — no public exposure of Blob / AI Search / OpenAI / PostgreSQL.
+    </div>
+
+    <!-- ============ ARROWS ============ -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+        </marker>
+        <marker id="arrow-tele" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#0f766e"/>
+        </marker>
+      </defs>
+
+      <!-- Users -> Front Door -->
+      <path class="rel" d="M 210 225 L 750 265" marker-end="url(#arrow)"/>
+      <text x="450" y="238">Browse SPA [HTTPS]</text>
+
+      <path class="rel" d="M 1510 225 L 950 265" marker-end="url(#arrow)"/>
+      <text x="1290" y="238">Browse SPA [HTTPS]</text>
+
+      <!-- Front Door -> Frontend -->
+      <path class="rel" d="M 730 355 L 730 405 L 230 405 L 230 445" marker-end="url(#arrow)"/>
+      <text x="480" y="398">Routes SPA [HTTPS]</text>
+
+      <!-- Frontend -> Backend -->
+      <path class="rel" d="M 380 495 L 400 495" marker-end="url(#arrow)"/>
+      <text x="390" y="486">API [JSON/HTTPS]</text>
+
+      <!-- Backend -> AI Service (trigger) -->
+      <path class="rel" d="M 700 470 L 740 470 L 740 596 L 760 596" marker-end="url(#arrow)"/>
+      <text x="720" y="530">Trigger audit / NL query</text>
+
+      <!-- Backend -> Redis (straight drop) -->
+      <path class="rel" d="M 550 565 L 550 850" marker-end="url(#arrow)"/>
+      <text x="565" y="700">Dispatch Celery tasks [Redis]</text>
+
+      <!-- Backend -> Blob -->
+      <path class="rel" d="M 700 520 L 700 750 L 950 750 L 950 850" marker-end="url(#arrow)"/>
+      <text x="830" y="742">Store uploads [HTTPS]</text>
+
+      <!-- Backend -> PostgreSQL -->
+      <path class="rel" d="M 450 565 L 450 755 L 250 755 L 250 850" marker-end="url(#arrow)"/>
+      <text x="350" y="747">Read/write data [SQL/TCP]</text>
+
+      <!-- Backend -> Key Vault -->
+      <path class="rel" d="M 500 565 L 500 760 L 55 760 L 55 1075 L 80 1075" marker-end="url(#arrow)"/>
+      <text x="280" y="752">Fetch secrets [Managed identity]</text>
+
+      <!-- Backend -> Entra ID -->
+      <path class="rel" d="M 620 565 L 620 765 L 1480 765 L 1480 1355 L 1020 1355" marker-end="url(#arrow)"/>
+      <text x="1150" y="758">OAuth2/OIDC validate [HTTPS]</text>
+
+      <!-- Celery -> Redis (consume) -->
+      <path class="rel" d="M 760 710 L 760 850" marker-end="url(#arrow)"/>
+      <text x="775" y="780">Consume tasks</text>
+
+      <!-- Celery -> Blob -->
+      <path class="rel" d="M 830 710 L 830 770 L 900 770 L 900 850" marker-end="url(#arrow)"/>
+      <text x="865" y="762">Read/write files</text>
+
+      <!-- Celery -> AI Search -->
+      <path class="rel" d="M 870 710 L 870 775 L 1300 775 L 1300 850" marker-end="url(#arrow)"/>
+      <text x="1100" y="767">Index docs (tagged by source)</text>
+
+      <!-- AI Service -> AI Search -->
+      <path class="rel" d="M 1180 595 L 1470 595 L 1470 895 L 1420 895" marker-end="url(#arrow)"/>
+      <text x="1490" y="700">Vector query</text>
+
+      <!-- AI Service -> OpenAI -->
+      <path class="rel" d="M 1180 585 L 1460 585 L 1460 1225 L 1340 1225" marker-end="url(#arrow)"/>
+      <text x="1490" y="840">Generate answers &amp; audits</text>
+
+      <!-- AI Service -> PostgreSQL (feedback) -->
+      <path class="rel" d="M 880 710 L 880 785 L 350 785 L 350 850" marker-end="url(#arrow)"/>
+      <text x="615" y="778">Feedback &amp; ranking config [SQL/TCP]</text>
+
+      <!-- Expert -> AI Search -->
+      <path class="rel" d="M 1000 676 L 1000 780 L 1190 780 L 1190 850" marker-end="url(#arrow)"/>
+      <text x="1095" y="773">Read doc/author metadata</text>
+
+      <!-- Celery -> Content Understanding -->
+      <path class="rel" d="M 900 710 L 900 735 L 60 735 L 60 1225 L 720 1225" marker-end="url(#arrow)"/>
+      <text x="430" y="728">Extract text &amp; structure</text>
+
+      <!-- Expert -> HR / Org Directory -->
+      <path class="rel" d="M 1180 650 L 1510 650 L 1510 1690 L 1260 1690" marker-end="url(#arrow)"/>
+      <text x="1460" y="1150">Resolve employee profiles</text>
+
+      <!-- Celery -> Enterprise Content Sources -->
+      <path class="rel" d="M 760 710 L 760 745 L 60 745 L 60 1690 L 80 1690" marker-end="url(#arrow)"/>
+      <text x="420" y="738">Crawl content [HTTPS/SQL]</text>
+
+      <!-- Telemetry (dotted) -->
+      <path class="telemetry" d="M 700 520 L 700 740 L 470 740 L 470 1030" marker-end="url(#arrow-tele)"/>
+      <text x="565" y="900">Telemetry (all services)</text>
+    </svg>
+
+    <!-- ============ LEGEND ============ -->
+    <div class="legend" style="left:60px; top:1800px; width:620px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch person-sw"></span> Person [Device: Web Browser]</div>
+      <div class="legend-item"><span class="legend-swatch node-sw"></span> Deployment Node — Azure PaaS (carried over from AS-IS)</div>
+      <div class="legend-item"><span class="legend-swatch node-new-sw"></span> Deployment Node — new in TO-BE (gold border)</div>
+      <div class="legend-item"><span class="legend-swatch ext-new-sw"></span> External Software System / on-premises (gold border = new)</div>
+      <div class="legend-line"><span class="legend-solid"></span> Relationship (HTTPS / SQL / Redis)</div>
+      <div class="legend-line"><span class="legend-dotted"></span> Telemetry &amp; monitoring</div>
+      <div class="legend-line"><span class="legend-dashed"></span> Zone (grouping only)</div>
+    </div>
+
+  </div>
+</body>
+</html>
