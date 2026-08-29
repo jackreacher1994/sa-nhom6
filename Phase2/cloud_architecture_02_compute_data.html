@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Architecture 2/4 — Application Compute & Data</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #fdfdfd; font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; padding: 24px; }
+    .diagram { position: relative; width: 1600px; height: 800px; background: #fff; border: 1px solid #ccd8e8; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); overflow: hidden; }
+    .c4-box { position: absolute; color: #fff; border-radius: 8px; padding: 8px 12px; text-align: center; line-height: 1.3; box-shadow: 2px 3px 8px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
+    .c4-box .name { font-size: 14px; font-weight: 700; }
+    .c4-box .type { font-size: 11px; margin-top: 3px; opacity: .92; }
+    .c4-box .desc { font-size: 11px; margin-top: 6px; opacity: .9; line-height: 1.4; }
+    .node, .node-ai, .node-id { background: #115594; border: 2px solid #0c3d6b; }
+    .aks { background: #115594; border: 2px solid #0c3d6b; justify-content: flex-start; padding-top: 10px; }
+    .stub { background: #f0f1f4; border: 2px dashed #9aa0a8; color: #4d525a; box-shadow: none; }
+    .stub .name { font-size: 12.5px; }
+    .inner { position: absolute; background: rgba(224,163,0,0.22); border: 1px solid #ffd76a; border-radius: 6px; color: #fff; padding: 4px 8px; font-size: 11px; text-align: center; line-height: 1.3; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 21; }
+    .inner b { font-size: 13px; display: block; margin-bottom: 1px; }
+
+    .zone { position: absolute; border: 2px dashed #7fa3c8; border-radius: 12px; background: rgba(238,244,251,0.18); z-index: 1; }
+    .zone-label { position: absolute; top: 7px; left: 14px; font-size: 12.5px; font-weight: 700; color: #43689a; z-index: 2; }
+    .zone-label small { font-weight: 400; font-size: 10.5px; color: #5c7a9c; }
+    .zone-teal { border-color: #6aa8a2; background: rgba(238,249,248,0.22); }
+    .zone-teal .zone-label { color: #0f766e; }
+    .zone-teal .zone-label small { color: #4b9c95; }
+    .zone-purple { border-color: #a98cbb; background: rgba(248,241,250,0.18); }
+    .zone-purple .zone-label { color: #7a5a90; }
+    .zone-purple .zone-label small { color: #9a80aa; }
+
+    .azure { position: absolute; border: 2.5px solid #115594; border-radius: 14px; background: rgba(17,85,148,0.03); z-index: 0; }
+    .azure-label { position: absolute; top: -13px; left: 30px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 700; color: #115594; z-index: 3; }
+
+    .legend { position: absolute; border: 1px solid #777; border-radius: 8px; padding: 8px 14px; font-size: 11.5px; background: #fff; box-shadow: 2px 3px 8px rgba(0,0,0,0.08); z-index: 30; }
+    .legend-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .legend-item, .legend-line { display: flex; align-items: center; gap: 9px; margin: 2px 0; }
+    .legend-swatch { display:inline-block; width:22px; height:14px; border-radius:3px; flex:0 0 auto; }
+    .legend-swatch.node-sw { background:#115594; }
+    .legend-swatch.stub-sw { background:#f0f1f4; border:2px dashed #9aa0a8; }
+    .legend-solid { width:22px; height:0; border-top:2px solid #555; flex:0 0 auto; }
+    .legend-stub { width:22px; height:0; border-top:2px dashed #8a8f96; flex:0 0 auto; }
+
+    svg.arrows { position: absolute; top: 0; left: 0; width: 1600px; height: 800px; pointer-events: none; z-index: 50; }
+    svg.arrows path.rel { fill: none; stroke: #555; stroke-width: 1.6; }
+    svg.arrows path.stub-link { fill: none; stroke: #8a8f96; stroke-width: 1.6; stroke-dasharray: 4 4; }
+    svg.arrows text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #1a1a1a; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <div class="legend" style="left:20px; top:15px; width:330px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch node-sw"></span> Azure service</div>
+      <div class="legend-item"><span class="legend-swatch stub-sw"></span> Continues in another diagram</div>
+      <div class="legend-line"><span class="legend-solid"></span> Request / data flow</div>
+      <div class="legend-line"><span class="legend-stub"></span> Cross-diagram connection</div>
+    </div>
+
+    <!-- Top stubs: inbound from Diagram 1 -->
+    <div class="c4-box stub" style="left:460px; top:30px; width:320px; height:80px;">
+      <div class="name">Azure Application Gateway</div>
+    </div>
+    <div class="c4-box stub" style="left:820px; top:30px; width:320px; height:80px;">
+      <div class="name">Azure Entra ID</div>
+    </div>
+
+    <!-- Azure boundary -->
+    <div class="azure" style="left:20px; top:140px; width:1560px; height:630px;">
+      <div class="azure-label">Azure Subscription — Japan East (AZ 1 · 2 · 3)</div>
+    </div>
+
+    <!-- Zone 2: AKS Compute -->
+    <div class="zone zone-teal" style="left:50px; top:160px; width:1020px; height:430px;">
+      <div class="zone-label">2 · Application Compute <small>— aks-subnet 10.1.0.0/22</small></div>
+    </div>
+
+    <div class="c4-box aks" style="left:70px; top:200px; width:980px; height:370px;">
+      <div class="name">Azure Kubernetes Service</div>
+      <div class="type" style="margin-bottom:2px;">[Node: managed Kubernetes · zone-redundant across AZ 1-2-3]</div>
+
+      <div class="inner" style="left:20px; top:60px; width:460px; height:140px;">
+        <b>Backend Service</b>
+        Python / FastAPI · Entra ID JWT validation &amp; RBAC · submissions, completeness check, templates, review decisions, audit log
+      </div>
+      <div class="inner" style="left:500px; top:60px; width:460px; height:140px;">
+        <b>AI Service</b>
+        Python / FastAPI · intent routing, RAG over the unified index, reranking, audit generation from templates, streamed answers with source links
+      </div>
+      <div class="inner" style="left:20px; top:215px; width:460px; height:140px;">
+        <b>ETL Service</b>
+        Python / FastAPI + Celery workers · source connectors (SharePoint, Confluence, file servers, DBs) · staged queues: extract → chunk → embed → index · idempotent + retries + DLQ
+      </div>
+      <div class="inner" style="left:500px; top:215px; width:460px; height:140px;">
+        <b>Expert Service</b>
+        Python / FastAPI · keyword / domain extraction from documents, matching &amp; ranking of subject-matter experts against org profiles
+      </div>
+    </div>
+
+    <!-- Zone 3: Data -->
+    <div class="zone zone-purple" style="left:1080px; top:160px; width:500px; height:470px;">
+      <div class="zone-label">3 · Data Services <small>— data-subnet 10.1.4.0/24</small></div>
+    </div>
+
+    <div class="c4-box node" style="left:1100px; top:210px; width:220px; height:170px;">
+      <div class="name">Azure Database for PostgreSQL</div>
+      <div class="type">[PaaS — zone redundant HA]</div>
+      <div class="desc">Application DB (users, submissions, audits, templates), Feedback &amp; Learning store, Governance / Audit log · PITR backups</div>
+    </div>
+    <div class="c4-box node" style="left:1340px; top:210px; width:220px; height:170px;">
+      <div class="name">Azure Cache for Redis</div>
+      <div class="type">[PaaS — Premium, zone redundant]</div>
+      <div class="desc">Celery broker &amp; staged task queues · embedding and frequent-query cache</div>
+    </div>
+    <div class="c4-box node" style="left:1100px; top:440px; width:220px; height:170px;">
+      <div class="name">Azure Blob Storage</div>
+      <div class="type">[PaaS — ZRS, versioning]</div>
+      <div class="desc">Immutable originals of uploaded handover documents and crawled files · lifecycle &amp; retention policies</div>
+    </div>
+    <div class="c4-box node" style="left:1340px; top:440px; width:220px; height:170px;">
+      <div class="name">Azure AI Search</div>
+      <div class="type">[PaaS — replicas + partitions]</div>
+      <div class="desc">Unified hybrid (vector + keyword) index over audit documents and multi-source knowledge</div>
+    </div>
+
+    <!-- Bottom stubs: outbound to Diagram 3 / 4 -->
+    <div class="c4-box stub" style="left:270px; top:650px; width:480px; height:90px;">
+      <div class="name">Azure OpenAI Service / Azure Content Understanding</div>
+    </div>
+    <div class="c4-box stub" style="left:850px; top:650px; width:480px; height:90px;">
+      <div class="name">Key Vault · Monitor · ACR · DevOps · Corporate Network</div>
+    </div>
+
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+        </marker>
+        <marker id="arrow-stub" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#8a8f96"/>
+        </marker>
+      </defs>
+
+      <!-- Application Gateway (stub) -> AKS -->
+      <path class="stub-link" d="M 620 110 L 620 200" marker-end="url(#arrow-stub)"/>
+      <text x="620" y="132">HTTPS → AKS ingress (internal LB)</text>
+
+      <!-- AKS -> Entra ID (stub) -->
+      <path class="stub-link" d="M 980 200 L 980 110" marker-end="url(#arrow-stub)"/>
+      <text x="980" y="132">Validate JWT (OIDC)</text>
+
+      <!-- AKS -> PostgreSQL -->
+      <path class="rel" d="M 1050 295 L 1100 295" marker-end="url(#arrow)"/>
+      <text x="1075" y="288">SQL/TCP</text>
+
+      <!-- AKS -> Redis -->
+      <path class="rel" d="M 1050 400 L 1450 400 L 1450 380" marker-end="url(#arrow)"/>
+      <text x="1250" y="393">Celery queues + cache</text>
+
+      <!-- AKS -> Blob -->
+      <path class="rel" d="M 1050 525 L 1100 525" marker-end="url(#arrow)"/>
+      <text x="1075" y="518">Blob API</text>
+
+      <!-- AKS -> AI Search -->
+      <path class="rel" d="M 1050 420 L 1450 420 L 1450 440" marker-end="url(#arrow)"/>
+      <text x="1250" y="413">Index &amp; vector query [HTTPS]</text>
+
+      <!-- AKS -> AI Platform (stub) -->
+      <path class="stub-link" d="M 350 570 L 350 650" marker-end="url(#arrow-stub)"/>
+      <text x="350" y="613">AI/ETL → OpenAI &amp; Content Understanding</text>
+
+      <!-- AKS -> Platform/Ops/External (stub) -->
+      <path class="stub-link" d="M 950 570 L 950 650" marker-end="url(#arrow-stub)"/>
+      <text x="950" y="613">Secrets, telemetry, CI/CD &amp; external data access</text>
+    </svg>
+
+  </div>
+</body>
+</html>

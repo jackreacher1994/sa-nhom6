@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Architecture 3/4 — AI Platform & ETL</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #fdfdfd; font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; padding: 24px; }
+    .diagram { position: relative; width: 1300px; height: 540px; background: #fff; border: 1px solid #ccd8e8; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); overflow: hidden; }
+    .c4-box { position: absolute; color: #fff; border-radius: 8px; padding: 8px 12px; text-align: center; line-height: 1.3; box-shadow: 2px 3px 8px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
+    .c4-box .name { font-size: 15px; font-weight: 700; }
+    .c4-box .type { font-size: 11px; margin-top: 3px; opacity: .92; }
+    .c4-box .desc { font-size: 11px; margin-top: 6px; opacity: .9; line-height: 1.4; }
+    .node-ai { background: #115594; border: 2px solid #0c3d6b; }
+    .stub { background: #f0f1f4; border: 2px dashed #9aa0a8; color: #4d525a; box-shadow: none; }
+    .stub .name { font-size: 13px; }
+
+    .zone-purple { position: absolute; border: 2px dashed #a98cbb; border-radius: 12px; background: rgba(248,241,250,0.18); z-index: 1; }
+    .zone-label { position: absolute; top: 7px; left: 14px; font-size: 12.5px; font-weight: 700; color: #7a5a90; z-index: 2; }
+
+    .azure { position: absolute; border: 2.5px solid #115594; border-radius: 14px; background: rgba(17,85,148,0.03); z-index: 0; }
+    .azure-label { position: absolute; top: -13px; left: 30px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 700; color: #115594; z-index: 3; }
+
+    .legend { position: absolute; border: 1px solid #777; border-radius: 8px; padding: 8px 14px; font-size: 11.5px; background: #fff; box-shadow: 2px 3px 8px rgba(0,0,0,0.08); z-index: 30; }
+    .legend-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .legend-item, .legend-line { display: flex; align-items: center; gap: 9px; margin: 2px 0; }
+    .legend-swatch { display:inline-block; width:22px; height:14px; border-radius:3px; flex:0 0 auto; }
+    .legend-swatch.node-sw { background:#115594; }
+    .legend-swatch.stub-sw { background:#f0f1f4; border:2px dashed #9aa0a8; }
+    .legend-stub { width:22px; height:0; border-top:2px dashed #8a8f96; flex:0 0 auto; }
+
+    svg.arrows { position: absolute; top: 0; left: 0; width: 1300px; height: 540px; pointer-events: none; z-index: 50; }
+    svg.arrows path.stub-link { fill: none; stroke: #8a8f96; stroke-width: 1.6; stroke-dasharray: 4 4; }
+    svg.arrows text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11.5px; fill: #1a1a1a; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <div class="legend" style="left:930px; top:40px; width:250px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch node-sw"></span> Managed AI service</div>
+      <div class="legend-item"><span class="legend-swatch stub-sw"></span> Continues in another diagram</div>
+      <div class="legend-line"><span class="legend-stub"></span> Cross-diagram connection</div>
+    </div>
+
+    <!-- Stub: consuming services -->
+    <div class="c4-box stub" style="left:400px; top:40px; width:500px; height:90px;">
+      <div class="name">Azure Kubernetes Service — AI Service &amp; ETL Service</div>
+    </div>
+
+    <!-- Azure boundary -->
+    <div class="azure" style="left:100px; top:170px; width:1100px; height:330px;">
+      <div class="azure-label">Azure Subscription — Japan East</div>
+    </div>
+
+    <div class="zone-purple" style="left:150px; top:200px; width:1000px; height:270px;">
+      <div class="zone-label">5 · AI Platform Services</div>
+    </div>
+
+    <div class="c4-box node-ai" style="left:220px; top:260px; width:420px; height:160px;">
+      <div class="name">Azure OpenAI Service</div>
+      <div class="type">[Managed AI — GPT-4o class + text embeddings]</div>
+      <div class="desc">Query intent, RAG answers, document summaries and AI audit results with pass/fail comments</div>
+    </div>
+
+    <div class="c4-box node-ai" style="left:680px; top:260px; width:420px; height:160px;">
+      <div class="name">Azure Content Understanding</div>
+      <div class="type">[Managed AI — document intelligence]</div>
+      <div class="desc">Extracts text, layout and structure from submitted and crawled documents for the ETL pipeline</div>
+    </div>
+
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow-stub" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#8a8f96"/>
+        </marker>
+      </defs>
+
+      <path class="stub-link" d="M 500 130 L 500 190 L 430 190 L 430 260" marker-end="url(#arrow-stub)"/>
+      <text x="465" y="192">AI Service → answers, summaries &amp; audits</text>
+
+      <path class="stub-link" d="M 800 130 L 800 190 L 890 190 L 890 260" marker-end="url(#arrow-stub)"/>
+      <text x="845" y="192">ETL Service → extract text &amp; structure</text>
+    </svg>
+
+  </div>
+</body>
+</html>

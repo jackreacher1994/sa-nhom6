@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Architecture 4/4 — Platform, Security, Ops & External</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #fdfdfd; font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; padding: 24px; }
+    .diagram { position: relative; width: 1600px; height: 800px; background: #fff; border: 1px solid #ccd8e8; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); overflow: hidden; }
+    .c4-box { position: absolute; color: #fff; border-radius: 8px; padding: 8px 12px; text-align: center; line-height: 1.3; box-shadow: 2px 3px 8px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
+    .c4-box .name { font-size: 14px; font-weight: 700; }
+    .c4-box .type { font-size: 11px; margin-top: 3px; opacity: .92; }
+    .c4-box .desc { font-size: 11px; margin-top: 6px; opacity: .9; line-height: 1.4; }
+    .node { background: #115594; border: 2px solid #0c3d6b; }
+    .external { background: #4f5256; border: 2px solid #35373a; }
+    .stub { background: #f0f1f4; border: 2px dashed #9aa0a8; color: #4d525a; box-shadow: none; }
+    .stub .name { font-size: 12.5px; }
+
+    .zone { position: absolute; border: 2px dashed #7fa3c8; border-radius: 12px; background: rgba(238,244,251,0.18); z-index: 1; }
+    .zone-label { position: absolute; top: 7px; left: 14px; font-size: 12.5px; font-weight: 700; color: #43689a; z-index: 2; }
+    .zone-gray { border-color: #9aa0a8; background: rgba(240,241,244,0.25); }
+    .zone-gray .zone-label { color: #5a6069; }
+
+    .azure { position: absolute; border: 2.5px solid #115594; border-radius: 14px; background: rgba(17,85,148,0.03); z-index: 0; }
+    .azure-label { position: absolute; top: -13px; left: 30px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 700; color: #115594; z-index: 3; }
+
+    .legend { position: absolute; border: 1px solid #777; border-radius: 8px; padding: 8px 14px; font-size: 11.5px; background: #fff; box-shadow: 2px 3px 8px rgba(0,0,0,0.08); z-index: 30; }
+    .legend-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .legend-item, .legend-line { display: flex; align-items: center; gap: 9px; margin: 2px 0; }
+    .legend-swatch { display:inline-block; width:22px; height:14px; border-radius:3px; flex:0 0 auto; }
+    .legend-swatch.node-sw { background:#115594; }
+    .legend-swatch.ext-sw { background:#4f5256; }
+    .legend-swatch.stub-sw { background:#f0f1f4; border:2px dashed #9aa0a8; }
+    .legend-solid { width:22px; height:0; border-top:2px solid #555; flex:0 0 auto; }
+    .legend-dotted { width:22px; height:0; border-top:2px dotted #0f766e; flex:0 0 auto; }
+    .legend-stub { width:22px; height:0; border-top:2px dashed #8a8f96; flex:0 0 auto; }
+
+    svg.arrows { position: absolute; top: 0; left: 0; width: 1600px; height: 800px; pointer-events: none; z-index: 50; }
+    svg.arrows path.rel { fill: none; stroke: #555; stroke-width: 1.6; }
+    svg.arrows path.telemetry { fill: none; stroke: #0f766e; stroke-width: 1.4; stroke-dasharray: 2 5; }
+    svg.arrows path.stub-link { fill: none; stroke: #8a8f96; stroke-width: 1.6; stroke-dasharray: 4 4; }
+    svg.arrows text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #1a1a1a; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <div class="legend" style="left:1220px; top:15px; width:350px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch node-sw"></span> Azure service</div>
+      <div class="legend-item"><span class="legend-swatch ext-sw"></span> On-premises system</div>
+      <div class="legend-item"><span class="legend-swatch stub-sw"></span> Continues in another diagram</div>
+      <div class="legend-line"><span class="legend-solid"></span> Request / data flow</div>
+      <div class="legend-line"><span class="legend-dotted"></span> Telemetry &amp; monitoring</div>
+    </div>
+
+    <!-- Stub: AKS workloads -->
+    <div class="c4-box stub" style="left:600px; top:30px; width:400px; height:90px;">
+      <div class="name">Azure Kubernetes Service</div>
+    </div>
+
+    <!-- Azure boundary -->
+    <div class="azure" style="left:20px; top:160px; width:1560px; height:610px;">
+      <div class="azure-label">Azure Subscription — Japan East</div>
+    </div>
+
+    <!-- Zone 4: Platform & Ops -->
+    <div class="zone" style="left:60px; top:190px; width:1480px; height:260px;">
+      <div class="zone-label">4 · Platform, Security &amp; Operations</div>
+    </div>
+
+    <div class="c4-box node" style="left:90px; top:240px; width:300px; height:170px;">
+      <div class="name">Azure Key Vault</div>
+      <div class="type">[PaaS]</div>
+      <div class="desc">Secrets, connection strings, source credentials, keys and TLS certificates — never stored in code</div>
+    </div>
+    <div class="c4-box node" style="left:420px; top:240px; width:300px; height:170px;">
+      <div class="name">Azure Monitor</div>
+      <div class="type">[PaaS — Application Insights + Container Insights]</div>
+      <div class="desc">Traces, metrics, container logs, queue-depth dashboards, SLO alerting and cost budget alerts</div>
+    </div>
+    <div class="c4-box node" style="left:850px; top:240px; width:300px; height:170px;">
+      <div class="name">Azure Container Registry</div>
+      <div class="type">[PaaS — Premium]</div>
+      <div class="desc">Signed images for the Backend, AI, ETL and Expert services; vulnerability scanning; pulled by AKS over a private endpoint with managed identity</div>
+    </div>
+    <div class="c4-box node" style="left:1180px; top:240px; width:300px; height:170px;">
+      <div class="name">Azure DevOps</div>
+      <div class="type">[CI/CD — Azure Repos + Pipelines]</div>
+      <div class="desc">Build &amp; test → push images to ACR → deploy Helm charts to AKS (blue/green) through a workload-identity service connection — no long-lived secrets</div>
+    </div>
+
+    <!-- Zone 6: Corporate Network -->
+    <div class="zone zone-gray" style="left:60px; top:480px; width:1480px; height:260px;">
+      <div class="zone-label">6 · Corporate Network</div>
+    </div>
+
+    <div class="c4-box external" style="left:150px; top:530px; width:550px; height:170px;">
+      <div class="name">Enterprise Content Sources</div>
+      <div class="type">[On-premises software systems]</div>
+      <div class="desc">SharePoint · Confluence · file servers · internal databases — crawled read-only by the ETL service; original documents are never modified</div>
+    </div>
+    <div class="c4-box external" style="left:850px; top:530px; width:550px; height:170px;">
+      <div class="name">HR / Org Directory</div>
+      <div class="type">[On-premises software system]</div>
+      <div class="desc">Approved employee profile and expertise data used by the Expert service for subject-matter experts matching</div>
+    </div>
+
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+        </marker>
+        <marker id="arrow-tele" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#0f766e"/>
+        </marker>
+        <marker id="arrow-stub" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#8a8f96"/>
+        </marker>
+      </defs>
+
+      <!-- DevOps -> ACR -->
+      <path class="rel" d="M 1180 315 L 1150 315" marker-end="url(#arrow)"/>
+      <text x="1165" y="220">Push signed images</text>
+
+      <!-- ACR -> AKS (stub) -->
+      <path class="rel" d="M 1000 240 L 1000 120" marker-end="url(#arrow)"/>
+      <text x="1000" y="180">Pull signed images</text>
+
+      <!-- DevOps -> AKS (stub) -->
+      <path class="rel" d="M 1330 240 L 1330 150 L 950 150 L 950 120" marker-end="url(#arrow)"/>
+      <text x="1140" y="144">Deploy Helm charts</text>
+
+      <!-- AKS (stub) -> Key Vault -->
+      <path class="rel" d="M 650 120 L 650 165 L 320 165 L 320 240" marker-end="url(#arrow)"/>
+      <text x="485" y="145">Secrets &amp; certs</text>
+
+      <!-- AKS (stub) -> Monitor -->
+      <path class="telemetry" d="M 750 120 L 750 175 L 570 175 L 570 240" marker-end="url(#arrow-tele)"/>
+      <text x="660" y="145">Telemetry, logs &amp; metrics</text>
+
+      <!-- AKS (stub) -> Enterprise Content Sources -->
+      <path class="rel" d="M 785 120 L 785 500 L 425 500 L 425 530" marker-end="url(#arrow)"/>
+      <text x="605" y="470">Crawl content [HTTPS/SQL]</text>
+
+      <!-- AKS (stub) -> HR / Org Directory -->
+      <path class="rel" d="M 785 120 L 785 460 L 1125 460 L 1125 530" marker-end="url(#arrow)"/>
+      <text x="955" y="435">Resolve employee profiles [HTTPS/LDAP]</text>
+    </svg>
+
+  </div>
+</body>
+</html>

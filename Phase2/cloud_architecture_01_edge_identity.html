@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Architecture 1/4 — Edge, Identity & Ingress</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+    .diagram {
+      position: relative;
+      width: 1560px;
+      height: 900px;
+      background: #fff;
+      border: 1px solid #ccd8e8;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      overflow: hidden;
+    }
+    .c4-box {
+      position: absolute;
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-align: center;
+      line-height: 1.3;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .c4-box .name { font-size: 14px; font-weight: 700; }
+    .c4-box .type { font-size: 11px; margin-top: 3px; opacity: .92; }
+    .c4-box .desc { font-size: 11px; margin-top: 6px; opacity: .9; line-height: 1.4; }
+    .person {
+      background: #f4fbf4; border: 2px solid #3a8342; border-radius: 24px; color: #1f2d1f; padding-top: 10px;
+    }
+    .person .icon { width: 40px; height: 40px; margin-bottom: 2px; display:flex; align-items:center; justify-content:center; }
+    .person .icon svg { width: 100%; height: 100%; }
+    .node, .node-ai, .node-id { background: #115594; border: 2px solid #0c3d6b; }
+    .policy { background: #eaf1f9; border: 2px dashed #115594; color: #10365c; box-shadow: none; }
+    .policy .type { color: #2f6da4; opacity: 1; }
+    .policy .desc { color: #34567a; opacity: 1; }
+    .stub { background: #f0f1f4; border: 2px dashed #9aa0a8; color: #4d525a; box-shadow: none; }
+    .stub .name { font-size: 12.5px; }
+
+    .zone { position: absolute; border: 2px dashed #7fa3c8; border-radius: 12px; background: rgba(238,244,251,0.18); z-index: 1; }
+    .zone-label { position: absolute; top: 7px; left: 14px; font-size: 12.5px; font-weight: 700; color: #43689a; z-index: 2; }
+    .zone-label small { font-weight: 400; font-size: 10.5px; color: #5c7a9c; }
+    .zone-green { border-color: #8aad78; background: rgba(242,247,238,0.18); }
+    .zone-green .zone-label { color: #5c7d4c; }
+
+    .azure { position: absolute; border: 2.5px solid #115594; border-radius: 14px; background: rgba(17,85,148,0.03); z-index: 0; }
+    .azure-label { position: absolute; top: -13px; left: 30px; background: #fff; padding: 0 12px; font-size: 14px; font-weight: 700; color: #115594; z-index: 3; }
+    .vnet { position: absolute; border: 2px solid #4a8ec4; border-radius: 12px; background: rgba(74,142,196,0.04); z-index: 0; }
+    .vnet-label { position: absolute; top: -11px; left: 220px; background: #fff; padding: 0 10px; font-size: 13px; font-weight: 700; color: #2f6da4; z-index: 3; }
+
+    .legend { position: absolute; border: 1px solid #777; border-radius: 8px; padding: 8px 14px; font-size: 11.5px; background: #fff; box-shadow: 2px 3px 8px rgba(0,0,0,0.08); z-index: 30; }
+    .legend-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .legend-item, .legend-line { display: flex; align-items: center; gap: 9px; margin: 2px 0; }
+    .legend-swatch { display:inline-block; width:22px; height:14px; border-radius:3px; flex:0 0 auto; }
+    .legend-swatch.person-sw { background:#f4fbf4; border:2px solid #3a8342; border-radius:12px; }
+    .legend-swatch.node-sw { background:#115594; }
+    .legend-swatch.policy-sw { background:#eaf1f9; border:2px dashed #115594; }
+    .legend-swatch.stub-sw { background:#f0f1f4; border:2px dashed #9aa0a8; }
+    .legend-solid { width:22px; height:0; border-top:2px solid #555; flex:0 0 auto; }
+    .legend-policy { width:22px; height:0; border-top:2px dashed #115594; flex:0 0 auto; }
+    .legend-stub { width:22px; height:0; border-top:2px dashed #8a8f96; flex:0 0 auto; }
+
+    .title { position: absolute; left: 30px; top: 12px; font-size: 19px; font-weight: 700; color: #0e3a66; }
+    .subtitle { position: absolute; left: 30px; top: 38px; font-size: 11.5px; color: #5a6b7e; }
+
+    svg.arrows { position: absolute; top: 0; left: 0; width: 1560px; height: 900px; pointer-events: none; z-index: 50; }
+    svg.arrows path.rel { fill: none; stroke: #555; stroke-width: 1.6; }
+    svg.arrows path.policy-link { fill: none; stroke: #115594; stroke-width: 1.6; stroke-dasharray: 7 4; }
+    svg.arrows path.stub-link { fill: none; stroke: #8a8f96; stroke-width: 1.6; stroke-dasharray: 4 4; }
+    svg.arrows text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #1a1a1a; text-anchor: middle; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+
+    <!-- Legend -->
+    <div class="legend" style="left:570px; top:15px; width:420px;">
+      <div class="legend-title">Legend</div>
+      <div class="legend-item"><span class="legend-swatch person-sw"></span> Actor (web browser)</div>
+      <div class="legend-item"><span class="legend-swatch node-sw"></span> Azure service</div>
+      <div class="legend-item"><span class="legend-swatch policy-sw"></span> Policy resource (attached)</div>
+      <div class="legend-item"><span class="legend-swatch stub-sw"></span> Continues in another diagram</div>
+      <div class="legend-line"><span class="legend-solid"></span> Request / data flow</div>
+      <div class="legend-line"><span class="legend-policy"></span> Policy attachment</div>
+    </div>
+
+    <!-- Users -->
+    <div class="c4-box person" style="left:100px; top:30px; width:280px; height:120px;">
+      <div class="icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="20" r="12" fill="#3a8342"></circle><path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path></svg></div>
+      <div class="name">Vendor / Contractor</div>
+      <div class="desc">Submits handover packages, adds sources, queries knowledge base.</div>
+    </div>
+    <div class="c4-box person" style="left:1180px; top:30px; width:280px; height:120px;">
+      <div class="icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="20" r="12" fill="#3a8342"></circle><path d="M16 54c2-11 10-16 16-16s14 5 16 16" fill="#3a8342"></path></svg></div>
+      <div class="name">Customer / Reviewer</div>
+      <div class="desc">Reviews audits, manages templates, finds subject-matter experts.</div>
+    </div>
+
+    <!-- Azure boundary -->
+    <div class="azure" style="left:50px; top:200px; width:1490px; height:650px;">
+      <div class="azure-label">Azure Subscription — Japan East (AZ 1 · 2 · 3)</div>
+    </div>
+
+    <!-- Zone 1: Global Edge & Identity -->
+    <div class="zone zone-green" style="left:80px; top:220px; width:1430px; height:200px;">
+      <div class="zone-label">1 · Global Edge &amp; Identity</div>
+    </div>
+
+    <div class="c4-box node-id" style="left:100px; top:275px; width:260px; height:130px;">
+      <div class="name">Azure Entra ID</div>
+      <div class="type">[Identity provider — OAuth2 / OIDC]</div>
+      <div class="desc">User sign-in, short-lived JWTs, app roles <b>Vendor</b> / <b>Customer</b></div>
+    </div>
+    <div class="c4-box node" style="left:390px; top:275px; width:260px; height:130px;">
+      <div class="name">Azure Static Web Apps</div>
+      <div class="type">[PaaS — static hosting]</div>
+      <div class="desc">Hosts the <b>Frontend SPA (ReactJS)</b></div>
+    </div>
+    <div class="c4-box node" style="left:680px; top:275px; width:260px; height:130px;">
+      <div class="name">Azure Front Door</div>
+      <div class="type">[PaaS — global edge]</div>
+      <div class="desc">TLS termination, DDoS protection, CDN caching and global routing: <b>/</b> to the SPA, <b>/api/*</b> to the private origin</div>
+    </div>
+    <div class="c4-box policy" style="left:955px; top:275px; width:260px; height:130px;">
+      <div class="name">Azure Web Application Firewall</div>
+      <div class="type">[Policy]</div>
+      <div class="desc">OWASP managed rule set, bot protection, rate limiting and custom rules — evaluated inside Front Door and Application Gateway</div>
+    </div>
+    <div class="c4-box node" style="left:1230px; top:275px; width:260px; height:130px;">
+      <div class="name">Azure DNS</div>
+      <div class="type">[PaaS]</div>
+      <div class="desc">Public DNS records, managed certificates stored in Key Vault, auto-renewal for edge and ingress endpoints</div>
+    </div>
+
+    <!-- Virtual Network -->
+    <div class="vnet" style="left:80px; top:455px; width:1430px; height:375px;">
+      <div class="vnet-label">Virtual Network — app-vnet 10.1.0.0/16</div>
+    </div>
+
+    <div class="c4-box node" style="left:708px; top:495px; width:480px; height:120px;">
+      <div class="name">Azure Application Gateway</div>
+      <div class="type">[PaaS — internal L7 load balancer]</div>
+      <div class="desc">Terminates Private Link traffic from Front Door, applies the same WAF policy, and load-balances into the AKS ingress controller</div>
+    </div>
+
+    <div class="c4-box stub" style="left:708px; top:665px; width:480px; height:110px;">
+      <div class="name">Azure Kubernetes Service</div>
+    </div>
+
+    <!-- Arrows -->
+    <svg class="arrows" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#555"/>
+        </marker>
+        <marker id="arrow-stub" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#8a8f96"/>
+        </marker>
+      </defs>
+
+      <!-- Users -> Front Door -->
+      <path class="rel" d="M 240 150 L 240 178 L 760 178 L 760 275" marker-end="url(#arrow)"/>
+      <text x="500" y="171">HTTPS</text>
+
+      <path class="rel" d="M 1320 150 L 1320 178 L 860 178 L 860 275" marker-end="url(#arrow)"/>
+      <text x="1090" y="171">HTTPS</text>
+
+      <!-- Front Door -> Static Web Apps -->
+      <path class="rel" d="M 680 340 L 650 340" marker-end="url(#arrow)"/>
+      <text x="665" y="253">Serve SPA</text>
+
+      <!-- Static Web Apps -> Entra ID -->
+      <path class="rel" d="M 390 340 L 360 340" marker-end="url(#arrow)"/>
+      <text x="375" y="253">OIDC + PKCE login</text>
+
+      <!-- DNS -> Front Door -->
+      <path class="rel" d="M 1360 275 L 1360 240 L 810 240 L 810 275" marker-end="url(#arrow)"/>
+      <text x="1085" y="238">DNS record → Front Door endpoint</text>
+
+      <!-- WAF policy attachments -->
+      <path class="policy-link" d="M 955 340 L 940 340"/>
+      <text x="948" y="253">WAF policy</text>
+
+      <path class="policy-link" d="M 1085 405 L 1085 495"/>
+      <text x="1085" y="440">WAF policy</text>
+
+      <!-- Front Door -> Application Gateway -->
+      <path class="rel" d="M 810 405 L 810 495" marker-end="url(#arrow)"/>
+      <text x="810" y="440">/api/* via Private Link</text>
+
+      <!-- Application Gateway -> AKS (stub) -->
+      <path class="stub-link" d="M 948 615 L 948 665" marker-end="url(#arrow-stub)"/>
+      <text x="948" y="642">HTTPS → AKS ingress (internal LB)</text>
+    </svg>
+
+  </div>
+</body>
+</html>
