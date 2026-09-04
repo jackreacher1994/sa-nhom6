@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Overview SVG</title>
+  <style>
+    body { margin: 0; padding: 24px; background: #dbe7ef; font-family: "Segoe UI", Arial, sans-serif; }
+    svg { display: block; width: min(1600px, 100%); height: auto; margin: 0 auto; background: #fff; box-shadow: 0 12px 32px rgba(16, 42, 67, .18); }
+    .title { font-size: 38px; font-weight: 700; fill: #073f72; }
+    .subtitle { font-size: 18px; fill: #5a7084; }
+    .label { font-size: 12px; font-weight: 700; letter-spacing: 1.2px; fill: #334e68; }
+    .tag { font-size: 12px; font-weight: 700; letter-spacing: 1px; fill: #fff; }
+    .heading { font-size: 22px; font-weight: 700; fill: #102a43; }
+    .ai-heading { font-size: 25px; font-weight: 700; fill: #075e58; }
+    .body { font-size: 14px; fill: #4d6476; }
+    .small { font-size: 12px; font-weight: 700; fill: #415a6d; }
+    .ai-text { font-size: 14px; font-weight: 700; fill: #075e58; }
+    .query { font-size: 14px; font-weight: 700; fill: #075e58; }
+    .query-small { font-size: 12px; font-weight: 600; fill: #3f7f7a; }
+    .footer { font-size: 13px; fill: #718497; }
+  </style>
+</head>
+<body>
+  <!-- Copy the SVG below. It contains only the editable workflow diagram. -->
+  <svg viewBox="180 180 1400 500" role="img" aria-labelledby="title description" xmlns="http://www.w3.org/2000/svg">
+    <title id="title">AI Document Audit and Knowledge Assistant workflow</title>
+    <desc id="description">Vendor document submission, AS-IS manual audit workflow, TO-BE AI-powered audit workflow, and customer decision.</desc>
+    <defs>
+      <filter id="ai-shadow" x="-10%" y="-10%" width="120%" height="130%">
+        <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#007c74" flood-opacity=".15"/>
+      </filter>
+      <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+        <path d="M0,0 L12,6 L0,12 Z" fill="#8399aa"/>
+      </marker>
+      <marker id="ai-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#4e9e96"/>
+      </marker>
+    </defs>
+
+    <!-- Vendor submission -->
+    <rect x="249" y="382" width="236" height="190" rx="8" fill="#f4f7f9" stroke="#b7c6d1" stroke-width="2"/>
+    <text x="269" y="414" class="label">VENDOR</text>
+    <text x="269" y="456" class="heading">Submit</text>
+    <text x="269" y="482" class="heading">documents</text>
+    <text x="269" y="514" class="body">Handover package:</text>
+    <text x="269" y="534" class="body">CAD drawings, compliance certs,</text>
+    <text x="269" y="554" class="body">vendor contracts</text>
+
+    <!-- Main workflow connector -->
+    <line x1="505" y1="477" x2="550" y2="477" stroke="#8399aa" stroke-width="4" marker-end="url(#arrow)"/>
+    <line x1="1140" y1="477" x2="1305" y2="477" stroke="#8399aa" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <!-- AS-IS workflow -->
+    <rect x="590" y="215" width="530" height="120" rx="6" fill="#f4f7f9" stroke="#aebdc8"/>
+    <text x="606" y="242" class="label">AS-IS: MANUAL AUDIT WORKFLOW</text>
+    <rect x="606" y="258" width="140" height="52" rx="4" fill="#fff" stroke="#c3ced6"/>
+    <rect x="785" y="258" width="140" height="52" rx="4" fill="#fff" stroke="#c3ced6"/>
+    <rect x="964" y="258" width="140" height="52" rx="4" fill="#fff" stroke="#c3ced6"/>
+    <line x1="750" y1="284" x2="779" y2="284" stroke="#8295a4" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="929" y1="284" x2="958" y2="284" stroke="#8295a4" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="676" y="280" class="small" text-anchor="middle">Vendor</text><text x="676" y="296" class="small" text-anchor="middle">submits</text>
+    <text x="855" y="280" class="small" text-anchor="middle">Reviewer checks</text><text x="855" y="296" class="small" text-anchor="middle">files and checklist</text>
+    <text x="1034" y="280" class="small" text-anchor="middle">Reviewer writes</text><text x="1034" y="296" class="small" text-anchor="middle">the decision</text>
+
+    <!-- TO-BE upgrade marker -->
+    <line x1="855" y1="335" x2="855" y2="362" stroke="#007c74" stroke-width="3" marker-end="url(#ai-arrow)"/>
+    <text x="874" y="354" class="label" fill="#075e58">TO-BE UPGRADE</text>
+
+    <!-- AI workflow -->
+    <rect x="588" y="360" width="530" height="280" rx="8" fill="#e8f7f4" stroke="#007c74" stroke-width="2" filter="url(#ai-shadow)"/>
+    <rect x="578" y="348" width="240" height="28" fill="#007c74"/>
+    <text x="590" y="367" class="tag">AI-POWERED AUDIT WORKFLOW</text>
+    <text x="612" y="421" class="ai-heading">AI-powered document intelligence</text>
+
+    <rect x="612" y="445" width="132" height="87" rx="5" fill="#fafffe" stroke="#78b9b0"/>
+    <rect x="787" y="445" width="132" height="87" rx="5" fill="#fafffe" stroke="#78b9b0"/>
+    <rect x="962" y="445" width="132" height="87" rx="5" fill="#fafffe" stroke="#78b9b0"/>
+    <line x1="749" y1="488" x2="780" y2="488" stroke="#4e9e96" stroke-width="2" marker-end="url(#ai-arrow)"/>
+    <line x1="924" y1="488" x2="955" y2="488" stroke="#4e9e96" stroke-width="2" marker-end="url(#ai-arrow)"/>
+    <text x="678" y="480" class="ai-text" text-anchor="middle">Validate</text><text x="678" y="498" class="ai-text" text-anchor="middle">package</text>
+    <text x="853" y="480" class="ai-text" text-anchor="middle">Analyze and audit</text><text x="853" y="498" class="ai-text" text-anchor="middle">documents</text>
+    <text x="1028" y="480" class="ai-text" text-anchor="middle">Generate audit</text><text x="1028" y="498" class="ai-text" text-anchor="middle">report</text>
+
+    <rect x="612" y="548" width="482" height="58" rx="5" fill="#fafffe" stroke="#78b9b0"/>
+    <text x="853" y="573" class="query" text-anchor="middle">Query documents in natural language</text>
+    <text x="853" y="592" class="query-small" text-anchor="middle">Ask questions across all documents</text>
+
+    <!-- Customer decision -->
+    <rect x="1325" y="382" width="236" height="190" rx="8" fill="#f4f7f9" stroke="#b7c6d1" stroke-width="2"/>
+    <text x="1345" y="414" class="label">CUSTOMER</text>
+    <text x="1345" y="456" class="heading">Review and</text>
+    <text x="1345" y="482" class="heading">decide</text>
+    <text x="1345" y="514" class="body">Accept or request changes</text>
+
+  </svg>
+</body>
+</html>
