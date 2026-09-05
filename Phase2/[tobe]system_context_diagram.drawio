@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron">
+  <diagram name="System Context" id="0">
+    <mxGraphModel dx="1542" dy="1333" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="720" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="legend_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#c7cdd4;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="58" width="760" x="470" y="18" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;fontColor=#333333;" value="Legend" vertex="1">
+          <mxGeometry height="24" width="60" x="485" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_person" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#f4fbf4;strokeColor=#3a8342;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="22" width="34" x="555" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_person_text" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#333333;" value="Person" vertex="1">
+          <mxGeometry height="24" width="60" x="596" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_system" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#115594;strokeColor=#0c3d6b;" value="" vertex="1">
+          <mxGeometry height="22" width="34" x="670" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_system_text" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#333333;" value="System in scope" vertex="1">
+          <mxGeometry height="24" width="115" x="711" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_external" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;" value="" vertex="1">
+          <mxGeometry height="22" width="34" x="835" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_external_text" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#333333;" value="External system" vertex="1">
+          <mxGeometry height="24" width="120" x="876" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_flow_text" parent="1" style="text;html=1;fontSize=13;align=left;verticalAlign=middle;fontColor=#333333;" value="Interaction" vertex="1">
+          <mxGeometry height="24" width="85" x="1130" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_flow" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#333333;endArrow=classic;endFill=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="47" as="sourcePoint" />
+            <mxPoint x="1120" y="47" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="p1" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#f4fbf4;strokeColor=#3a8342;strokeWidth=2;fontColor=#1f2d1f;fontSize=15;align=center;verticalAlign=top;spacingTop=48;spacingLeft=8;spacingRight=8;" value="Vendor / Contractor&#xa;[Person]&#xa;Uploads documents and queries knowledge." vertex="1">
+          <mxGeometry height="140" width="260" x="100" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p1icon" parent="p1" style="shape=actor;html=1;fillColor=#3a8342;strokeColor=#3a8342;" value="" vertex="1">
+          <mxGeometry height="34" width="24" x="118" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#f4fbf4;strokeColor=#3a8342;strokeWidth=2;fontColor=#1f2d1f;fontSize=15;align=center;verticalAlign=top;spacingTop=48;spacingLeft=8;spacingRight=8;" value="Customer / Reviewer&#xa;[Person]&#xa;Reviews findings, templates and experts." vertex="1">
+          <mxGeometry height="140" width="260" x="1340" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p2icon" parent="p2" style="shape=actor;html=1;fillColor=#3a8342;strokeColor=#3a8342;" value="" vertex="1">
+          <mxGeometry height="34" width="24" x="118" y="8" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sys" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#115594;strokeColor=#0c3d6b;fontColor=#ffffff;fontSize=16;align=center;verticalAlign=middle;spacing=8;" value="AI Document Audit &amp; Knowledge Assistant System&#xa;[Software System]&#xa;Audits documents and answers knowledge queries.&#xa;Returns evidence-based results with access control." vertex="1">
+          <mxGeometry height="140" width="500" x="600" y="280" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=6;" value="Azure Entra ID&#xa;[Software System]&#xa;Authentication and role identity." vertex="1">
+          <mxGeometry height="100" width="260" x="80" y="580" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=6;" value="Enterprise Content Sources&#xa;[Software System]&#xa;Corporate documents and structured data." vertex="1">
+          <mxGeometry height="100" width="260" x="400" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=6;" value="Document Intelligence Platform&#xa;[Software System]&#xa;Extracts text and document structure." vertex="1">
+          <mxGeometry height="100" width="260" x="720" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=6;" value="Generative AI Platform&#xa;[Software System]&#xa;Embeddings and grounded generation." vertex="1">
+          <mxGeometry height="100" width="260" x="1040" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4f5256;strokeColor=#35373a;fontColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=6;" value="HR / Org Directory&#xa;[Software System]&#xa;Employee profiles for expert matching." vertex="1">
+          <mxGeometry height="100" width="260" x="1360" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="p1" target="sys" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.15;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Uploads documents and queries knowledge">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230" y="250" />
+              <mxPoint x="675" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="1" source="p2" target="sys" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.85;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Reviews findings and manages templates">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1470" y="250" />
+              <mxPoint x="1025" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="r6" edge="1" parent="1" source="sys" target="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Authenticates with">
+          <mxGeometry x="-0.35" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="500" />
+              <mxPoint x="210" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="1" source="sys" target="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Ingests enterprise content from">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="530" />
+              <mxPoint x="530" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r4" edge="1" parent="1" source="sys" target="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Extracts document content using">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r5" edge="1" parent="1" source="sys" target="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Generates grounded results using">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="530" />
+              <mxPoint x="1170" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r7" edge="1" parent="1" source="sys" target="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=12;fontColor=#333333;labelBackgroundColor=#ffffff;exitX=0.9;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;" value="Finds experts via">
+          <mxGeometry x="0.35" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="500" />
+              <mxPoint x="1490" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
