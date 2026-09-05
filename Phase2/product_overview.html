@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Overview - AI Document Audit &amp; Knowledge Assistant</title>
+  <style>
+    :root { --ink:#102a43; --muted:#5a7084; --blue:#075c9e; --teal:#007c74; --teal-dark:#075e58; --pale-blue:#edf6fc; --pale-teal:#e8f7f4; --gray:#f4f7f9; --line:#8399aa; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#dbe7ef; font-family:"Segoe UI",Arial,sans-serif; color:var(--ink); }
+    .slide { position:relative; width:1600px; height:900px; margin:24px auto; overflow:hidden; background:#fff; box-shadow:0 12px 32px rgba(16,42,67,.18); }
+    header { height:180px; padding:60px 86px 0; border-bottom:1px solid #dce7ef; }
+    h1 { margin:0; font-size:38px; letter-spacing:0; color:#073f72; }
+    .subtitle { margin:10px 0 0; font-size:18px; color:var(--muted); }
+    .journey { position:absolute; top:360px; left:86px; right:86px; display:flex; align-items:center; justify-content:center; gap:24px; }
+    .step { width:236px; height:190px; padding:22px 20px; border:2px solid #b7c6d1; border-radius:8px; background:var(--gray); }
+    .step-label { margin-bottom:10px; font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#334e68; }
+    .step h2 { margin:0 0 7px; font-size:22px; line-height:1.15; }
+    .step p { margin:0; font-size:14px; line-height:1.35; color:#4d6476; }
+    .arrow { position:relative; width:45px; height:4px; flex:0 0 45px; background:var(--line); }
+    .arrow::after { content:""; position:absolute; top:-7px; right:0; width:14px; height:14px; border-top:4px solid var(--line); border-right:4px solid var(--line); transform:rotate(45deg); }
+    .enhancement { position:relative; width:530px; flex:0 0 530px; height:280px; padding:0 24px 20px; border:2px solid var(--teal); border-radius:8px; background:var(--pale-teal); box-shadow:0 4px 20px rgba(0,124,116,.15); }
+    .asis-panel { position:absolute; top:-147px; left:0; width:530px; height:120px; padding:13px 16px; border:1px solid #aebdc8; border-radius:6px; background:#f4f7f9; }
+    .asis-title { margin-bottom:10px; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#334e68; }
+    .asis-flow { display:flex; align-items:center; gap:8px; }
+    .asis-step { flex:1; padding:8px 6px; border:1px solid #c3ced6; border-radius:4px; background:#fff; text-align:center; font-size:12px; font-weight:700; line-height:1.25; color:#415a6d; }
+    .asis-arrow { width:14px; height:2px; flex:0 0 14px; background:#8295a4; position:relative; }
+    .asis-arrow::after { content:""; position:absolute; top:-3px; right:0; width:7px; height:7px; border-top:2px solid #8295a4; border-right:2px solid #8295a4; transform:rotate(45deg); }
+    .upgrade-arrow { position:absolute; top:-27px; left:262px; width:3px; height:27px; background:var(--teal); }
+    .upgrade-arrow::after { content:""; position:absolute; bottom:-1px; left:-4px; width:8px; height:8px; border-right:3px solid var(--teal); border-bottom:3px solid var(--teal); transform:rotate(45deg); }
+    .upgrade-label { position:absolute; top:-23px; left:281px; width:130px; font-size:11px; font-weight:700; color:var(--teal-dark); text-transform:uppercase; letter-spacing:.7px; }
+    .new-label { display:inline-block; min-width:240px; margin:-13px 0 16px -11px; padding:4px 12px; background:var(--teal); color:#fff; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; }
+    .enhancement h2 { margin:0 0 16px; font-size:25px; line-height:1.1; color:var(--teal-dark); white-space:nowrap; }
+    .ai-steps { display:flex; align-items:center; gap:9px; }
+    .ai-step { flex:1; min-height:87px; padding:12px 9px; border:1px solid #78b9b0; border-radius:5px; background:#fafffe; text-align:center; font-size:14px; font-weight:700; line-height:1.25; color:#075e58; display:flex; align-items:center; justify-content:center; }
+    .ai-arrow { width:14px; height:2px; flex:0 0 14px; background:#4e9e96; position:relative; }
+    .ai-arrow::after { content:""; position:absolute; top:-3px; right:0; width:7px; height:7px; border-top:2px solid #4e9e96; border-right:2px solid #4e9e96; transform:rotate(45deg); }
+    .query-feature { margin-top:10px; padding:9px 12px; border:1px solid #78b9b0; border-radius:5px; background:#fafffe; text-align:center; font-size:14px; font-weight:700; color:var(--teal-dark); }
+    .query-feature small { display:block; margin-top:2px; font-size:12px; font-weight:600; color:#3f7f7a; }
+    .expert-feature { margin-top:10px; padding-top:8px; border-top:1px solid #a9bbb0; font-size:12px; font-weight:700; color:var(--teal-dark); }
+    .legend { position:absolute; left:86px; bottom:65px; display:flex; align-items:center; gap:9px; font-size:14px; color:var(--muted); }
+    .swatch { width:19px; height:19px; border:2px solid var(--teal); border-radius:4px; background:var(--pale-teal); }
+    footer { position:absolute; right:86px; bottom:42px; font-size:13px; color:#718497; }
+    @media print { body { background:#fff; } .slide { margin:0; box-shadow:none; } }
+  </style>
+</head>
+<body>
+  <main class="slide" aria-label="Product overview workflow with highlighted enhancements">
+    <header>
+      <h1>AI Document Audit &amp; Knowledge Assistant</h1>
+      <p class="subtitle">A smarter handover workflow that gives reviewers clear, evidence-based decisions</p>
+    </header>
+    <section class="journey" aria-label="Document handover workflow">
+      <article class="step">
+        <div class="step-label">Vendor</div>
+        <h2>Submit documents</h2>
+        <p>Handover package:<br>CAD drawings, compliance certs,<br>vendor contracts</p>
+      </article>
+      <div class="arrow" aria-hidden="true"></div>
+      <article class="enhancement">
+        <div class="asis-panel">
+          <div class="asis-title">AS-IS: Manual audit workflow</div>
+          <div class="asis-flow">
+            <div class="asis-step">Vendor<br>submits</div>
+            <div class="asis-arrow" aria-hidden="true"></div>
+            <div class="asis-step">Reviewer checks<br>files and checklist</div>
+            <div class="asis-arrow" aria-hidden="true"></div>
+            <div class="asis-step">Reviewer writes<br>the decision</div>
+          </div>
+        </div>
+        <div class="upgrade-arrow" aria-hidden="true"></div>
+        <div class="upgrade-label">TO-BE upgrade</div>
+        <div class="new-label">AI-powered audit workflow</div>
+        <h2>AI-powered document intelligence</h2>
+        <div class="ai-steps">
+          <div class="ai-step">Validate<br>package</div>
+          <div class="ai-arrow" aria-hidden="true"></div>
+          <div class="ai-step">Analyze and audit<br>documents</div>
+          <div class="ai-arrow" aria-hidden="true"></div>
+          <div class="ai-step">Generate audit<br>report</div>
+        </div>
+        <div class="query-feature">Query documents in natural language<small>Ask questions across all documents</small></div>
+      </article>
+      <div class="arrow" aria-hidden="true"></div>
+      <article class="step">
+        <div class="step-label">Customer</div>
+        <h2>Review and decide</h2>
+        <p>Accept or request changes</p>
+      </article>
+    </section>
+    <div class="legend"><span class="swatch"></span> Highlighted areas are new in the TO-BE solution</div>
+    <footer>Product Overview</footer>
+  </main>
+</body>
+</html>
